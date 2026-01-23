@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ceramic Studio - Artisan Crafts &amp; Studio Updates</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13c8ec",
+                        "background-light": "#f6f8f8",
+                        "background-dark": "#101f22",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .snap-x { scroll-snap-type: x mandatory; }
+        .snap-start { scroll-snap-align: start; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#0d191b] dark:text-white transition-colors duration-300">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-50 w-full border-b border-[#e7f1f3] dark:border-[#1e2f33] bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
+<div class="max-w-[1200px] mx-auto flex items-center justify-between px-6 py-4">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-3xl">fluid</span>
+<h1 class="text-lg font-bold tracking-tight">Ceramic Studio</h1>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Shop</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Our Story</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Process</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Workshop</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#4c8d9a] text-sm">search</span>
+<input class="bg-[#e7f1f3] dark:bg-[#1a2e32] border-none rounded-lg pl-9 pr-4 py-2 text-sm focus:ring-1 focus:ring-primary w-48" placeholder="Search pieces..." type="text"/>
+</div>
+<button class="flex items-center justify-center p-2 rounded-lg bg-[#e7f1f3] dark:bg-[#1a2e32] hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-[22px]">shopping_bag</span>
+</button>
+</div>
+</div>
+</header>
+<main class="flex-1">
+<!-- Hero Section -->
+<section class="max-w-[1200px] mx-auto px-6 py-8">
+<div class="relative h-[500px] w-full overflow-hidden rounded-xl bg-cover bg-center flex items-center justify-center p-8" data-alt="Artisan potter working with clay on a wheel" style='background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url("https://lh3.googleusercontent.com/aida-public/AB6AXuBRuUpqAwPWbi7CO6QKQlx4Qsn2wPbDS-bn3F0JheFF86U_fDoOqTDOpDgDjEguu5H4xDeuX4KVVVmuzzsU1rwSO9UceuIN6jg3kN0YDLKgdTk1IefAdhfkgug0vx-cp6ocqG4u4Kg9UpQ0SXEUl0XKKy-Fx5yMQ5XINowdP-5jatmlXBRycctlMsRRKm1bt6jIkZbZy8lvttRKkJ8anQ5mNvkvnLWA1qY4sT8jmqKuaReyVjavqDplCae6hQMyOTAghVuZXoSdDko");'>
+<div class="max-w-2xl text-center flex flex-col items-center gap-6">
+<h2 class="text-white text-4xl md:text-6xl font-black leading-tight">Artisan Ceramics for Modern Living</h2>
+<p class="text-white/90 text-lg md:text-xl font-light">Hand-thrown pieces crafted with clay and soul in our coastal studio.</p>
+<button class="bg-primary text-white px-8 py-3 rounded-lg font-bold text-lg hover:scale-105 transition-transform">
+                            Shop Collection
+                        </button>
+</div>
+</div>
+</section>
+<!-- Product Grid Section -->
+<section class="max-w-[1200px] mx-auto px-6 py-12">
+<div class="flex items-center justify-between mb-8">
+<h3 class="text-2xl font-bold">Featured Pieces</h3>
+<a class="text-primary text-sm font-semibold flex items-center gap-1" href="#">View All <span class="material-symbols-outlined text-sm">arrow_forward</span></a>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Product 1 -->
+<div class="group flex flex-col gap-3">
+<div class="aspect-square overflow-hidden rounded-lg bg-[#e7f1f3] relative">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Minimalist white textured ceramic vase" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDTlOA7o7ubkVSPNsc4xfs0dQDQwMN4u6DHHP6-0KRTqlLQ2cqfjstourKTeN1cNA1CokdrnmQqVDb0xfsC70yqOSLFmbqMegUJRzjYoie3-9y3RBDjLiO4p0EMnjgElJIbxS7bEEKiW3UdjY2mU22p0z0zC2WnVLMYJfuDzAM6iNBX4PI7MEzoOOgRtJPaAMkPzwym-84N4KD-GLNB7q06p2OhhWDFwjHfBo_gsS_4CAcIKICz4ttg85Cu6ix8tf1rPjK3Nglc_aQ");'></div>
+<button class="absolute bottom-4 right-4 bg-white/90 dark:bg-black/80 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-sm">add_shopping_cart</span>
+</button>
+</div>
+<div>
+<p class="text-base font-medium">Textured Vase</p>
+<p class="text-[#4c8d9a] dark:text-[#7ab8c4] text-sm">$45.00</p>
+</div>
+</div>
+<!-- Product 2 -->
+<div class="group flex flex-col gap-3">
+<div class="aspect-square overflow-hidden rounded-lg bg-[#e7f1f3] relative">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Handcrafted blue glazed ceramic bowl" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDjcolMwJQ9bjzjEcHPSnOTj3fnER1cxulZe8yVbHqAJS7i6V46bAm6SjgU868bGV2d06f2DrJ1VhJHWVIT-S4Iwnl9qWN3cDzCHI0nJ9Ykjsh8g_UkHAFkNa5hjuztPI86Lduvg_mjXTsOqiu0xuhiT9tAcVyCRUe16PBroWdiisAAt19iXfp4Jq8uF5TF0SHirsZs6dsl2ptoCqNKk5QXz_FPn4mfilEkcWUy3jKx0XJ2d567doMjjyqL-HHYK6D2vZkwU0lCC0g");'></div>
+<button class="absolute bottom-4 right-4 bg-white/90 dark:bg-black/80 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-sm">add_shopping_cart</span>
+</button>
+</div>
+<div>
+<p class="text-base font-medium">Glazed Bowl</p>
+<p class="text-[#4c8d9a] dark:text-[#7ab8c4] text-sm">$38.00</p>
+</div>
+</div>
+<!-- Product 3 -->
+<div class="group flex flex-col gap-3">
+<div class="aspect-square overflow-hidden rounded-lg bg-[#e7f1f3] relative">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Simple earthy stone mug" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBthUC5ET1buKk48JTrHpp7n5XVIv5ylD6LVWLwlOp6nBkTLE7OmgYwI4NTDRM6H8JEuUx4BrHtRRHo2_XFF9iK79Yb7qMHHWtppQxlQUCKlfy9gzgpjdadAmEtOsNkZwT-YATFRoVNZXRH24m0diLa7dM2XCxLwT7HXHM6Ae6QwJjLReQARI1mVGE2yhZaD7KHyHy8vPvTyk1-fIRu9ltxpswkUxs_rwtBgURtVZBHN5qDbLQtA_JhcsSevjZoJ0Jlksl7gqV5UPo");'></div>
+<button class="absolute bottom-4 right-4 bg-white/90 dark:bg-black/80 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-sm">add_shopping_cart</span>
+</button>
+</div>
+<div>
+<p class="text-base font-medium">Minimalist Mug</p>
+<p class="text-[#4c8d9a] dark:text-[#7ab8c4] text-sm">$24.00</p>
+</div>
+</div>
+<!-- Product 4 -->
+<div class="group flex flex-col gap-3">
+<div class="aspect-square overflow-hidden rounded-lg bg-[#e7f1f3] relative">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Flat stone plate with organic edges" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCrPXq14SO8dDoXvKTbNvmN__nbtklt-R2-cd2FbsDaLRJTB8riZN82a8LdOvxRQU0qlHUyjEfwv79gEygJgqLA3ka4wNQdK8mhHIcK0QqHTpfIdTdGeTMe0gon_u1AosDS0-vACe3TOMlGihL-1qG10K_e7k_Xft03Om9yBGT2ZptIl9HnIPHadcA638yL83Uqrlt2pkh-rYHb9MQYRpIJwPFjNpfUB9CReWDbZGc8jwKSR6EMIqeWGj8KtJecgg8yce74MOMG3IE");'></div>
+<button class="absolute bottom-4 right-4 bg-white/90 dark:bg-black/80 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-sm">add_shopping_cart</span>
+</button>
+</div>
+<div>
+<p class="text-base font-medium">Stone Plate</p>
+<p class="text-[#4c8d9a] dark:text-[#7ab8c4] text-sm">$32.00</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Telegram Feed Section (Live from the Studio) -->
+<section class="bg-[#f0f5f6] dark:bg-[#0c181a] py-16 mt-8">
+<div class="max-w-[1200px] mx-auto px-6">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="inline-block w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+<span class="text-xs font-bold uppercase tracking-widest text-[#4c8d9a] dark:text-primary">Community Feed</span>
+</div>
+<h3 class="text-3xl font-bold mb-2">Live from the Studio</h3>
+<p class="text-[#4c8d9a] dark:text-[#7ab8c4] max-w-lg">Join our Telegram channel for daily updates on kiln firings, new releases, and a look into our process.</p>
+</div>
+<a class="flex items-center gap-2 bg-[#0088cc] text-white px-5 py-2.5 rounded-full text-sm font-bold hover:bg-[#0077b5] transition-colors shadow-lg shadow-[#0088cc]/20 self-start md:self-auto" href="https://t.me/" target="_blank">
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-1.96 1.25-5.54 3.69-.52.35-.99.53-1.41.52-.46-.01-1.35-.26-2.01-.48-.81-.27-1.45-.42-1.39-.89.03-.24.36-.48.99-.74 3.84-1.67 6.41-2.77 7.71-3.3 3.66-1.51 4.42-1.77 4.92-1.78.11 0 .35.03.51.16.13.11.17.26.18.37 0 .09.01.19-.01.28z"></path></svg>
+                            Join Channel
+                        </a>
+</div>
+<!-- Scrollable Row of Cards (shadcn/ui Card style) -->
+<div class="relative group">
+<div class="flex gap-6 overflow-x-auto no-scrollbar snap-x pb-4">
+<!-- Telegram Card 1 -->
+<div class="min-w-[300px] md:min-w-[350px] snap-start bg-white dark:bg-[#15272a] border border-[#e7f1f3] dark:border-[#1e2f33] rounded-xl shadow-sm hover:shadow-md transition-shadow flex flex-col">
+<div class="h-48 w-full bg-cover bg-center rounded-t-xl" data-alt="Close up of fresh glazes in containers" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB2guR4wp9a-etalotMq2RwggsPyDXRRA4iePnCVoZs5d-DJLHTYgijl951QLLHMyg4JHkLkIhexoJZxDe7ekDmngtbrY7hE5PkicvmxAP7XyxbzHf-3SLbm3_PY1Fe4wVF_0YPAXVWe1vZUnNndquWBoQ64kA8OR0e1fUrY9lg5GC22_4PhILwHrKIvUVdshfwDT8ybPS2ygGoSF8jbi3c9HSse7PlkvsDrGT22OyQzppkh-Q9Sl-5L4W_4bJsDZfJ0hWYqIdmPoY");'></div>
+<div class="p-5 flex flex-col flex-1 gap-3">
+<div class="flex justify-between items-center">
+<span class="text-[10px] font-bold text-primary bg-primary/10 px-2 py-1 rounded uppercase tracking-wider">Update</span>
+<span class="text-[11px] text-[#4c8d9a] font-medium">2 hours ago</span>
+</div>
+<p class="text-sm leading-relaxed line-clamp-3 text-[#0d191b] dark:text-[#d1d5db]">Just finished mixing a new batch of "Seafoam Mist" glaze. Can't wait to see how it looks on the tall vases tomorrow morning!</p>
+<div class="mt-auto pt-4 border-t border-[#e7f1f3] dark:border-[#1e2f33]">
+<a class="text-primary text-xs font-bold flex items-center gap-1 group/link" href="#">
+                                            View in Telegram
+                                            <span class="material-symbols-outlined text-sm group-hover/link:translate-x-1 transition-transform">open_in_new</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Telegram Card 2 -->
+<div class="min-w-[300px] md:min-w-[350px] snap-start bg-white dark:bg-[#15272a] border border-[#e7f1f3] dark:border-[#1e2f33] rounded-xl shadow-sm hover:shadow-md transition-shadow flex flex-col">
+<div class="h-48 w-full bg-cover bg-center rounded-t-xl" data-alt="Studio interior with sunlight streaming in" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDbBaWx8xpV1-cjtlhf7H1NFfslZKmqZF37_ZMeuaS1jY3OxGKjoDgGvO15VLPLSxQ0jhWqf_PJtpVhLpVrI8seuQvvRVbsk0NEnXBKnBGGTWvk85GhjawEkNpNUazH3ItNvM0hNc5mMb6b1fb_H7EH6hGSu5PCRMUgQGtzUvF-gFodOOEo5ofoK3BJ_OoBY2EJgdtacR9nTS2Jy2ajy0VBCTFGMroQoFsQSLjoWQmwDZwEMc1s0px7z7xFcX6znT3e60VeiqjxpB8");'></div>
+<div class="p-5 flex flex-col flex-1 gap-3">
+<div class="flex justify-between items-center">
+<span class="text-[10px] font-bold text-primary bg-primary/10 px-2 py-1 rounded uppercase tracking-wider">Workshop</span>
+<span class="text-[11px] text-[#4c8d9a] font-medium">Yesterday</span>
+</div>
+<p class="text-sm leading-relaxed line-clamp-3 text-[#0d191b] dark:text-[#d1d5db]">A few spots just opened up for our Saturday morning wheel-throwing workshop. Grab them while they last!</p>
+<div class="mt-auto pt-4 border-t border-[#e7f1f3] dark:border-[#1e2f33]">
+<a class="text-primary text-xs font-bold flex items-center gap-1 group/link" href="#">
+                                            View in Telegram
+                                            <span class="material-symbols-outlined text-sm group-hover/link:translate-x-1 transition-transform">open_in_new</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Telegram Card 3 -->
+<div class="min-w-[300px] md:min-w-[350px] snap-start bg-white dark:bg-[#15272a] border border-[#e7f1f3] dark:border-[#1e2f33] rounded-xl shadow-sm hover:shadow-md transition-shadow flex flex-col">
+<div class="h-48 w-full bg-cover bg-center rounded-t-xl" data-alt="Kiln cooling down with door slightly open" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA7HCE23Y5wFltilZM9QPBYe7c5wEUMFIy43zKIerGWNPpD3jniXUBA76b8_9Zv5CWdhlPlNR4-9RSlAYD_tBWcODFaviIHnWbdWPBEZ3OVW0cRSC-N_6bWEiZafNIb3HjKwUoORgg7plAZ_OL851XVzZ7cWXSx3nmOXpkv0fwwubsalSqprvKZ4MrGRfMngZktY1ct3ojGcI3nptW_wqwfYAy_hYIx8dDUaJyDD9GDO1vdbMlfJcolqifF6QU-DH-8z3Pjlg8Ns_8");'></div>
+<div class="p-5 flex flex-col flex-1 gap-3">
+<div class="flex justify-between items-center">
+<span class="text-[10px] font-bold text-primary bg-primary/10 px-2 py-1 rounded uppercase tracking-wider">Process</span>
+<span class="text-[11px] text-[#4c8d9a] font-medium">Nov 22</span>
+</div>
+<p class="text-sm leading-relaxed line-clamp-3 text-[#0d191b] dark:text-[#d1d5db]">Kiln firing complete! Unloading the Summer Series. Stay tuned for photos of the finished pieces later today.</p>
+<div class="mt-auto pt-4 border-t border-[#e7f1f3] dark:border-[#1e2f33]">
+<a class="text-primary text-xs font-bold flex items-center gap-1 group/link" href="#">
+                                            View in Telegram
+                                            <span class="material-symbols-outlined text-sm group-hover/link:translate-x-1 transition-transform">open_in_new</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Telegram Card 4 (Text only style) -->
+<div class="min-w-[300px] md:min-w-[350px] snap-start bg-white dark:bg-[#15272a] border border-[#e7f1f3] dark:border-[#1e2f33] rounded-xl shadow-sm hover:shadow-md transition-shadow flex flex-col">
+<div class="p-5 flex flex-col flex-1 gap-4 justify-center bg-primary/5">
+<div class="flex justify-between items-center">
+<span class="text-[10px] font-bold text-primary bg-primary/10 px-2 py-1 rounded uppercase tracking-wider">Announcement</span>
+<span class="text-[11px] text-[#4c8d9a] font-medium">Nov 20</span>
+</div>
+<div class="flex flex-col gap-2">
+<span class="material-symbols-outlined text-primary text-4xl">campaign</span>
+<p class="text-base font-semibold leading-snug text-[#0d191b] dark:text-white">Shipping worldwide now available for our holiday collections!</p>
+<p class="text-sm text-[#4c8d9a] dark:text-[#7ab8c4]">We've partnered with a new courier to ensure your fragile pieces arrive safely across the globe.</p>
+</div>
+<div class="mt-auto pt-4 border-t border-[#e7f1f3] dark:border-[#1e2f33]">
+<a class="text-primary text-xs font-bold flex items-center gap-1 group/link" href="#">
+                                            View in Telegram
+                                            <span class="material-symbols-outlined text-sm group-hover/link:translate-x-1 transition-transform">open_in_new</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<!-- Scroll Hint Arrows (Desktop only) -->
+<div class="hidden md:flex absolute top-1/2 -translate-y-1/2 -left-4 items-center">
+<button class="bg-white dark:bg-[#1a2e32] shadow-lg border border-[#e7f1f3] dark:border-[#1e2f33] rounded-full p-2 hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+</div>
+<div class="hidden md:flex absolute top-1/2 -translate-y-1/2 -right-4 items-center">
+<button class="bg-white dark:bg-[#1a2e32] shadow-lg border border-[#e7f1f3] dark:border-[#1e2f33] rounded-full p-2 hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-white dark:bg-[#0d191b] border-t border-[#e7f1f3] dark:border-[#1e2f33] py-16">
+<div class="max-w-[1200px] mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
+<div class="flex flex-col gap-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-2xl">fluid</span>
+<h4 class="text-lg font-bold">Ceramic Studio</h4>
+</div>
+<p class="text-sm text-[#4c8d9a] leading-relaxed">Artisan ceramics designed for durability and aesthetic pleasure. Each piece is unique.</p>
+</div>
+<div>
+<h5 class="font-bold mb-4">Shop</h5>
+<ul class="flex flex-col gap-2 text-sm text-[#4c8d9a]">
+<li><a class="hover:text-primary transition-colors" href="#">Vases</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Dinnerware</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Mugs</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Gift Cards</a></li>
+</ul>
+</div>
+<div>
+<h5 class="font-bold mb-4">Studio</h5>
+<ul class="flex flex-col gap-2 text-sm text-[#4c8d9a]">
+<li><a class="hover:text-primary transition-colors" href="#">Our Story</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">The Kiln</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Workshops</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Wholesale</a></li>
+</ul>
+</div>
+<div>
+<h5 class="font-bold mb-4">Stay Connected</h5>
+<p class="text-sm text-[#4c8d9a] mb-4">Join our newsletter for exclusive drops.</p>
+<div class="flex gap-2">
+<input class="flex-1 bg-background-light dark:bg-[#1a2e32] border-none rounded-lg px-4 py-2 text-sm" placeholder="Email address" type="email"/>
+<button class="bg-primary text-white p-2 rounded-lg">
+<span class="material-symbols-outlined text-sm">send</span>
+</button>
+</div>
+</div>
+</div>
+<div class="max-w-[1200px] mx-auto px-6 mt-12 pt-8 border-t border-[#e7f1f3] dark:border-[#1e2f33] text-center">
+<p class="text-xs text-[#4c8d9a]">© 2023 Artisan Ceramic Studio. All rights reserved. Crafted with soul.</p>
+</div>
+</footer>
+</div>
+</body></html>

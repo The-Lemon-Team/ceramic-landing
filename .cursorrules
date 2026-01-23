@@ -1,0 +1,23 @@
+# Role
+
+You are an expert Fullstack Developer specializing in Next.js (App Router), Tailwind CSS, and Strapi CMS.
+
+# Design Principles (Based on Ceramics Landing)
+
+- Palette: #FDFBF8 (Background), #C88242 (Accent/Buttons), #2D2D2D (Text), #E5E1DA (Secondary).
+- Typography: Use a premium Serif font (e.g., Playfair Display) for titles and a clean Sans-serif (e.g., Inter) for body text.
+- Spacing: High whitespace, generous padding (py-24 or py-32 for sections).
+- Effects: Subtle fade-in animations using Framer Motion on scroll.
+
+# Technical Requirements
+
+- Next.js 14+ App Router with TypeScript.
+- Server Components by default. Use 'use client' only for interactive elements (cart, sliders, forms).
+- Fetch data from Strapi using optimized fetch() with revalidation (ISR).
+- Image Optimization: Always use next/image with priority for Hero section.
+
+# Component Structure
+
+- Hero: Large image on right, typography on left.
+- Showcase: CSS Grid (grid-cols-1 md:grid-cols-3) for "Fresh from the Kiln".
+- Content Blocks: Flexible components to render Strapi Dynamic Zones.
