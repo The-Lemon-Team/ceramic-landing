@@ -1,23 +1,33 @@
 "use client";
 
-import { useState, Fragment } from "react";
+import { useState, Fragment, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Image from "next/image";
 import { Product } from "@/types/product";
+
+type ProductModalVariant = "shop" | "gallery";
 
 interface ProductModalProps {
   product: Product;
   isOpen: boolean;
   onClose: () => void;
+  /** "shop" = полная версия с ценой, корзиной (для второй версии сайта). "gallery" = только просмотр описания и галереи */
+  variant?: ProductModalVariant;
 }
 
 export default function ProductModal({
   product,
   isOpen,
   onClose,
+  variant = "shop",
 }: ProductModalProps) {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
+  const isGallery = variant === "gallery";
+
+  useEffect(() => {
+    setSelectedImageIndex(0);
+  }, [product.id]);
 
   const handleAddToCart = () => {
     // TODO: Implement cart functionality
@@ -68,7 +78,7 @@ export default function ProductModal({
                 <button
                   onClick={onClose}
                   className="absolute top-4 right-4 z-20 text-stone-500 hover:text-stone-800 transition-colors p-2"
-                  aria-label="Close"
+                  aria-label="Закрыть"
                 >
                   <svg
                     className="w-6 h-6"
@@ -149,27 +159,33 @@ export default function ProductModal({
                 {/* Details Section */}
                 <div className="w-full md:w-2/5 p-6 md:p-10 flex flex-col bg-white">
                   <div className="flex-grow">
-                    <span className="text-[10px] tracking-[0.2em] uppercase font-medium text-primary mb-2 block">
-                      {product.category}
-                    </span>
+                    {!isGallery && (
+                      <span className="text-[10px] tracking-[0.2em] uppercase font-medium text-primary mb-2 block">
+                        {product.category}
+                      </span>
+                    )}
                     <Dialog.Title className="text-3xl md:text-4xl font-serif text-stone-800 mb-2">
                       {product.title}
                     </Dialog.Title>
-                    <div className="text-xl text-stone-500 font-light mb-6">
-                      ${product.price.toFixed(2)}
-                    </div>
+                    {!isGallery && (
+                      <div className="text-xl text-stone-500 font-light mb-6">
+                        {product.price.toFixed(0)} ₽
+                      </div>
+                    )}
                     <div className="space-y-6 text-sm leading-relaxed text-stone-600">
                       <p>{product.description}</p>
                       <div className="pt-4 border-t border-stone-100">
                         <div className="flex items-center gap-2 mb-2">
                           <span className="font-medium text-stone-800">
-                            Finish:
+                            Покрытие:
                           </span>
-                          <span className="text-stone-500">{product.finish}</span>
+                          <span className="text-stone-500">
+                            {product.finish}
+                          </span>
                         </div>
                         <div className="flex items-center gap-2">
                           <span className="font-medium text-stone-800">
-                            Dimensions:
+                            Размеры:
                           </span>
                           <span className="text-stone-500">
                             {product.dimensions}
@@ -177,18 +193,67 @@ export default function ProductModal({
                         </div>
                       </div>
                     </div>
-                    <div className="mt-8 space-y-4">
-                      <label className="block text-[10px] tracking-widest uppercase font-semibold text-stone-400">
-                        Quantity
-                      </label>
-                      <div className="flex items-center border border-stone-200 w-fit rounded">
+                    {!isGallery && (
+                      <div className="mt-8 space-y-4">
+                        <label className="block text-[10px] tracking-widest uppercase font-semibold text-stone-400">
+                          Количество
+                        </label>
+                        <div className="flex items-center border border-stone-200 w-fit rounded">
+                          <button
+                            onClick={decreaseQuantity}
+                            className="px-3 py-2 text-stone-500 hover:text-primary transition-colors"
+                            aria-label="Уменьшить количество"
+                          >
+                            <svg
+                              className="w-4 h-4"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M20 12H4"
+                              />
+                            </svg>
+                          </button>
+                          <span className="px-4 py-2 text-stone-800 font-medium">
+                            {quantity}
+                          </span>
+                          <button
+                            onClick={increaseQuantity}
+                            className="px-3 py-2 text-stone-500 hover:text-primary transition-colors"
+                            aria-label="Увеличить количество"
+                          >
+                            <svg
+                              className="w-4 h-4"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M12 4v16m8-8H4"
+                              />
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  {!isGallery && (
+                    <>
+                      <div className="mt-10 space-y-3">
                         <button
-                          onClick={decreaseQuantity}
-                          className="px-3 py-2 text-stone-500 hover:text-primary transition-colors"
-                          aria-label="Decrease quantity"
+                          onClick={handleAddToCart}
+                          className="w-full bg-primary hover:bg-orange-600 text-white py-4 px-6 rounded transition-all flex items-center justify-center gap-2 font-medium tracking-wide"
                         >
+                          В КОРЗИНУ
                           <svg
-                            className="w-4 h-4"
+                            className="w-5 h-5"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -197,93 +262,50 @@ export default function ProductModal({
                               strokeLinecap="round"
                               strokeLinejoin="round"
                               strokeWidth={2}
-                              d="M20 12H4"
+                              d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
                             />
                           </svg>
                         </button>
-                        <span className="px-4 py-2 text-stone-800 font-medium">
-                          {quantity}
-                        </span>
-                        <button
-                          onClick={increaseQuantity}
-                          className="px-3 py-2 text-stone-500 hover:text-primary transition-colors"
-                          aria-label="Increase quantity"
-                        >
-                          <svg
-                            className="w-4 h-4"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M12 4v16m8-8H4"
-                            />
-                          </svg>
+                        <button className="w-full border border-stone-200 text-stone-700 hover:border-primary hover:text-primary py-4 px-6 rounded transition-all text-sm font-medium">
+                          ПОДРОБНЕЕ
                         </button>
                       </div>
-                    </div>
-                  </div>
-                  <div className="mt-10 space-y-3">
-                    <button
-                      onClick={handleAddToCart}
-                      className="w-full bg-primary hover:bg-orange-600 text-white py-4 px-6 rounded transition-all flex items-center justify-center gap-2 font-medium tracking-wide"
-                    >
-                      ADD TO CART
-                      <svg
-                        className="w-5 h-5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-                        />
-                      </svg>
-                    </button>
-                    <button className="w-full border border-stone-200 text-stone-700 hover:border-primary hover:text-primary py-4 px-6 rounded transition-all text-sm font-medium">
-                      VIEW FULL DETAILS
-                    </button>
-                  </div>
-                  <div className="mt-8 flex flex-wrap gap-4 text-[11px] text-stone-400 uppercase tracking-wider">
-                    <div className="flex items-center gap-1.5">
-                      <svg
-                        className="w-4 h-4"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
-                        />
-                      </svg>
-                      Ships in 3-5 days
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <svg
-                        className="w-4 h-4"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                      </svg>
-                      Handmade in Oregon
-                    </div>
-                  </div>
+                      <div className="mt-8 flex flex-wrap gap-4 text-[11px] text-stone-400 uppercase tracking-wider">
+                        <div className="flex items-center gap-1.5">
+                          <svg
+                            className="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
+                            />
+                          </svg>
+                          Доставка 3–5 дней
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <svg
+                            className="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                            />
+                          </svg>
+                          Ручная работа в Санкт-Петербурге
+                        </div>
+                      </div>
+                    </>
+                  )}
                 </div>
               </Dialog.Panel>
             </Transition.Child>

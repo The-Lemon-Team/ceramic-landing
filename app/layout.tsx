@@ -25,7 +25,7 @@ const mrsSaintDelafield = Mrs_Saint_Delafield({
 
 export const metadata: Metadata = {
   title: "Ceramic•Loop",
-  description: "Premium ceramics landing page",
+  description: "Керамика Санкт-Петербурга — авторские изделия ручной работы",
 };
 
 export default function RootLayout({
@@ -34,7 +34,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ru">
       <body
         className={`${cormorantGaramond.variable} ${inter.variable} ${mrsSaintDelafield.variable} font-sans antialiased`}
       >

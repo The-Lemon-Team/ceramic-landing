@@ -3,30 +3,30 @@ import Image from "next/image";
 
 export default function Footer() {
   return (
-    <footer className="bg-white py-20 border-t border-stone-100">
+    <footer className="bg-white pt-16 pb-8 md:pt-20 md:pb-10 border-t border-stone-100">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="grid md:grid-cols-12 gap-12 mb-20">
+        <div className="grid md:grid-cols-12 gap-12 mb-12">
           <div className="md:col-span-4">
             <Link href="/" className="flex items-center gap-2 mb-6">
               <Image
                 src="/images/logo.png"
-                alt="Ceramic•Loop Logo"
+                alt="Логотип Ceramic•Loop"
                 width={40}
                 height={40}
                 className="w-10 h-10 object-contain"
               />
-              <span className="text-xl font-serif font-bold">Ceramic•Loop</span>
+              <span className="text-xl font-serif font-bold text-stone-800">Ceramic•Loop</span>
             </Link>
-            <p className="text-stone-400 text-sm leading-relaxed max-w-xs">
+            <p className="font-sans text-sm leading-relaxed text-stone-500 max-w-xs">
               Не просто студия, а пространство, где керамика хранит время и
               остаётся с вами навсегда.
             </p>
           </div>
           <div className="md:col-span-2">
-            <h5 className="text-xs uppercase tracking-widest font-bold mb-6">
+            <h5 className="font-sans text-xs uppercase tracking-[0.2em] font-bold text-stone-600 mb-6">
               Магазин
             </h5>
-            <ul className="text-sm space-y-4 text-stone-500">
+            <ul className="font-sans text-sm space-y-4 text-stone-500">
               <li>
                 <Link href="#" className="hover:text-primary transition-colors">
                   Вазы
@@ -50,10 +50,10 @@ export default function Footer() {
             </ul>
           </div>
           <div className="md:col-span-2">
-            <h5 className="text-xs uppercase tracking-widest font-bold mb-6">
+            <h5 className="font-sans text-xs uppercase tracking-[0.2em] font-bold text-stone-600 mb-6">
               Студия
             </h5>
-            <ul className="text-sm space-y-4 text-stone-500">
+            <ul className="font-sans text-sm space-y-4 text-stone-500">
               <li>
                 <Link href="#" className="hover:text-primary transition-colors">
                   О нас
@@ -61,12 +61,12 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="#" className="hover:text-primary transition-colors">
-                  The Process
+                  Процесс
                 </Link>
               </li>
               <li>
                 <Link href="#" className="hover:text-primary transition-colors">
-                  Visit Us
+                  Как нас найти
                 </Link>
               </li>
               <li>
@@ -77,7 +77,7 @@ export default function Footer() {
             </ul>
           </div>
           <div className="md:col-span-4">
-            <h5 className="text-xs uppercase tracking-widest font-bold mb-6">
+            <h5 className="font-sans text-xs uppercase tracking-[0.2em] font-bold text-stone-600 mb-6">
               Социальные сети
             </h5>
             <div className="flex gap-4">
@@ -102,14 +102,14 @@ export default function Footer() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col md:flex-row justify-between pt-8 border-t border-stone-100 text-[10px] uppercase tracking-widest text-stone-400">
-          <p>© 2026 Ceramic•Loop. All rights reserved.</p>
+        <div className="flex flex-col md:flex-row justify-between pt-6 border-t border-stone-100 font-sans text-xs uppercase tracking-[0.2em] text-stone-400">
+          <p>© 2026 Ceramic•Loop. Все права защищены.</p>
           <div className="flex gap-8 mt-4 md:mt-0">
             <Link href="#" className="hover:text-stone-900 transition-colors">
-              Privacy Policy
+              Политика конфиденциальности
             </Link>
             <Link href="#" className="hover:text-stone-900 transition-colors">
-              Terms of Service
+              Условия использования
             </Link>
           </div>
         </div>

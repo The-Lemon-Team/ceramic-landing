@@ -10,7 +10,7 @@ export default function Navbar() {
         <Link href="/" className="flex items-center gap-2">
           <Image
             src="/images/logo.png"
-            alt="Ceramic•Loop Logo"
+            alt="Логотип Ceramic•Loop"
             width={40}
             height={40}
             className="w-10 h-10 object-contain"
@@ -21,23 +21,29 @@ export default function Navbar() {
           </span>
         </Link>
         <div className="hidden md:flex items-center gap-8 text-sm uppercase tracking-widest font-medium text-stone-600">
-          <Link href="#" className="hover:text-primary transition-colors">
-            Новости
-          </Link>
-          <Link href="#" className="hover:text-primary transition-colors">
-            Магазин
-          </Link>
-          <Link href="#" className="hover:text-primary transition-colors">
+          <Link href="#about" className="hover:text-primary transition-colors">
             О нас
           </Link>
-          <Link href="#" className="hover:text-primary transition-colors">
-            Отзывы
+          <Link href="#news" className="hover:text-primary transition-colors">
+            Новости
+          </Link>
+          <Link
+            href="#gallery"
+            className="hover:text-primary transition-colors"
+          >
+            Галерея
+          </Link>
+          <Link href="#arts" className="hover:text-primary transition-colors">
+            Арты
+          </Link>
+          <Link href="#diary" className="hover:text-primary transition-colors">
+            Статьи
           </Link>
         </div>
         <div className="flex items-center gap-4">
           <button
             className="p-2 hover:bg-stone-100 rounded-full transition-colors"
-            aria-label="Search"
+            aria-label="Поиск"
           >
             <svg
               className="w-6 h-6"
@@ -56,7 +62,7 @@ export default function Navbar() {
           <div className="relative">
             <button
               className="p-2 hover:bg-stone-100 rounded-full transition-colors"
-              aria-label="Shopping bag"
+              aria-label="Корзина"
             >
               <svg
                 className="w-6 h-6"

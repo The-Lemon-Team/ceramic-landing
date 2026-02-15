@@ -31,7 +31,7 @@ export default function ProductCard({
             onAddToCart(product);
           }}
           className="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm text-stone-900 p-3 rounded-full opacity-0 group-hover:opacity-100 transition-opacity translate-y-2 group-hover:translate-y-0 duration-300 shadow-lg"
-          aria-label="Add to cart"
+          aria-label="В корзину"
         >
           <svg
             className="w-5 h-5"
@@ -55,7 +55,7 @@ export default function ProductCard({
             {product.finish}
           </p>
         </div>
-        <span className="font-medium">${product.price}</span>
+        <span className="font-medium">{product.price} ₽</span>
       </div>
     </div>
   );
