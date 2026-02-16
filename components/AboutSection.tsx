@@ -17,7 +17,7 @@ export default function AboutSection() {
       />
       <div className="relative z-10 max-w-7xl px-6 mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-10 md:gap-12 items-center">
-          <div className="relative w-fit max-w-[280px] md:max-w-[320px] mx-auto md:mx-0">
+          <div className="relative w-fit max-w-[308px] md:max-w-[352px] mx-auto md:mx-0">
             <div className="absolute -top-6 -left-6 w-32 h-32 bg-primary rounded-full blur-3xl"></div>
             {/* <div className="absolute -bottom-20 -right-20 z-0 w-48 h-48 bg-stone-200 rounded-full opacity-30"></div> */}
             <div
@@ -27,8 +27,8 @@ export default function AboutSection() {
               <Image
                 src="/images/about-photo.jpg"
                 alt="Ольга Альжанова с керамической миской в студии"
-                width={320}
-                height={533}
+                width={352}
+                height={587}
                 className="w-full aspect-[3/5] object-cover"
               />
             </div>

@@ -24,12 +24,12 @@ export default function ProductGallerySection({ items }: ProductGallerySectionPr
   };
 
   return (
-    <section id="gallery" className="py-10 md:py-12 bg-accent-earth">
+    <section id="ceramics" className="py-10 md:py-12 bg-accent-earth">
       <div className="max-w-7xl mx-auto px-6">
         <div className="mb-6 md:mb-8">
           <span className="section-label-wrap">
             <span className="section-label inline-flex items-center gap-1.5">
-              Галерея
+              Керамика
               <svg
                 width="12"
                 height="12"
@@ -48,9 +48,9 @@ export default function ProductGallerySection({ items }: ProductGallerySectionPr
               </svg>
             </span>
           </span>
-          <h2 className="section-title mb-4">Изделия из студии</h2>
+          <h2 className="section-title mb-4">Купить керамику</h2>
           <p className="section-subtitle max-w-lg">
-            Ограниченные серии, ручная работа и глазуровка в нашей студии.
+            Авторская керамика ручной работы. Ограниченные серии, доставка по России.
           </p>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-5">
@@ -77,6 +77,11 @@ export default function ProductGallerySection({ items }: ProductGallerySectionPr
               <p className="text-[10px] text-stone-400 uppercase tracking-wide truncate">
                 {product.finish}
               </p>
+              {product.price > 0 && (
+                <p className="text-sm font-semibold text-primary mt-2">
+                  {product.price.toFixed(0)} ₽
+                </p>
+              )}
             </button>
           ))}
         </div>
@@ -86,7 +91,7 @@ export default function ProductGallerySection({ items }: ProductGallerySectionPr
           product={selectedProduct}
           isOpen={isModalOpen}
           onClose={closeModal}
-          variant="gallery"
+          variant="shop"
         />
       )}
     </section>

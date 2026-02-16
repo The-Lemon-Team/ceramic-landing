@@ -13,6 +13,8 @@ interface ProductModalProps {
   onClose: () => void;
   /** "shop" = полная версия с ценой, корзиной (для второй версии сайта). "gallery" = только просмотр описания и галереи */
   variant?: ProductModalVariant;
+  /** Показывать цену в режиме gallery */
+  showPrice?: boolean;
 }
 
 export default function ProductModal({
@@ -20,10 +22,12 @@ export default function ProductModal({
   isOpen,
   onClose,
   variant = "shop",
+  showPrice = false,
 }: ProductModalProps) {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const isGallery = variant === "gallery";
+  const displayPrice = !isGallery || showPrice;
 
   useEffect(() => {
     setSelectedImageIndex(0);
@@ -73,11 +77,17 @@ export default function ProductModal({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="relative w-full max-w-5xl bg-background-light shadow-2xl overflow-hidden rounded-lg flex flex-col md:flex-row">
+              <Dialog.Panel
+                className="relative bg-white shadow-2xl overflow-y-auto rounded-2xl flex flex-col md:flex-row"
+                style={{
+                  width: "min(100%, 800px)",
+                  maxHeight: "min(820px, 90vh)",
+                }}
+              >
                 {/* Close Button */}
                 <button
                   onClick={onClose}
-                  className="absolute top-4 right-4 z-20 text-stone-500 hover:text-stone-800 transition-colors p-2"
+                  className="absolute top-4 right-4 z-20 w-10 h-10 flex items-center justify-center rounded-full text-stone-500 hover:text-stone-800 hover:bg-stone-100 transition-colors"
                   aria-label="Закрыть"
                 >
                   <svg
@@ -96,24 +106,24 @@ export default function ProductModal({
                 </button>
 
                 {/* Gallery Section */}
-                <div className="w-full md:w-3/5 p-6 md:p-10 flex flex-col lg:flex-row gap-6">
+                <div className="w-full md:w-[45%] p-6 md:p-8 flex flex-col lg:flex-row gap-4 bg-stone-50">
                   {/* Thumbnails (Desktop) */}
-                  <div className="hidden lg:flex flex-col gap-4 order-1">
+                  <div className="hidden lg:flex flex-col gap-2 order-1 shrink-0">
                     {product.images.map((image, index) => (
                       <button
                         key={index}
                         onClick={() => setSelectedImageIndex(index)}
-                        className={`w-20 h-20 rounded overflow-hidden cursor-pointer transition-opacity ${
+                        className={`w-14 h-14 rounded-lg overflow-hidden cursor-pointer transition-opacity shrink-0 border-2 border-transparent ${
                           selectedImageIndex === index
-                            ? "ring-1 ring-primary opacity-100"
+                            ? "border-primary opacity-100"
                             : "opacity-60 hover:opacity-100"
                         }`}
                       >
                         <Image
                           src={image}
                           alt={`${product.title} ${index + 1}`}
-                          width={80}
-                          height={80}
+                          width={56}
+                          height={56}
                           className="w-full h-full object-cover"
                         />
                       </button>
@@ -121,33 +131,34 @@ export default function ProductModal({
                   </div>
 
                   {/* Main Image */}
-                  <div className="flex-1 order-2">
-                    <div className="aspect-[4/5] md:aspect-square bg-stone-100 rounded-lg overflow-hidden">
+                  <div className="flex-1 order-2 min-w-0">
+                    <div className="aspect-[4/5] max-h-[280px] md:max-h-[300px] bg-stone-200 rounded-xl overflow-hidden">
                       <Image
                         src={product.images[selectedImageIndex]}
                         alt={product.title}
-                        width={600}
-                        height={600}
+                        width={400}
+                        height={500}
                         className="w-full h-full object-cover"
+                        sizes="(max-width: 768px) 100vw, 360px"
                       />
                     </div>
                     {/* Thumbnails (Mobile) */}
-                    <div className="flex lg:hidden gap-3 mt-4 overflow-x-auto pb-2">
+                    <div className="flex lg:hidden gap-2 mt-3 overflow-x-auto pb-1">
                       {product.images.map((image, index) => (
                         <button
                           key={index}
                           onClick={() => setSelectedImageIndex(index)}
-                          className={`min-w-[70px] h-[70px] rounded overflow-hidden transition-opacity ${
+                          className={`min-w-[56px] h-[56px] rounded-lg overflow-hidden transition-opacity shrink-0 border-2 ${
                             selectedImageIndex === index
-                              ? "ring-1 ring-primary opacity-100"
-                              : "opacity-60"
+                              ? "border-primary opacity-100"
+                              : "border-transparent opacity-60"
                           }`}
                         >
                           <Image
                             src={image}
                             alt={`${product.title} ${index + 1}`}
-                            width={70}
-                            height={70}
+                            width={56}
+                            height={56}
                             className="w-full h-full object-cover"
                           />
                         </button>
@@ -157,42 +168,58 @@ export default function ProductModal({
                 </div>
 
                 {/* Details Section */}
-                <div className="w-full md:w-2/5 p-6 md:p-10 flex flex-col bg-white">
-                  <div className="flex-grow">
+                <div className="w-full md:w-[55%] p-6 md:p-8 flex flex-col bg-white overflow-y-auto">
+                  <div className="flex-grow space-y-5">
                     {!isGallery && (
-                      <span className="text-[10px] tracking-[0.2em] uppercase font-medium text-primary mb-2 block">
+                      <span className="text-[10px] tracking-[0.2em] uppercase font-medium text-primary block">
                         {product.category}
                       </span>
                     )}
-                    <Dialog.Title className="text-3xl md:text-4xl font-serif text-stone-800 mb-2">
+                    <Dialog.Title className="text-2xl md:text-3xl font-serif text-stone-800 leading-tight">
                       {product.title}
                     </Dialog.Title>
-                    {!isGallery && (
-                      <div className="text-xl text-stone-500 font-light mb-6">
-                        {product.price.toFixed(0)} ₽
+
+                    {/* Описание */}
+                    <div>
+                      <p className="text-sm leading-relaxed text-stone-600">
+                        {product.description}
+                      </p>
+                    </div>
+
+                    {/* Покрытие и размеры */}
+                    {(product.finish !== "—" || product.dimensions !== "—") && (
+                      <div className="py-4 border-t border-stone-100 space-y-2">
+                        {product.finish !== "—" && (
+                          <div className="flex gap-2 text-sm">
+                            <span className="font-medium text-stone-800 shrink-0">
+                              Покрытие:
+                            </span>
+                            <span className="text-stone-500">
+                              {product.finish}
+                            </span>
+                          </div>
+                        )}
+                        {product.dimensions !== "—" && (
+                          <div className="flex gap-2 text-sm">
+                            <span className="font-medium text-stone-800 shrink-0">
+                              Размеры:
+                            </span>
+                            <span className="text-stone-500">
+                              {product.dimensions}
+                            </span>
+                          </div>
+                        )}
                       </div>
                     )}
-                    <div className="space-y-6 text-sm leading-relaxed text-stone-600">
-                      <p>{product.description}</p>
+
+                    {/* Цена — после описания */}
+                    {displayPrice && product.price > 0 && (
                       <div className="pt-4 border-t border-stone-100">
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="font-medium text-stone-800">
-                            Покрытие:
-                          </span>
-                          <span className="text-stone-500">
-                            {product.finish}
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <span className="font-medium text-stone-800">
-                            Размеры:
-                          </span>
-                          <span className="text-stone-500">
-                            {product.dimensions}
-                          </span>
-                        </div>
+                        <p className="text-xl font-semibold text-stone-800">
+                          {product.price.toFixed(0)} ₽
+                        </p>
                       </div>
-                    </div>
+                    )}
                     {!isGallery && (
                       <div className="mt-8 space-y-4">
                         <label className="block text-[10px] tracking-widest uppercase font-semibold text-stone-400">

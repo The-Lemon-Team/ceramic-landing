@@ -26,10 +26,10 @@ interface TelegramPostCardProps {
 export default function TelegramPostCard({ post }: TelegramPostCardProps) {
   return (
     <div
-      className={`min-w-[260px] md:min-w-[300px] snap-start bg-white dark:bg-[#15272a] rounded-lg shadow-sm hover:shadow-md transition-shadow flex flex-col border ${borderMuted}`}
+      className={`min-w-[300px] md:min-w-[360px] snap-start bg-white dark:bg-[#15272a] rounded-lg shadow-sm hover:shadow-md transition-shadow flex flex-col border ${borderMuted}`}
     >
       {post.image ? (
-        <div className="h-36 w-full relative rounded-t-lg overflow-hidden">
+        <div className="h-72 w-full relative rounded-t-lg overflow-hidden">
           <Image
             src={post.image}
             alt={post.text}
@@ -81,14 +81,14 @@ export default function TelegramPostCard({ post }: TelegramPostCardProps) {
         </div>
       )}
       {post.image && (
-        <div className="p-5 flex flex-col flex-1 gap-3 min-h-[7.5rem]">
+        <div className="p-5 flex flex-col flex-1 gap-3 min-h-[12rem]">
           <div className="flex justify-between items-center gap-2">
             <span className="text-[10px] font-bold text-[#0088cc] bg-[#0088cc]/10 px-1.5 py-0.5 rounded uppercase tracking-wider">
               {formatCategory(post.category)}
             </span>
             <span className={timestampClasses}>{post.timestamp}</span>
           </div>
-          <p className="text-xs leading-relaxed line-clamp-4 text-[#0d191b] dark:text-[#d1d5db] flex-1 min-h-0">
+          <p className="text-sm leading-loose line-clamp-6 text-[#0d191b] dark:text-[#d1d5db] flex-1 min-h-0">
             {post.text}
           </p>
           <div className={`mt-auto pt-3 border-t ${borderMuted}`}>
