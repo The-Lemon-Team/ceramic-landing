@@ -1,44 +1,40 @@
-"use client";
-
 import Link from "next/link";
 import Image from "next/image";
+import NavLink from "./NavLink";
+import { SITE_NAME } from "@/data/site";
 
-export default function Navbar() {
+export interface NavItem {
+  href: string;
+  label: string;
+}
+
+interface NavbarProps {
+  items: NavItem[];
+}
+
+export default function Navbar({ items }: NavbarProps) {
   return (
     <nav className="sticky top-0 z-50 bg-background-light/80 backdrop-blur-md border-b border-stone-200">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           <Image
             src="/images/logo.png"
-            alt="Логотип Ceramic•Loop"
+            alt={`Логотип ${SITE_NAME}`}
             width={40}
             height={40}
             className="w-10 h-10 object-contain"
             priority
           />
           <span className="text-xl font-serif font-bold tracking-tight">
-            Ceramic•Loop
+            {SITE_NAME}
           </span>
         </Link>
-        <div className="hidden md:flex items-center gap-8 text-sm uppercase tracking-widest font-medium text-stone-600">
-          <Link href="#about" className="hover:text-primary transition-colors">
-            О нас
-          </Link>
-          <Link href="#news" className="hover:text-primary transition-colors">
-            Новости
-          </Link>
-          <Link
-            href="#gallery"
-            className="hover:text-primary transition-colors"
-          >
-            Галерея
-          </Link>
-          <Link href="#arts" className="hover:text-primary transition-colors">
-            Арты
-          </Link>
-          <Link href="#diary" className="hover:text-primary transition-colors">
-            Статьи
-          </Link>
+        <div className="hidden md:flex items-center gap-8">
+          {items.map((item) => (
+            <NavLink key={item.href} href={item.href}>
+              {item.label}
+            </NavLink>
+          ))}
         </div>
         <div className="flex items-center gap-4">
           <button

@@ -1,59 +1,19 @@
 "use client";
 
 import { useRef, useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
 import { TelegramPost } from "@/types/telegram-post";
+import TelegramPostCard from "./TelegramPostCard";
 
-import photo1 from "./telegram_posters/photo-1.jpg";
-import photo2 from "./telegram_posters/photo-2.jpg";
-import photo3 from "./telegram_posters/photo-3.jpg";
+const borderMuted = "border-[#e7f1f3] dark:border-[#1e2f33]";
+const scrollButtonClasses =
+  "bg-white dark:bg-[#1a2e32] shadow-lg rounded-full p-2 hover:bg-primary hover:text-white transition-colors";
+const arrowIconClasses = "w-5 h-5";
 
-// Статические данные для демонстрации (посты 1–3 с локальными фото)
-const posts: TelegramPost[] = [
-  {
-    id: "1",
-    category: "Update",
-    image: photo1.src,
-    text: `В мастерской сейчас так❤️: тишина после творчества, готовые работы на полке ждут своих хозяев, а за окном холодная метель и манят домашние огни🥺`,
-    timestamp: "2 часа назад",
-  },
-  {
-    id: "2",
-    category: "Update",
-    image: photo2.src,
-    text: `❤️Совсем скоро весенние праздники❤️
+interface TelegramNewsFeedProps {
+  items: TelegramPost[];
+}
 
-А значит, отличный повод дарить что-то особенное интерьерное📍
-
-Тарелочки с росписью — гранат, лимон, ботаника — каждая уникальна и расписана вручную.
-#керамика #ручнаяработа 
-
-Эти тарелочки уже готовы 💌
-Забронировать можно прямо в сообщениях💌`,
-    timestamp: "Вчера",
-  },
-  {
-    id: "3",
-    category: "Update",
-    image: photo3.src,
-    text: `Пара преподавателей говорили мне: «Рисуй так, как надо, как сказали!»
-
-​Говорили: «У тебя штриховка — "солома", твои работы видно за версту, можешь даже не подписывать. Много теней, рефлексов — перебор!»
-
-​А я стояла и думала: а пусть эту штриховку даже с космоса видно будет🌟`,
-    timestamp: "22 ноя",
-  },
-  {
-    id: "4",
-    category: "Announcement",
-    text: "Теперь доступна доставка по всему миру для наших праздничных коллекций!",
-    timestamp: "20 ноя",
-    telegramUrl: "#",
-  },
-];
-
-export default function TelegramNewsFeed() {
+export default function TelegramNewsFeed({ items }: TelegramNewsFeedProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
@@ -88,26 +48,26 @@ export default function TelegramNewsFeed() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6 md:mb-8">
           <div>
-            <div className="section-label-wrap flex items-center gap-2 mb-2">
-              <span className="section-label text-[#4c8d9a] dark:text-[#0088cc]">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-[#4c8d9a] dark:text-[#0088cc]">
                 Лента сообщества
               </span>
-
               <span className="relative flex h-2 w-2 shrink-0" aria-hidden>
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-red-500" />
               </span>
             </div>
-            <h2 className="section-title text-[#0d191b] dark:text-white mb-4">
+            <h2 className="text-[#0d191b] dark:text-white mb-4">
               Прямо из студии
             </h2>
-            <p className="section-subtitle text-[#4c8d9a] dark:text-[#7ab8c4] max-w-lg">
-              Обжиги, новые работы и закулисье студии — в нашем Telegram-канале.
+            <p className="text-[#4c8d9a] dark:text-[#7ab8c4] max-w-lg">
+              Обжиги, новые работы и закулисье студии — в нашем
+              Telegram-канале.
             </p>
           </div>
           <a
             className="flex items-center gap-2 bg-[#0088cc] text-white px-5 py-2.5 rounded-full text-sm font-bold hover:bg-[#0077b5] transition-colors shadow-lg shadow-[#0088cc]/20 self-start md:self-auto"
-            href="https://t.me/"
+            href="https://t.me/ceramic_loop"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -118,130 +78,26 @@ export default function TelegramNewsFeed() {
           </a>
         </div>
 
-        {/* Scrollable Row of Cards */}
         <div className="relative group">
           <div
             ref={scrollContainerRef}
             onScroll={handleScroll}
             className="flex gap-4 overflow-x-auto no-scrollbar snap-x pb-4 scroll-smooth"
           >
-            {posts.map((post) => (
-              <div
-                key={post.id}
-                className="min-w-[260px] md:min-w-[300px] snap-start bg-white dark:bg-[#15272a] border border-[#e7f1f3] dark:border-[#1e2f33] rounded-lg shadow-sm hover:shadow-md transition-shadow flex flex-col"
-              >
-                {post.image ? (
-                  <div className="h-36 w-full relative rounded-t-lg overflow-hidden">
-                    <Image
-                      src={post.image}
-                      alt={post.text}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                ) : (
-                  <div className="p-4 flex flex-col flex-1 gap-3 justify-center bg-primary/5 rounded-t-lg">
-                    <div className="flex justify-between items-center gap-2">
-                      <span className="text-[10px] font-bold text-primary bg-primary/10 px-1.5 py-0.5 rounded uppercase tracking-wider">
-                        {post.category === "Announcement"
-                          ? "Объявление"
-                          : post.category}
-                      </span>
-                      <span className="text-[10px] text-[#4c8d9a] font-medium shrink-0">
-                        {post.timestamp}
-                      </span>
-                    </div>
-                    <div className="flex flex-col gap-1.5">
-                      <svg
-                        className="w-8 h-8 text-[#0088cc]"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"></path>
-                      </svg>
-                      <p className="text-sm font-semibold leading-snug text-[#0d191b] dark:text-white line-clamp-2">
-                        {post.text}
-                      </p>
-                    </div>
-                    <div className="mt-auto pt-3 border-t border-[#e7f1f3] dark:border-[#1e2f33]">
-                      <Link
-                        href={post.telegramUrl || "#"}
-                        className="text-[#0088cc] text-[11px] font-bold flex items-center gap-1 group/link"
-                      >
-                        В Telegram
-                        <svg
-                          className="w-3.5 h-3.5 group-hover/link:translate-x-1 transition-transform"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                          />
-                        </svg>
-                      </Link>
-                    </div>
-                  </div>
-                )}
-                {post.image && (
-                  <div className="p-5 flex flex-col flex-1 gap-3 min-h-[7.5rem]">
-                    <div className="flex justify-between items-center gap-2">
-                      <span className="text-[10px] font-bold text-[#0088cc] bg-[#0088cc]/10 px-1.5 py-0.5 rounded uppercase tracking-wider">
-                        {post.category === "Update"
-                          ? "Обновление"
-                          : post.category === "Workshop"
-                          ? "Мастер-класс"
-                          : post.category === "Process"
-                          ? "Процесс"
-                          : "Объявление"}
-                      </span>
-                      <span className="text-[10px] text-[#4c8d9a] font-medium shrink-0">
-                        {post.timestamp}
-                      </span>
-                    </div>
-                    <p className="text-xs leading-relaxed line-clamp-4 text-[#0d191b] dark:text-[#d1d5db] flex-1 min-h-0">
-                      {post.text}
-                    </p>
-                    <div className="mt-auto pt-3 border-t border-[#e7f1f3] dark:border-[#1e2f33]">
-                      <Link
-                        href={post.telegramUrl || "#"}
-                        className="text-[#0088cc] text-[11px] font-bold flex items-center gap-1 group/link"
-                      >
-                        В Telegram
-                        <svg
-                          className="w-3.5 h-3.5 group-hover/link:translate-x-1 transition-transform"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                          />
-                        </svg>
-                      </Link>
-                    </div>
-                  </div>
-                )}
-              </div>
+            {items.map((post) => (
+              <TelegramPostCard key={post.id} post={post} />
             ))}
           </div>
 
-          {/* Scroll Hint Arrows (Desktop only) */}
           {showLeftArrow && (
             <div className="hidden md:flex absolute top-1/2 -translate-y-1/2 -left-4 items-center">
               <button
                 onClick={() => scroll("left")}
-                className="bg-white dark:bg-[#1a2e32] shadow-lg border border-[#e7f1f3] dark:border-[#1e2f33] rounded-full p-2 hover:bg-primary hover:text-white transition-colors"
+                className={`${scrollButtonClasses} border ${borderMuted}`}
                 aria-label="Прокрутить влево"
               >
                 <svg
-                  className="w-5 h-5"
+                  className={arrowIconClasses}
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -260,11 +116,11 @@ export default function TelegramNewsFeed() {
             <div className="hidden md:flex absolute top-1/2 -translate-y-1/2 -right-4 items-center">
               <button
                 onClick={() => scroll("right")}
-                className="bg-white dark:bg-[#1a2e32] shadow-lg border border-[#e7f1f3] dark:border-[#1e2f33] rounded-full p-2 hover:bg-primary hover:text-white transition-colors"
+                className={`${scrollButtonClasses} border ${borderMuted}`}
                 aria-label="Прокрутить вправо"
               >
                 <svg
-                  className="w-5 h-5"
+                  className={arrowIconClasses}
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"

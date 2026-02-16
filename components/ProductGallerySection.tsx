@@ -2,11 +2,14 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import ProductModal from "./ProductModal";
+import { ProductModal } from "@/ui-lib";
 import { Product } from "@/types/product";
-import { products } from "@/data/products";
 
-export default function ProductGallerySection() {
+interface ProductGallerySectionProps {
+  items: Product[];
+}
+
+export default function ProductGallerySection({ items }: ProductGallerySectionProps) {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -51,7 +54,7 @@ export default function ProductGallerySection() {
           </p>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-5">
-          {products.map((product) => (
+          {items.map((product) => (
             <button
               key={product.id}
               type="button"

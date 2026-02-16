@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { SITE_NAME } from "@/data/site";
 
 export default function Footer() {
   return (
@@ -10,12 +11,12 @@ export default function Footer() {
             <Link href="/" className="flex items-center gap-2 mb-6">
               <Image
                 src="/images/logo.png"
-                alt="Логотип Ceramic•Loop"
+                alt={`Логотип ${SITE_NAME}`}
                 width={40}
                 height={40}
                 className="w-10 h-10 object-contain"
               />
-              <span className="text-xl font-serif font-bold text-stone-800">Ceramic•Loop</span>
+              <span className="text-xl font-serif font-bold text-stone-800">{SITE_NAME}</span>
             </Link>
             <p className="font-sans text-sm leading-relaxed text-stone-500 max-w-xs">
               Не просто студия, а пространство, где керамика хранит время и
@@ -103,7 +104,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="flex flex-col md:flex-row justify-between pt-6 border-t border-stone-100 font-sans text-xs uppercase tracking-[0.2em] text-stone-400">
-          <p>© 2026 Ceramic•Loop. Все права защищены.</p>
+          <p>© 2026 {SITE_NAME}. Все права защищены.</p>
           <div className="flex gap-8 mt-4 md:mt-0">
             <Link href="#" className="hover:text-stone-900 transition-colors">
               Политика конфиденциальности

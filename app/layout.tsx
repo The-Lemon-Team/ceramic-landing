@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SITE_NAME } from "@/data/site";
 import {
   Cormorant_Garamond,
   Inter,
@@ -24,7 +25,7 @@ const mrsSaintDelafield = Mrs_Saint_Delafield({
 });
 
 export const metadata: Metadata = {
-  title: "Ceramic•Loop",
+  title: SITE_NAME,
   description: "Керамика Санкт-Петербурга — авторские изделия ручной работы",
 };
 

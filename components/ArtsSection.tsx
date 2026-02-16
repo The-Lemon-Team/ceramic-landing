@@ -2,12 +2,15 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { artsThemes } from "@/data/artsThemes";
 import type { ArtsTheme } from "@/data/artsThemes";
 import ArtsGalleryModal from "./ArtsGalleryModal";
 import { assetUrl } from "@/lib/assetUrl";
 
-export default function ArtsSection() {
+interface ArtsSectionProps {
+  items: ArtsTheme[];
+}
+
+export default function ArtsSection({ items }: ArtsSectionProps) {
   const [openedTheme, setOpenedTheme] = useState<ArtsTheme | null>(null);
 
   return (
@@ -44,7 +47,7 @@ export default function ArtsSection() {
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
-          {artsThemes.map((theme) => (
+          {items.map((theme) => (
             <button
               key={theme.id}
               type="button"

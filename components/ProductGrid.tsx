@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import ProductCard from "./ProductCard";
-import ProductModal from "./ProductModal";
+import { ProductModal } from "@/ui-lib";
 import { Product } from "@/types/product";
 import { products } from "@/data/products";
 
