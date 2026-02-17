@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_shared_media_items",
+  "info": {
+    "displayName": "Media Item",
+    "icon": "picture",
+    "description": "Элемент медиа (изображение или видео)"
+  },
+  "options": {},
+  "attributes": {
+    "type": {
+      "type": "enumeration",
+      "enum": ["image", "video"],
+      "required": true
+    },
+    "src": {
+      "type": "string",
+      "required": true
+    },
+    "alt": {
+      "type": "string"
+    },
+    "poster": {
+      "type": "string",
+      "description": "Постер для видео"
+    }
+  }
+}

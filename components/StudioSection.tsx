@@ -7,13 +7,20 @@ import ArtsGalleryModal from "./ArtsGalleryModal";
 import type { ArtsTheme } from "@/data/artsThemes";
 import type { Product } from "@/types/product";
 import { assetUrl } from "@/lib/assetUrl";
-import { DIRECTIONS } from "@/data/directions";
 
 type TabId = "gallery" | "products" | "directions";
+
+export interface DirectionsData {
+  title: string;
+  address: string;
+  mapUrl: string;
+  text: string;
+}
 
 interface StudioSectionProps {
   artsItems: ArtsTheme[];
   productsItems: Product[];
+  directions: DirectionsData;
 }
 
 const TABS: { id: TabId; label: string }[] = [
@@ -34,6 +41,7 @@ const hasVideos = (theme: ArtsTheme) =>
 export default function StudioSection({
   artsItems,
   productsItems,
+  directions,
 }: StudioSectionProps) {
   const [activeTab, setActiveTab] = useState<TabId>("gallery");
   const [openedTheme, setOpenedTheme] = useState<ArtsTheme | null>(null);
@@ -71,7 +79,7 @@ export default function StudioSection({
   return (
     <section
       id="studio"
-      className="min-h-[80vh] w-full bg-[#1a1612] flex items-center justify-center p-0 md:p-4 py-10 md:py-8 font-sans text-white relative overflow-hidden"
+      className=" w-full bg-[#1a1612] flex items-center justify-center p-0 md:p-4 py-10 md:py-8 font-sans text-white relative overflow-hidden"
     >
       {/* Фоновое изображение */}
       <div className="absolute inset-0 z-0 w-full">
@@ -157,15 +165,15 @@ export default function StudioSection({
 
           {/* Контент табов */}
           {activeTab === "gallery" && (
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 flex-1 min-h-0 overflow-auto content-start items-stretch auto-rows-[minmax(208px,auto)]">
-              {artsItems.map((theme) => (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 flex-1 min-h-0 overflow-auto content-start items-stretch auto-rows-[minmax(132px,auto)]">
+              {[...artsItems, ...artsItems].map((theme) => (
                 <button
                   key={theme.id}
                   type="button"
                   onClick={() => setOpenedTheme(theme)}
                   className="gallery-item group text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-900 rounded-xl w-full min-w-0 flex flex-col h-full"
                 >
-                    <div className="aspect-[3/4] w-full min-h-[96px] sm:min-h-[112px] relative overflow-hidden rounded-xl bg-zinc-900 border border-white/5 shrink-0">
+                  <div className="aspect-[3/4] w-full min-h-[96px] max-h-[132px] max-w-[132px] sm:min-h-[112px] relative overflow-hidden rounded-xl bg-zinc-900 border border-white/5 shrink-0">
                     <Image
                       src={assetUrl(theme.cover)}
                       alt={theme.title}
@@ -285,7 +293,7 @@ export default function StudioSection({
             >
               <div className="relative rounded-xl overflow-hidden bg-stone-800 ring-1 ring-stone-700 w-full h-[240px] sm:h-[300px] md:h-[420px]">
                 <iframe
-                  src={DIRECTIONS.mapUrl}
+                  src={directions.mapUrl}
                   title="Карта"
                   className="w-full h-full absolute inset-0"
                   allowFullScreen
@@ -343,7 +351,9 @@ export default function StudioSection({
                           </svg>
                         </span>
                         <div className="flex-1 min-w-0">
-                          <p className="font-medium text-sm">{DIRECTIONS.address}</p>
+                          <p className="font-medium text-sm">
+                            {directions.address}
+                          </p>
                           <button
                             type="button"
                             onClick={() => setIsDirectionsPopupOpen(true)}
@@ -358,8 +368,18 @@ export default function StudioSection({
                           className="shrink-0 text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 p-1"
                           aria-label="Закрыть"
                         >
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          <svg
+                            className="w-5 h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M6 18L18 6M6 6l12 12"
+                            />
                           </svg>
                         </button>
                       </div>
@@ -434,11 +454,13 @@ export default function StudioSection({
               id="directions-popup-title"
               className="text-xl font-serif text-stone-800 dark:text-white mb-2"
             >
-              {DIRECTIONS.title}
+              {directions.title}
             </h3>
-            <p className="text-primary font-medium mb-4">{DIRECTIONS.address}</p>
+            <p className="text-primary font-medium mb-4">
+              {directions.address}
+            </p>
             <div className="text-sm leading-relaxed text-stone-600 dark:text-stone-300 whitespace-pre-line">
-              {DIRECTIONS.text}
+              {directions.text}
             </div>
             <button
               type="button"

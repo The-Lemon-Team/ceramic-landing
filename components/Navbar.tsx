@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import NavLink from "./NavLink";
-import { SITE_NAME } from "@/data/site";
 
 export interface NavItem {
   href: string;
@@ -10,23 +9,24 @@ export interface NavItem {
 
 interface NavbarProps {
   items: NavItem[];
+  siteName?: string;
 }
 
-export default function Navbar({ items }: NavbarProps) {
+export default function Navbar({ items, siteName = "Ceramic•Loop" }: NavbarProps) {
   return (
     <nav className="sticky top-0 z-50 bg-background-light/80 backdrop-blur-md border-b border-stone-200">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           <Image
             src="/images/logo.png"
-            alt={`Логотип ${SITE_NAME}`}
+            alt={`Логотип ${siteName}`}
             width={40}
             height={40}
             className="w-10 h-10 object-contain"
             priority
           />
           <span className="text-xl font-serif font-bold tracking-tight">
-            {SITE_NAME}
+            {siteName}
           </span>
         </Link>
         <div className="hidden md:flex items-center gap-8">

@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "arts_themes",
+  "info": {
+    "displayName": "Arts Theme",
+    "singularName": "arts-theme",
+    "pluralName": "arts-themes",
+    "description": "Темы галереи «Зарисовки и арты»"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "cover": {
+      "type": "string",
+      "required": true,
+      "description": "Путь к постеру"
+    },
+    "media": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.media-item",
+      "description": "Медиа темы: изображения и видео"
+    }
+  }
+}

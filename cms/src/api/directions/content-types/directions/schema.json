@@ -1,0 +1,29 @@
+{
+  "kind": "singleType",
+  "collectionName": "directions",
+  "info": {
+    "displayName": "Directions",
+    "singularName": "directions",
+    "pluralName": "directions",
+    "description": "Как добраться"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "default": "Как добраться"
+    },
+    "address": {
+      "type": "string"
+    },
+    "mapUrl": {
+      "type": "string"
+    },
+    "text": {
+      "type": "text"
+    }
+  }
+}

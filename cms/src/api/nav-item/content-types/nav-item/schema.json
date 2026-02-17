@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "nav_items",
+  "info": {
+    "displayName": "Nav Item",
+    "singularName": "nav-item",
+    "pluralName": "nav-items",
+    "description": "Пункт навигации"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "href": {
+      "type": "string",
+      "required": true
+    },
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "sortOrder": {
+      "type": "integer",
+      "default": 0,
+      "description": "Порядок в меню"
+    }
+  }
+}

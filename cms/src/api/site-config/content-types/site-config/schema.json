@@ -1,0 +1,36 @@
+{
+  "kind": "singleType",
+  "collectionName": "site_configs",
+  "info": {
+    "displayName": "Site Config",
+    "singularName": "site-config",
+    "pluralName": "site-configs",
+    "description": "Конфигурация сайта"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "siteName": {
+      "type": "string",
+      "default": "Ceramic•Loop"
+    },
+    "heroSubTitle": {
+      "type": "string",
+      "default": "Керамика Санкт-Петербурга"
+    },
+    "heroMotto": {
+      "type": "text",
+      "default": "Керамические изделия, созданные с душой и теплом в нашей студии."
+    },
+    "heroCtaHref": {
+      "type": "string",
+      "default": "#studio"
+    },
+    "heroCtaLabel": {
+      "type": "string",
+      "default": "Просмотреть коллекцию"
+    }
+  }
+}
