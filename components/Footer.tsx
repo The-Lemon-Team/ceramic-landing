@@ -16,7 +16,9 @@ export default function Footer() {
                 height={40}
                 className="w-10 h-10 object-contain"
               />
-              <span className="text-xl font-serif font-bold text-stone-800">{SITE_NAME}</span>
+              <span className="text-xl font-serif font-bold text-stone-800">
+                {SITE_NAME}
+              </span>
             </Link>
             <p className="font-sans text-sm leading-relaxed text-stone-500 max-w-xs">
               Не просто студия, а пространство, где керамика хранит время и
@@ -103,13 +105,19 @@ export default function Footer() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col md:flex-row justify-between pt-6 border-t border-stone-100 font-sans text-xs uppercase tracking-[0.2em] text-stone-400">
-          <p>© 2026 {SITE_NAME}. Все права защищены.</p>
-          <div className="flex gap-8 mt-4 md:mt-0">
-            <Link href="#" className="hover:text-stone-900 transition-colors">
+        <div className="flex flex-col md:flex-row justify-between pt-6 border-t border-primary font-sans text-xs uppercase tracking-[0.2em] text-stone-400">
+          <p className="copyright">© 2026 {SITE_NAME}. Все права защищены.</p>
+          <div className="politics-links flex flex-row flex-wrap gap-2 md:gap-8 mt-4 pt-4 border-t border-primary md:mt-0 md:pt-0 md:border-0">
+            <Link
+              href="#"
+              className="hover:text-stone-900 transition-colors whitespace-nowrap"
+            >
               Политика конфиденциальности
             </Link>
-            <Link href="#" className="hover:text-stone-900 transition-colors">
+            <Link
+              href="#"
+              className="hover:text-stone-900 transition-colors whitespace-nowrap"
+            >
               Условия использования
             </Link>
           </div>

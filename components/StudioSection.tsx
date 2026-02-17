@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import Image from "next/image";
 import { ProductModal } from "@/ui-lib";
 import ArtsGalleryModal from "./ArtsGalleryModal";
@@ -38,6 +38,89 @@ const hasImages = (theme: ArtsTheme) =>
 const hasVideos = (theme: ArtsTheme) =>
   theme.media.some((m) => m.type === "video");
 
+function chunk<T>(arr: T[], size: number): T[][] {
+  const result: T[][] = [];
+  for (let i = 0; i < arr.length; i += size) {
+    result.push(arr.slice(i, i + size));
+  }
+  return result;
+}
+
+function GalleryCard({
+  theme,
+  onOpen,
+}: {
+  theme: ArtsTheme;
+  onOpen: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onOpen}
+      className="gallery-item group text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-900 rounded-xl w-full min-w-0 flex flex-col h-full"
+    >
+      <div className="aspect-[3/4] w-full min-h-[96px] max-h-[132px] sm:min-h-[112px] relative overflow-hidden rounded-xl bg-zinc-900 border border-white/5 shrink-0">
+        <Image
+          src={assetUrl(theme.cover)}
+          alt={theme.title}
+          fill
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
+          sizes="(max-width: 768px) 50vw, 25vw"
+          unoptimized
+        />
+        <div className="absolute bottom-1.5 right-1.5 flex gap-1">
+          {hasImages(theme) && (
+            <span
+              className="w-6 h-6 rounded-full bg-black/50 flex items-center justify-center"
+              title="Изображения"
+              aria-hidden
+            >
+              <svg
+                className="w-3 h-3 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                <circle cx="8.5" cy="8.5" r="1.5" />
+                <path d="M21 15l-5-5L5 21" />
+              </svg>
+            </span>
+          )}
+          {hasVideos(theme) && (
+            <span
+              className="w-6 h-6 rounded-full bg-black/50 flex items-center justify-center"
+              title="Видео"
+              aria-hidden
+            >
+              <svg
+                className="w-3 h-3 text-white"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </span>
+          )}
+        </div>
+      </div>
+      <div className="mt-2 px-0.5 shrink-0 flex flex-col gap-1">
+        <p className="text-[10px] font-medium uppercase tracking-widest text-gray-300 line-clamp-1 group-hover:text-amber-400 transition-colors">
+          {theme.title}
+        </p>
+        <p className="text-[10px] uppercase tracking-widest text-stone-500 mt-0.5">
+          {theme.media.length}{" "}
+          {theme.media.length === 1
+            ? "файл"
+            : theme.media.length < 5
+            ? "файла"
+            : "файлов"}
+        </p>
+      </div>
+    </button>
+  );
+}
+
 export default function StudioSection({
   artsItems,
   productsItems,
@@ -49,10 +132,18 @@ export default function StudioSection({
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [isDirectionsPopupOpen, setIsDirectionsPopupOpen] = useState(false);
   const [isMapPinPopupOpen, setIsMapPinPopupOpen] = useState(false);
+  const galleryCarouselRef = useRef<HTMLDivElement>(null);
   const [pinPosition] = useState(() => ({
     left: 42 + Math.floor(Math.random() * 14),
     top: 48 + Math.floor(Math.random() * 14),
   }));
+
+  const galleryItems = useMemo(
+    () => [...artsItems, ...artsItems, ...artsItems],
+    [artsItems]
+  );
+  const mobileSlides = useMemo(() => chunk(galleryItems, 4), [galleryItems]);
+  const desktopSlides = useMemo(() => chunk(galleryItems, 8), [galleryItems]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -94,23 +185,24 @@ export default function StudioSection({
         />
       </div>
 
-      {/* Основной контейнер — карточка */}
-      <div className="relative z-10 w-full max-w-7xl bg-black/40 backdrop-blur-3xl md:rounded-3xl overflow-hidden flex flex-col md:flex-row min-h-[600px] border border-white/10 shadow-2xl">
-        {/* ЛЕВАЯ КОЛОНКА: фото (на мобилке order-2 — после заголовка) */}
-        <div className="w-full md:w-1/2 order-2 md:order-1 aspect-square md:aspect-auto overflow-hidden shrink-0 relative">
+      {/* Основной контейнер — карточка (подложка только с md) */}
+      <div className="relative z-10 w-full max-w-7xl md:bg-black/40 md:backdrop-blur-3xl md:rounded-3xl overflow-hidden flex flex-col md:flex-row min-h-[600px] md:border md:border-white/10 md:shadow-2xl">
+        {/* ЛЕВАЯ КОЛОНКА: фото (только md+, на мобилке фото встроено в контент ниже) */}
+        <div className="hidden md:block w-full md:w-1/2 order-1 aspect-square md:aspect-auto overflow-hidden shrink-0 relative">
           <Image
             src="/images/studio/photo_2026-02-16_03-33-52.jpg"
-            alt="Студия керамики"
+            alt=""
             fill
             className="object-cover"
-            sizes="(max-width: 768px) 100vw, 50vw"
+            sizes="50vw"
             priority
+            aria-hidden
           />
         </div>
 
-        {/* ПРАВАЯ КОЛОНКА: контент */}
-        <div className="w-full md:w-1/2 p-5 md:p-10 flex flex-col order-1 md:order-2 min-h-0 overflow-hidden">
-          {/* Заголовок */}
+        {/* ПРАВАЯ КОЛОНКА: контент. На мобилке порядок: заголовок → изображение → табы → контент */}
+        <div className="w-full md:w-1/2 p-5 md:p-10 flex flex-col order-2 min-h-0 overflow-hidden">
+          {/* Заголовок: Студия (иконка) + Студия (заголовок) */}
           <div className="mb-4 md:mb-6 shrink-0">
             <div className="flex items-center gap-2 text-amber-400 mb-2">
               <span className="text-[10px] tracking-[0.3em] uppercase font-bold">
@@ -137,8 +229,20 @@ export default function StudioSection({
             </h2>
           </div>
 
-          {/* Описание */}
-          <p className="text-gray-300 leading-relaxed text-sm font-light mb-5 shrink-0">
+          {/* Изображение: только на мобилке, между заголовком и табами */}
+          <div className="block md:hidden w-full aspect-square overflow-hidden shrink-0 relative rounded-xl mb-5">
+            <Image
+              src="/images/studio/photo_2026-02-16_03-33-52.jpg"
+              alt="Студия керамики"
+              fill
+              className="object-cover"
+              sizes="100vw"
+              priority
+            />
+          </div>
+
+          {/* Описание (только md+, на мобилке не показываем по желаемому порядку) */}
+          <p className="hidden md:block text-gray-300 leading-relaxed text-sm font-light mb-5 shrink-0">
             Авторская керамика ручной работы в Санкт-Петербурге. В студии
             создаём ограниченные серии: от эскиза до обжига. Работаем с разными
             массами и глазурями, часть процесса снимаем на видео. Ниже — галерея
@@ -163,89 +267,54 @@ export default function StudioSection({
             ))}
           </div>
 
-          {/* Контент табов */}
+          {/* Контент табов: галерея — карусель (мобилка 2×2 по 4 айтема, десктоп 4×2 по 8) */}
           {activeTab === "gallery" && (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 flex-1 min-h-0 overflow-auto content-start items-stretch auto-rows-[minmax(132px,auto)]">
-              {[...artsItems, ...artsItems].map((theme) => (
-                <button
-                  key={theme.id}
-                  type="button"
-                  onClick={() => setOpenedTheme(theme)}
-                  className="gallery-item group text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-900 rounded-xl w-full min-w-0 flex flex-col h-full"
-                >
-                  <div className="aspect-[3/4] w-full min-h-[96px] max-h-[132px] max-w-[132px] sm:min-h-[112px] relative overflow-hidden rounded-xl bg-zinc-900 border border-white/5 shrink-0">
-                    <Image
-                      src={assetUrl(theme.cover)}
-                      alt={theme.title}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                      unoptimized
-                    />
-                    <div className="absolute bottom-1.5 right-1.5 flex gap-1">
-                      {hasImages(theme) && (
-                        <span
-                          className="w-6 h-6 rounded-full bg-black/50 flex items-center justify-center"
-                          title="Изображения"
-                          aria-hidden
-                        >
-                          <svg
-                            className="w-3 h-3 text-white"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <rect
-                              x="3"
-                              y="3"
-                              width="18"
-                              height="18"
-                              rx="2"
-                              ry="2"
-                            />
-                            <circle cx="8.5" cy="8.5" r="1.5" />
-                            <path d="M21 15l-5-5L5 21" />
-                          </svg>
-                        </span>
-                      )}
-                      {hasVideos(theme) && (
-                        <span
-                          className="w-6 h-6 rounded-full bg-black/50 flex items-center justify-center"
-                          title="Видео"
-                          aria-hidden
-                        >
-                          <svg
-                            className="w-3 h-3 text-white"
-                            fill="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path d="M8 5v14l11-7z" />
-                          </svg>
-                        </span>
-                      )}
-                    </div>
+            <div
+              ref={galleryCarouselRef}
+              className="flex-1 min-h-0 flex flex-col overflow-hidden"
+            >
+              {/* Мобильная карусель: слайд = 4 айтема (2×2), пролистывание вправо */}
+              <div className="flex md:hidden overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth no-scrollbar flex-1 min-h-0 -mx-5 px-5">
+                {mobileSlides.map((slideThemes, slideIndex) => (
+                  <div
+                    key={`m-${slideIndex}`}
+                    className="shrink-0 w-full min-w-full grid grid-cols-2 grid-rows-2 gap-3 content-start auto-rows-fr snap-start pr-3 first:pl-0"
+                    style={{ minHeight: "min(280px, 50vw)" }}
+                  >
+                    {slideThemes.map((theme, idx) => (
+                      <GalleryCard
+                        key={`${theme.id}-m-${slideIndex}-${idx}`}
+                        theme={theme}
+                        onOpen={() => setOpenedTheme(theme)}
+                      />
+                    ))}
                   </div>
-                  <div className="mt-2 px-0.5 shrink-0 flex flex-col gap-1">
-                    <p className="text-[10px] font-medium uppercase tracking-widest text-gray-300 line-clamp-1 group-hover:text-amber-400 transition-colors">
-                      {theme.title}
-                    </p>
-                    <p className="text-[10px] uppercase tracking-widest text-stone-500 mt-0.5">
-                      {theme.media.length}{" "}
-                      {theme.media.length === 1
-                        ? "файл"
-                        : theme.media.length < 5
-                        ? "файла"
-                        : "файлов"}
-                    </p>
+                ))}
+              </div>
+              {/* Десктопная карусель: слайд = 8 айтемов (4×2), пролистывание вправо */}
+              <div className="hidden md:flex overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth no-scrollbar flex-1 min-h-0 -mx-10 px-10">
+                {desktopSlides.map((slideThemes, slideIndex) => (
+                  <div
+                    key={`d-${slideIndex}`}
+                    className="shrink-0 w-full min-w-full grid grid-cols-4 grid-rows-2 gap-3 content-start auto-rows-fr snap-start pr-3 first:pl-0"
+                    style={{ minHeight: "240px" }}
+                  >
+                    {slideThemes.map((theme, idx) => (
+                      <GalleryCard
+                        key={`${theme.id}-d-${slideIndex}-${idx}`}
+                        theme={theme}
+                        onOpen={() => setOpenedTheme(theme)}
+                      />
+                    ))}
                   </div>
-                </button>
-              ))}
+                ))}
+              </div>
             </div>
           )}
 
           {activeTab === "products" && (
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3 flex-1 min-h-0 md:min-h-[480px] overflow-auto content-start items-stretch auto-rows-[minmax(208px,auto)]">
-              {productsItems.map((product) => (
+              {productsItems.map((product, index) => (
                 <article
                   key={product.id}
                   role="button"
@@ -257,7 +326,9 @@ export default function StudioSection({
                       openProductModal(product);
                     }
                   }}
-                  className="group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-900 rounded-xl w-full text-left flex flex-col h-full"
+                  className={`group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-900 rounded-xl w-full text-left flex flex-col h-full ${
+                    index >= 4 ? "hidden md:flex" : ""
+                  }`}
                   aria-label={`Открыть ${product.title}`}
                 >
                   <div className="aspect-[3/4] w-full overflow-hidden rounded-xl mb-1.5 relative bg-zinc-800 border border-white/5 shrink-0">
