@@ -51,10 +51,11 @@ const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Database 
     },
   };
 
+  const dbClient = client as 'mysql' | 'postgres' | 'sqlite';
   return {
     connection: {
-      client,
-      ...connections[client],
+      client: dbClient,
+      ...connections[dbClient],
       acquireConnectionTimeout: env.int('DATABASE_CONNECTION_TIMEOUT', 60000),
     },
   };

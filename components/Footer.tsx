@@ -4,9 +4,9 @@ import { SITE_NAME } from "@/data/site";
 
 export default function Footer() {
   return (
-    <footer className="bg-white pt-16 pb-8 md:pt-20 md:pb-10 border-t border-stone-100">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid md:grid-cols-12 gap-12 mb-12">
+    <footer className="bg-white pt-12 px-6 pb-8 md:pt-20 md:pb-10 border-t border-stone-100">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid md:grid-cols-12 gap-8 mb-8">
           <div className="md:col-span-4">
             <Link href="/" className="flex items-center gap-2 mb-6">
               <Image
@@ -26,10 +26,10 @@ export default function Footer() {
             </p>
           </div>
           <div className="md:col-span-2">
-            <h5 className="font-sans text-xs uppercase tracking-[0.2em] font-bold text-stone-600 mb-6">
+            <h5 className="font-sans text-xs uppercase tracking-[0.2em] font-bold text-stone-600 mb-2.5">
               Магазин
             </h5>
-            <ul className="font-sans text-sm space-y-4 text-stone-500">
+            <ul className="font-sans text-sm space-y-1.5 text-stone-500">
               <li>
                 <Link href="#" className="hover:text-primary transition-colors">
                   Вазы
@@ -53,10 +53,10 @@ export default function Footer() {
             </ul>
           </div>
           <div className="md:col-span-2">
-            <h5 className="font-sans text-xs uppercase tracking-[0.2em] font-bold text-stone-600 mb-6">
+            <h5 className="font-sans text-xs uppercase tracking-[0.2em] font-bold text-stone-600 mb-2.5">
               Студия
             </h5>
-            <ul className="font-sans text-sm space-y-4 text-stone-500">
+            <ul className="font-sans text-sm space-y-1.5 text-stone-500">
               <li>
                 <Link href="#" className="hover:text-primary transition-colors">
                   О нас
@@ -80,7 +80,7 @@ export default function Footer() {
             </ul>
           </div>
           <div className="md:col-span-4">
-            <h5 className="font-sans text-xs uppercase tracking-[0.2em] font-bold text-stone-600 mb-6">
+            <h5 className="font-sans text-xs uppercase tracking-[0.2em] font-bold text-stone-600 mb-2.5">
               Социальные сети
             </h5>
             <div className="flex gap-4">
@@ -110,7 +110,7 @@ export default function Footer() {
           <div className="politics-links flex flex-row flex-wrap gap-2 md:gap-8 mt-4 pt-4 border-t border-primary md:mt-0 md:pt-0 md:border-0">
             <Link
               href="#"
-              className="hover:text-stone-900 transition-colors whitespace-nowrap"
+              className="hover:text-stone-900 text-xs transition-colors whitespace-nowrap"
             >
               Политика конфиденциальности
             </Link>

@@ -175,13 +175,13 @@ export default function ArtsGalleryModal({
                     >
                       {isVideo ? (
                         <div className="w-full h-full bg-zinc-800 flex items-center justify-center relative">
-                          <img src={src} alt="" className="absolute inset-0 w-full h-full object-cover" />
+                          <Image src={src} alt="" width={56} height={56} className="absolute inset-0 w-full h-full object-cover" unoptimized />
                           <svg className="w-6 h-6 text-white drop-shadow relative z-10" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M8 5v14l11-7z" />
                           </svg>
                         </div>
                       ) : (
-                        <img src={src} alt="" className="w-full h-full object-cover" />
+                        <Image src={src} alt="" width={56} height={56} className="w-full h-full object-cover" unoptimized />
                       )}
                     </button>
                   );

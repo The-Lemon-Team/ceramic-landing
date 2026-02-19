@@ -9,7 +9,9 @@ interface ProductGallerySectionProps {
   items: Product[];
 }
 
-export default function ProductGallerySection({ items }: ProductGallerySectionProps) {
+export default function ProductGallerySection({
+  items,
+}: ProductGallerySectionProps) {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -24,8 +26,8 @@ export default function ProductGallerySection({ items }: ProductGallerySectionPr
   };
 
   return (
-    <section id="ceramics" className="py-10 md:py-12 bg-accent-earth">
-      <div className="max-w-7xl mx-auto px-6">
+    <section id="ceramics" className="py-10 md:py-12 px-6 bg-accent-earth">
+      <div className="max-w-7xl mx-auto">
         <div className="mb-6 md:mb-8">
           <span className="section-label-wrap">
             <span className="section-label inline-flex items-center gap-1.5">
@@ -50,7 +52,8 @@ export default function ProductGallerySection({ items }: ProductGallerySectionPr
           </span>
           <h2 className="section-title mb-4">Купить керамику</h2>
           <p className="section-subtitle max-w-lg">
-            Авторская керамика ручной работы. Ограниченные серии, доставка по России.
+            Авторская керамика ручной работы. Ограниченные серии, доставка по
+            России.
           </p>
         </div>
         <div className="carousel-scroll flex gap-4 md:gap-5 overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth no-scrollbar pb-4 -mx-6 px-6 [scroll-padding-inline:1.5rem]">
