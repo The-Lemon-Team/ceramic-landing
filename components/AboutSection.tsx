@@ -1,6 +1,11 @@
 import Image from "next/image";
+import type { AboutAuthorData } from "@/lib/strapi";
 
-export default function AboutSection() {
+type AboutSectionProps = {
+  data: AboutAuthorData;
+};
+
+export default function AboutSection({ data }: AboutSectionProps) {
   return (
     <section
       id="about"
@@ -16,6 +21,11 @@ export default function AboutSection() {
         aria-hidden
       />
       <div className="relative z-10 max-w-7xl px-6 mx-auto">
+        {data.sectionTitle && (
+          <h2 className="text-2xl md:text-3xl font-serif text-stone-800 text-center mb-12">
+            {data.sectionTitle}
+          </h2>
+        )}
         <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-10 md:gap-12 items-center">
           <div className="relative w-fit max-w-[308px] md:max-w-[352px] mx-auto md:mx-0">
             <div className="absolute -top-6 -left-6 w-32 h-32 bg-primary rounded-full blur-3xl"></div>
@@ -25,24 +35,26 @@ export default function AboutSection() {
               style={{ aspectRatio: "3/5" }}
             >
               <Image
-                src="/images/about-photo.jpg"
-                alt="Ольга Альжанова с керамической миской в студии"
+                src={data.photo}
+                alt={data.photoAlt}
                 width={352}
                 height={587}
                 className="w-full aspect-[3/5] object-cover"
               />
             </div>
-            <div className="absolute -bottom-2 -left-10 bg-primary p-4 text-white rounded-lg shadow-xl hidden lg:block">
-              <p className="font-serif text-xl italic">
-                &quot;Искусство — это след человеческой жизни.&quot;
-              </p>
-            </div>
+            {data.quote && (
+              <div className="absolute -bottom-2 -left-10 bg-primary p-4 text-white rounded-lg shadow-xl hidden lg:block">
+                <p className="font-serif text-xl italic">
+                  &quot;{data.quote}&quot;
+                </p>
+              </div>
+            )}
           </div>
           <div className="flex flex-col justify-center">
             <div className="rounded-2xl bg-white/75  px-6 py-8 md:px-10 md:py-10 border border-white/60 shadow-sm">
               <span className="section-label-wrap">
                 <span className="section-label text-stone-500 inline-flex items-center gap-1.5">
-                  Мастер
+                  {data.sectionLabel}
                   <svg
                     width="12"
                     height="12"
@@ -62,36 +74,28 @@ export default function AboutSection() {
                   </svg>
                 </span>
               </span>
-              <h2 className="section-title mb-6">Альжанова Ольга</h2>
-              <div className="space-y-5 text-stone-600 text-[1.0625rem] leading-relaxed">
-                <p>
-                  Всем здравствуйте💜 Меня зовут Оля и я рыбка 98 года
-                  рождения😊
-                </p>
-                <p>
-                  Позже, с удовольствием расскажу вам про себя, что бы
-                  познакомиться. Как закончила Псковский политехнический колледж
-                  с двумя 📕 дипломами по направлению ДПИ художник-оформитель и
-                  педагогическое, где изучила много дисциплин, выполняя всё
-                  сразу на практике, познавая различные материалы их виды и
-                  свойства, (всегда отдавала предпочтение росписи, батику и
-                  работе за🖼️).
-                </p>
-                <p>
-                  Поведаю, что керамика — это магия, которая не покидает меня с
-                  колледжа. И вот спустя годы, она снова появилась в жизни.
-                  <br />
-                  📺🧡❤️💎📕😊
-                </p>
-              </div>
-              <div className="mt-8 pt-8 border-t border-stone-100">
-                <p className="text-stone-400 text-sm mb-2">
-                  С любовью и намерением,
-                </p>
-                <p className="font-script text-4xl text-stone-800">
-                  Olya Alzhanova
-                </p>
-              </div>
+              <h2 className="section-title mb-6">{data.authorName}</h2>
+              {data.bio && (
+                <div className="space-y-5 text-stone-600 text-[1.0625rem] leading-relaxed whitespace-pre-line">
+                  {data.bio.split("\n\n").map((para, i) => (
+                    <p key={i}>{para}</p>
+                  ))}
+                </div>
+              )}
+              {(data.closingText || data.signature) && (
+                <div className="mt-8 pt-8 border-t border-stone-100">
+                  {data.closingText && (
+                    <p className="text-stone-400 text-sm mb-2">
+                      {data.closingText}
+                    </p>
+                  )}
+                  {data.signature && (
+                    <p className="font-script text-4xl text-stone-800">
+                      {data.signature}
+                    </p>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>

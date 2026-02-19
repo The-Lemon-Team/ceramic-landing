@@ -7,6 +7,7 @@ CMS на базе Strapi v5 для лендинга керамической с�
 - **Product** — керамические изделия (тарелки, плитка и т.д.)
 - **Arts Theme** — темы галереи «Зарисовки и арты»
 - **Telegram Post** — посты из Telegram-канала
+- **About Author** — блок «Об авторе»: заголовок, автор, биография, фото (single type)
 - **Directions** — блок «Как добраться» (single type)
 - **Site Config** — конфигурация сайта и Hero (single type)
 - **Nav Item** — пункты навигации
@@ -38,6 +39,7 @@ npm run develop
 - Products: `GET /api/products`
 - Arts themes: `GET /api/arts-themes`
 - Telegram posts: `GET /api/telegram-posts`
+- About author: `GET /api/about-author`
 - Directions: `GET /api/directions`
 - Site config: `GET /api/site-config`
 - Nav items: `GET /api/nav-items`
