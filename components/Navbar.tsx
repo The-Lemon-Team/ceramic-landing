@@ -16,7 +16,6 @@ export default function Navbar({
   items,
   siteName = "Ceramic•Loop",
 }: NavbarProps) {
-  console.log("NavBar", items);
   return (
     <nav className="sticky top-0 z-50 bg-background-light/80 backdrop-blur-md border-b border-stone-200">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
