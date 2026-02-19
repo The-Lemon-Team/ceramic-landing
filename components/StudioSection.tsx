@@ -121,6 +121,40 @@ function GalleryCard({
   );
 }
 
+function ProductCard({
+  product,
+  onOpen,
+}: {
+  product: Product;
+  onOpen: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onOpen}
+      className="group text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-900 rounded-xl w-full min-w-0 flex flex-col h-full"
+    >
+      <div className="aspect-[3/4] w-full min-h-[96px] max-h-[132px] sm:min-h-[112px] relative overflow-hidden rounded-xl bg-zinc-900 border border-white/5 shrink-0">
+        <Image
+          src={product.mainImage}
+          alt={product.title}
+          fill
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
+          sizes="(max-width: 768px) 50vw, 25vw"
+        />
+      </div>
+      <div className="mt-2 px-0.5 shrink-0 flex flex-col gap-1">
+        <p className="text-[10px] font-medium uppercase tracking-widest text-gray-300 line-clamp-1 group-hover:text-amber-400 transition-colors">
+          {product.title}
+        </p>
+        <p className="text-[10px] uppercase tracking-widest text-stone-500 mt-0.5">
+          {product.price > 0 ? `${product.price.toFixed(0)} ₽` : "—"}
+        </p>
+      </div>
+    </button>
+  );
+}
+
 export default function StudioSection({
   artsItems,
   productsItems,
@@ -132,18 +166,33 @@ export default function StudioSection({
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [isDirectionsPopupOpen, setIsDirectionsPopupOpen] = useState(false);
   const [isMapPinPopupOpen, setIsMapPinPopupOpen] = useState(false);
-  const galleryCarouselRef = useRef<HTMLDivElement>(null);
+  const galleryMobileRef = useRef<HTMLDivElement>(null);
+  const galleryDesktopRef = useRef<HTMLDivElement>(null);
+  const productsMobileRef = useRef<HTMLDivElement>(null);
+  const productsDesktopRef = useRef<HTMLDivElement>(null);
+  const [galleryShowPrev, setGalleryShowPrev] = useState(false);
+  const [galleryShowNext, setGalleryShowNext] = useState(true);
+  const [productsShowPrev, setProductsShowPrev] = useState(false);
+  const [productsShowNext, setProductsShowNext] = useState(true);
   const [pinPosition] = useState(() => ({
     left: 42 + Math.floor(Math.random() * 14),
     top: 48 + Math.floor(Math.random() * 14),
   }));
 
   const galleryItems = useMemo(
-    () => [...artsItems, ...artsItems, ...artsItems],
+    () => [...artsItems, ...artsItems, ...artsItems, ...artsItems],
     [artsItems]
   );
   const mobileSlides = useMemo(() => chunk(galleryItems, 4), [galleryItems]);
   const desktopSlides = useMemo(() => chunk(galleryItems, 8), [galleryItems]);
+  const mobileProductSlides = useMemo(
+    () => chunk(productsItems, 4),
+    [productsItems]
+  );
+  const desktopProductSlides = useMemo(
+    () => chunk(productsItems, 8),
+    [productsItems]
+  );
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -156,6 +205,65 @@ export default function StudioSection({
       setActiveTab("products");
     }
   }, []);
+
+  const updateGalleryArrows = () => {
+    const isDesktop = typeof window !== "undefined" && window.innerWidth >= 768;
+    const el = (isDesktop ? galleryDesktopRef : galleryMobileRef).current;
+    if (!el) return;
+    const { scrollLeft, scrollWidth, clientWidth } = el;
+    setGalleryShowPrev(scrollLeft > 5);
+    setGalleryShowNext(scrollLeft < scrollWidth - clientWidth - 5);
+  };
+
+  useEffect(() => {
+    if (activeTab === "gallery") {
+      galleryMobileRef.current?.scrollTo({ left: 0 });
+      galleryDesktopRef.current?.scrollTo({ left: 0 });
+      updateGalleryArrows();
+      window.addEventListener("resize", updateGalleryArrows);
+      return () => window.removeEventListener("resize", updateGalleryArrows);
+    }
+    if (activeTab === "products") {
+      productsMobileRef.current?.scrollTo({ left: 0 });
+      productsDesktopRef.current?.scrollTo({ left: 0 });
+      updateProductsArrows();
+      window.addEventListener("resize", updateProductsArrows);
+      return () => window.removeEventListener("resize", updateProductsArrows);
+    }
+  }, [activeTab]);
+
+  const scrollGallery = (dir: "prev" | "next") => {
+    const ref =
+      typeof window !== "undefined" && window.innerWidth >= 768
+        ? galleryDesktopRef
+        : galleryMobileRef;
+    const el = ref?.current;
+    if (!el) return;
+    const slideWidth = el.clientWidth;
+    const delta = dir === "prev" ? -slideWidth : slideWidth;
+    el.scrollBy({ left: delta, behavior: "smooth" });
+  };
+
+  const updateProductsArrows = () => {
+    const isDesktop = typeof window !== "undefined" && window.innerWidth >= 768;
+    const el = (isDesktop ? productsDesktopRef : productsMobileRef).current;
+    if (!el) return;
+    const { scrollLeft, scrollWidth, clientWidth } = el;
+    setProductsShowPrev(scrollLeft > 5);
+    setProductsShowNext(scrollLeft < scrollWidth - clientWidth - 5);
+  };
+
+  const scrollProducts = (dir: "prev" | "next") => {
+    const ref =
+      typeof window !== "undefined" && window.innerWidth >= 768
+        ? productsDesktopRef
+        : productsMobileRef;
+    const el = ref?.current;
+    if (!el) return;
+    const slideWidth = el.clientWidth;
+    const delta = dir === "prev" ? -slideWidth : slideWidth;
+    el.scrollBy({ left: delta, behavior: "smooth" });
+  };
 
   const openProductModal = (product: Product) => {
     setSelectedProduct(product);
@@ -170,7 +278,7 @@ export default function StudioSection({
   return (
     <section
       id="studio"
-      className=" w-full bg-[#1a1612] flex items-center justify-center p-0 md:p-4 py-10 md:py-8 font-sans text-white relative overflow-hidden"
+      className=" w-full bg-[#1a1612] flex items-center justify-center p-0 md:p-4 py-12 md:py-8 font-sans text-white relative overflow-hidden"
     >
       {/* Фоновое изображение */}
       <div className="absolute inset-0 z-0 w-full">
@@ -201,7 +309,7 @@ export default function StudioSection({
         </div>
 
         {/* ПРАВАЯ КОЛОНКА: контент. На мобилке порядок: заголовок → изображение → табы → контент */}
-        <div className="w-full md:w-1/2 p-5 md:p-10 flex flex-col order-2 min-h-0 overflow-hidden">
+        <div className="w-full md:w-1/2 px-5 md:p-10 flex flex-col order-2 min-h-0 overflow-hidden">
           {/* Заголовок: Студия (иконка) + Студия (заголовок) */}
           <div className="mb-4 md:mb-6 shrink-0">
             <div className="flex items-center gap-2 text-amber-400 mb-2">
@@ -269,16 +377,17 @@ export default function StudioSection({
 
           {/* Контент табов: галерея — карусель (мобилка 2×2 по 4 айтема, десктоп 4×2 по 8) */}
           {activeTab === "gallery" && (
-            <div
-              ref={galleryCarouselRef}
-              className="flex-1 min-h-0 flex flex-col overflow-hidden"
-            >
-              {/* Мобильная карусель: слайд = 4 айтема (2×2), пролистывание вправо */}
-              <div className="flex md:hidden overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth no-scrollbar flex-1 min-h-0 -mx-5 px-5">
+            <div className="flex-1 min-h-0 flex flex-col overflow-hidden relative">
+              {/* Мобильная карусель */}
+              <div
+                ref={galleryMobileRef}
+                onScroll={updateGalleryArrows}
+                className="carousel-scroll carousel-scroll-thin flex md:hidden overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth flex-1 min-h-0 w-full pb-2"
+              >
                 {mobileSlides.map((slideThemes, slideIndex) => (
                   <div
                     key={`m-${slideIndex}`}
-                    className="shrink-0 w-full min-w-full grid grid-cols-2 grid-rows-2 gap-3 content-start auto-rows-fr snap-start pr-3 first:pl-0"
+                    className="shrink-0 w-full min-w-full grid grid-cols-2 grid-rows-2 gap-3 content-start auto-rows-fr snap-start px-2 first:pl-0 last:pr-0"
                     style={{ minHeight: "min(280px, 50vw)" }}
                   >
                     {slideThemes.map((theme, idx) => (
@@ -291,12 +400,16 @@ export default function StudioSection({
                   </div>
                 ))}
               </div>
-              {/* Десктопная карусель: слайд = 8 айтемов (4×2), пролистывание вправо */}
-              <div className="hidden md:flex overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth no-scrollbar flex-1 min-h-0 -mx-10 px-10">
+              {/* Десктопная карусель */}
+              <div
+                ref={galleryDesktopRef}
+                onScroll={updateGalleryArrows}
+                className="carousel-scroll carousel-scroll-thin hidden md:flex overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth flex-1 min-h-0 w-full pb-2"
+              >
                 {desktopSlides.map((slideThemes, slideIndex) => (
                   <div
                     key={`d-${slideIndex}`}
-                    className="shrink-0 w-full min-w-full grid grid-cols-4 grid-rows-2 gap-3 content-start auto-rows-fr snap-start pr-3 first:pl-0"
+                    className="shrink-0 w-full min-w-full grid grid-cols-4 grid-rows-2 gap-3 content-start auto-rows-fr snap-start px-2 first:pl-0 last:pr-0"
                     style={{ minHeight: "240px" }}
                   >
                     {slideThemes.map((theme, idx) => (
@@ -309,51 +422,145 @@ export default function StudioSection({
                   </div>
                 ))}
               </div>
+              {/* Кнопки навигации */}
+              {galleryShowPrev && (
+                <button
+                  type="button"
+                  onClick={() => scrollGallery("prev")}
+                  className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-colors"
+                  aria-label="Предыдущий слайд"
+                >
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 19l-7-7 7-7"
+                    />
+                  </svg>
+                </button>
+              )}
+              {galleryShowNext && (
+                <button
+                  type="button"
+                  onClick={() => scrollGallery("next")}
+                  className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-colors"
+                  aria-label="Следующий слайд"
+                >
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </button>
+              )}
             </div>
           )}
 
           {activeTab === "products" && (
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 flex-1 min-h-0 md:min-h-[480px] overflow-auto content-start items-stretch auto-rows-[minmax(208px,auto)]">
-              {productsItems.map((product, index) => (
-                <article
-                  key={product.id}
-                  role="button"
-                  tabIndex={0}
-                  onClick={() => openProductModal(product)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      e.preventDefault();
-                      openProductModal(product);
-                    }
-                  }}
-                  className={`group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-900 rounded-xl w-full text-left flex flex-col h-full ${
-                    index >= 4 ? "hidden md:flex" : ""
-                  }`}
-                  aria-label={`Открыть ${product.title}`}
-                >
-                  <div className="aspect-[3/4] w-full overflow-hidden rounded-xl mb-1.5 relative bg-zinc-800 border border-white/5 shrink-0">
-                    <Image
-                      src={product.mainImage}
-                      alt={product.title}
-                      width={280}
-                      height={373}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 280px"
-                    />
+            <div className="flex-1 min-h-0 flex flex-col overflow-hidden relative">
+              {/* Мобильная карусель изделий */}
+              <div
+                ref={productsMobileRef}
+                onScroll={updateProductsArrows}
+                className="carousel-scroll carousel-scroll-thin flex md:hidden overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth flex-1 min-h-0 w-full pb-2"
+              >
+                {mobileProductSlides.map((slideProducts, slideIndex) => (
+                  <div
+                    key={`pm-${slideIndex}`}
+                    className="shrink-0 w-full min-w-full grid grid-cols-2 grid-rows-2 gap-3 content-start auto-rows-fr snap-start px-2 first:pl-0 last:pr-0"
+                    style={{ minHeight: "min(280px, 50vw)" }}
+                  >
+                    {slideProducts.map((product) => (
+                      <ProductCard
+                        key={product.id}
+                        product={product}
+                        onOpen={() => openProductModal(product)}
+                      />
+                    ))}
                   </div>
-                  <h3 className="text-[10px] font-bold uppercase tracking-widest text-amber-400 line-clamp-2 group-hover:text-amber-300 transition-colors">
-                    {product.title}
-                  </h3>
-                  <p className="text-[10px] text-stone-500 uppercase tracking-wider truncate mt-0.5">
-                    {product.finish}
-                  </p>
-                  {product.price > 0 && (
-                    <p className="text-sm font-medium text-amber-400 mt-2">
-                      {product.price.toFixed(0)} ₽
-                    </p>
-                  )}
-                </article>
-              ))}
+                ))}
+              </div>
+              {/* Десктопная карусель изделий */}
+              <div
+                ref={productsDesktopRef}
+                onScroll={updateProductsArrows}
+                className="carousel-scroll carousel-scroll-thin hidden md:flex overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth flex-1 min-h-0 w-full pb-2"
+              >
+                {desktopProductSlides.map((slideProducts, slideIndex) => (
+                  <div
+                    key={`pd-${slideIndex}`}
+                    className="shrink-0 w-full min-w-full grid grid-cols-4 grid-rows-2 gap-3 content-start auto-rows-fr snap-start px-2 first:pl-0 last:pr-0"
+                    style={{ minHeight: "240px" }}
+                  >
+                    {slideProducts.map((product) => (
+                      <ProductCard
+                        key={product.id}
+                        product={product}
+                        onOpen={() => openProductModal(product)}
+                      />
+                    ))}
+                  </div>
+                ))}
+              </div>
+              {/* Кнопки навигации */}
+              {productsShowPrev && (
+                <button
+                  type="button"
+                  onClick={() => scrollProducts("prev")}
+                  className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-colors"
+                  aria-label="Предыдущий слайд"
+                >
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 19l-7-7 7-7"
+                    />
+                  </svg>
+                </button>
+              )}
+              {productsShowNext && (
+                <button
+                  type="button"
+                  onClick={() => scrollProducts("next")}
+                  className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-colors"
+                  aria-label="Следующий слайд"
+                >
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </button>
+              )}
             </div>
           )}
 
@@ -362,7 +569,7 @@ export default function StudioSection({
               id="directions"
               className="space-y-4 flex-1 min-h-0 flex flex-col overflow-auto"
             >
-              <div className="relative rounded-xl overflow-hidden bg-stone-800 ring-1 ring-stone-700 w-full h-[240px] sm:h-[300px] md:h-[420px]">
+              <div className="relative rounded-xl overflow-hidden bg-stone-800 ring-1 ring-stone-700 w-full h-[318px]">
                 <iframe
                   src={directions.mapUrl}
                   title="Карта"

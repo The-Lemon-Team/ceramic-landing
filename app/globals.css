@@ -34,6 +34,26 @@
     scrollbar-width: none;
   }
 
+  .carousel-scroll {
+    overscroll-behavior-x: contain;
+  }
+
+  /* Тонкая полоса прокрутки для каруселей (видна при наведении) */
+  .carousel-scroll-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+  }
+  .carousel-scroll-thin::-webkit-scrollbar {
+    height: 6px;
+  }
+  .carousel-scroll-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .carousel-scroll-thin::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+  }
+
   /* Hero Patterns – Charlie Brown (zigzag stripes), прозрачность через псевдоэлемент */
   .bg-pattern-charlie-brown {
     position: relative;

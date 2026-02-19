@@ -21,11 +21,6 @@ export default function AboutSection({ data }: AboutSectionProps) {
         aria-hidden
       />
       <div className="relative z-10 max-w-7xl px-6 mx-auto">
-        {data.sectionTitle && (
-          <h2 className="text-2xl md:text-3xl font-serif text-stone-800 text-center mb-12">
-            {data.sectionTitle}
-          </h2>
-        )}
         <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-10 md:gap-12 items-center">
           <div className="relative w-fit max-w-[308px] md:max-w-[352px] mx-auto md:mx-0">
             <div className="absolute -top-6 -left-6 w-32 h-32 bg-primary rounded-full blur-3xl"></div>
@@ -51,7 +46,7 @@ export default function AboutSection({ data }: AboutSectionProps) {
             )}
           </div>
           <div className="flex flex-col justify-center">
-            <div className="rounded-2xl bg-white/75  px-6 py-8 md:px-10 md:py-10 border border-white/60 shadow-sm">
+            <div className="rounded-[5px] bg-white/50 px-6 py-8 md:px-10 md:py-10 border border-white/40 shadow-sm">
               <span className="section-label-wrap">
                 <span className="section-label text-stone-500 inline-flex items-center gap-1.5">
                   {data.sectionLabel}

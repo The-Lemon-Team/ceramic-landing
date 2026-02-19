@@ -53,13 +53,13 @@ export default function ProductGallerySection({ items }: ProductGallerySectionPr
             Авторская керамика ручной работы. Ограниченные серии, доставка по России.
           </p>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-5">
+        <div className="carousel-scroll flex gap-4 md:gap-5 overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth no-scrollbar pb-4 -mx-6 px-6 [scroll-padding-inline:1.5rem]">
           {items.map((product) => (
             <button
               key={product.id}
               type="button"
               onClick={() => openModal(product)}
-              className="group text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-xl"
+              className="group text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-xl shrink-0 snap-start w-[min(45vw,180px)] sm:w-[min(30vw,200px)] md:w-[min(22vw,220px)] lg:w-[min(18vw,240px)]"
             >
               <div className="aspect-[3/4] overflow-hidden rounded-xl mb-2.5 relative">
                 <Image
@@ -68,7 +68,7 @@ export default function ProductGallerySection({ items }: ProductGallerySectionPr
                   width={280}
                   height={373}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
+                  sizes="(max-width: 640px) 45vw, (max-width: 768px) 30vw, (max-width: 1024px) 22vw, 240px"
                 />
               </div>
               <h3 className="text-sm font-serif leading-tight mb-0.5 line-clamp-2">

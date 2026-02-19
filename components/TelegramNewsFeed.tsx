@@ -84,7 +84,7 @@ export default function TelegramNewsFeed({ items }: TelegramNewsFeedProps) {
           <div
             ref={scrollContainerRef}
             onScroll={handleScroll}
-            className="flex gap-5 overflow-x-auto no-scrollbar snap-x pb-4 scroll-smooth"
+            className="carousel-scroll flex gap-5 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-4 scroll-smooth"
           >
             {items.map((post) => (
               <TelegramPostCard key={post.id} post={post} />
