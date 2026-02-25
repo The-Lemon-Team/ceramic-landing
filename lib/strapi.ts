@@ -175,11 +175,16 @@ export async function getDirections() {
   }>("/directions");
   if (!res?.data) return fallbackToStatic(null, DIRECTIONS);
   const d = res.data as Record<string, unknown>;
+  const fallback = DIRECTIONS as Record<string, unknown>;
   return {
     title: (d?.title as string) || "Как добраться",
     address: (d?.address as string) || "",
     mapUrl: (d?.mapUrl as string) || "",
     text: (d?.text as string) || "",
+    hint: (d?.hint as string) || (fallback?.hint as string) || "",
+    parking: (d?.parking as string) || (fallback?.parking as string) || "",
+    yandexMapsUrl: (d?.yandexMapsUrl as string) || (fallback?.yandexMapsUrl as string) || "",
+    googleMapsUrl: (d?.googleMapsUrl as string) || (fallback?.googleMapsUrl as string) || "",
   };
 }
 

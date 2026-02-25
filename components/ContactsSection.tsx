@@ -1,12 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import Image from "next/image";
 
 export interface DirectionsData {
   title: string;
   address: string;
   mapUrl: string;
   text: string;
+  hint?: string;
+  parking?: string;
+  yandexMapsUrl?: string;
+  googleMapsUrl?: string;
 }
 
 interface ContactsSectionProps {
@@ -15,10 +19,38 @@ interface ContactsSectionProps {
 
 const TELEGRAM_URL = "https://t.me/ceramic_loop";
 
-export default function ContactsSection({
-  directions,
-}: ContactsSectionProps) {
-  const [isDirectionsPopupOpen, setIsDirectionsPopupOpen] = useState(false);
+/** Фото-ориентиры для карусели (из проекта, позже заменить на реальные) */
+const ORIENTATION_PHOTOS = [
+  {
+    src: "https://lh3.googleusercontent.com/aida-public/AB6AXuDEcKSfVsH7iGB-mhi7w7JAKeYKnvJHyHkiu7hhvFQY9t4V9OcwOHYHaOaG5V570RL4eOESCIRWecXf8FlKDpKSlWDcUUjNrK1wiK-RN8maFl35EpaE8415OQsRN98U7H8O4BZFEJ_NVD5gzEt-fRk7Iw08E3tAN3qX7TPwk-8DWXJcfNADEiaW2LjnmcfAD1qoXqiB6jvo5RmSSxCRSeRFRSowy4EzsPGjHjtv4b9vfWKtHhzRREP6xBVQx1tVOSMmiEwtNN6womg",
+    alt: "Студия керамики",
+  },
+  {
+    src: "https://lh3.googleusercontent.com/aida-public/AB6AXuAKCI_1NW9gyQvvZ7I7kk940Rgg4jCgsUcwQDzvYfwR6HKBkc_xJ8U76mfN8aZWXbT8KHZ2R4acWtyLUt59K0FwRSBhiTMD12pHKKssLCQCBixHkd0uNv6xx6hz766COUI6muoaviAiYmI0-3FK1N4Hv9HwtTqZ9KKVQWBgz0qiLI49_-jplixy832dySum_B_NYDvNfCA4itb_Bf7T3JB7AZuLEnYZjrmRhIAWb7RPflb44-retl_TfPVY9yJ5p9hJFL7bwDnmXcQ",
+    alt: "Керамика в студии",
+  },
+  {
+    src: "https://lh3.googleusercontent.com/aida-public/AB6AXuD0Wwmkkl62kGIKXDPRcx78zz0q6hvAqhyaVBleDpZwnWnmEoGDwRN5IzwEX26fIF9CVX8srHlpuFWWyyG5zv31Va6ip-kkrlL54qeBVb_SeubTFYoxRXTqHUaspoMae1djAZRkSbvAXqUUUmGkXK5rhZObNiwU1TDGJH3dfETChpquZLuF1zTiTlaesUgZwjGlj_vkdAFvIfJaXW7RMYm2qvM_imHFlJHtueyK0ikAQPs-qmoK_GWfT0Gs1m9iXmyMx3DHV425E5U",
+    alt: "Интерьер студии",
+  },
+  {
+    src: "https://lh3.googleusercontent.com/aida-public/AB6AXuCM-HgxXPcEg8h62pk-CuR7vg8jsiUiyDhWTZmXFInrQwEg9P5gXXGSYtpEmQ3d5rUh7HO0UcYe3plkB8PoyvtWzhHyezz_g5y3qQh5LcNZQD7eNmdSccjc-QjDQ6vFO-sIxwAPEQTbYIAPTYJ4eMk8AkPm4INgQ9bY0dNSv4M2ZVUs4JQvvVX7K5pz2pYn4tqgn6vfpWhfovCDZD2NZ85VmQOJb51uR69JWAdkCteAQM4HoTizQb1oIWhTGzqsQY6dgaS4VAaUcE4",
+    alt: "Рабочее пространство",
+  },
+];
+
+export default function ContactsSection({ directions }: ContactsSectionProps) {
+  const hint =
+    directions.hint ||
+    "Мы находимся в историческом здании на Петроградской. Заходите в черную арку, далее — вторая дверь направо, мы на 3 этаже. Если запутаетесь — просто нажмите кнопку «Петля» на домофоне, и мы вас сориентируем";
+  const parking =
+    directions.parking || "Есть платная городская парковка прямо у входа";
+  const yandexUrl =
+    directions.yandexMapsUrl ||
+    "https://yandex.ru/maps/?pt=30.311389,59.966389&z=17";
+  const googleUrl =
+    directions.googleMapsUrl ||
+    "https://www.google.com/maps/search/?api=1&query=59.966389,30.311389";
 
   return (
     <section
@@ -51,7 +83,8 @@ export default function ContactsSection({
           {directions.address}
         </p>
 
-        <div className="grid md:grid-cols-2 gap-8 mb-8">
+        {/* Карта слева, подсказка справа */}
+        <div className="grid md:grid-cols-2 gap-8 mb-8 items-start">
           {/* Карта */}
           <div className="relative rounded-xl overflow-hidden bg-stone-100 border border-stone-200 h-[280px] md:h-[320px]">
             <iframe
@@ -64,85 +97,109 @@ export default function ContactsSection({
             />
           </div>
 
-          {/* Кнопки связи */}
-          <div className="flex flex-col justify-center gap-4">
-            <a
-              href={TELEGRAM_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 px-6 py-4 bg-[#0088cc] text-white rounded-xl font-bold hover:bg-[#0077b5] transition-colors shadow-lg shadow-[#0088cc]/20"
-            >
-              <svg className="w-6 h-6 fill-current shrink-0" viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-1.96 1.25-5.54 3.69-.52.35-.99.53-1.41.52-.46-.01-1.35-.26-2.01-.48-.81-.27-1.45-.42-1.39-.89.03-.24.36-.48.99-.74 3.84-1.67 6.41-2.77 7.71-3.3 3.66-1.51 4.42-1.77 4.92-1.78.11 0 .35.03.51.16.13.11.17.26.18.37 0 .09.01.19-.01.28z" />
-              </svg>
-              Написать в Telegram
-            </a>
-            <button
-              type="button"
-              onClick={() => setIsDirectionsPopupOpen(true)}
-              className="inline-flex items-center gap-3 px-6 py-4 bg-stone-100 text-stone-800 rounded-xl font-medium hover:bg-stone-200 transition-colors border border-stone-200"
-            >
+          {/* Правая колонка: подсказка + кнопки + парковка */}
+          <div className="flex flex-col gap-4">
+            <p className="text-stone-600 text-sm leading-relaxed">{hint}</p>
+
+            {/* Компактные кнопки в ряд */}
+            <div className="flex flex-wrap gap-2">
+              <a
+                href={TELEGRAM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-3 py-2 bg-[#0088cc] text-white rounded-lg text-sm font-medium hover:bg-[#0077b5] transition-colors"
+              >
+                <svg
+                  className="w-4 h-4 fill-current shrink-0"
+                  viewBox="0 0 24 24"
+                  aria-hidden
+                >
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-1.96 1.25-5.54 3.69-.52.35-.99.53-1.41.52-.46-.01-1.35-.26-2.01-.48-.81-.27-1.45-.42-1.39-.89.03-.24.36-.48.99-.74 3.84-1.67 6.41-2.77 7.71-3.3 3.66-1.51 4.42-1.77 4.92-1.78.11 0 .35.03.51.16.13.11.17.26.18.37 0 .09.01.19-.01.28z" />
+                </svg>
+                Telegram
+              </a>
+              <a
+                href={yandexUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-3 py-2 bg-stone-100 text-stone-800 rounded-lg text-sm font-medium hover:bg-stone-200 transition-colors border border-stone-200"
+                title="Открыть в Яндекс.Картах"
+              >
+                <svg
+                  className="w-4 h-4 shrink-0 text-[#fc3f1d]"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden
+                >
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                </svg>
+                Открыть в Я
+              </a>
+              <a
+                href={googleUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-3 py-2 bg-stone-100 text-stone-800 rounded-lg text-sm font-medium hover:bg-stone-200 transition-colors border border-stone-200"
+                title="Открыть в Google Maps"
+              >
+                <svg
+                  className="w-4 h-4 shrink-0 text-[#4285f4]"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden
+                >
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                </svg>
+                Открыть в G
+              </a>
+            </div>
+
+            {/* Парковка */}
+            <div className="flex items-center gap-2 text-sm text-stone-600">
               <svg
-                className="w-6 h-6 shrink-0"
+                className="w-5 h-5 shrink-0 text-stone-400"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
+                aria-hidden
               >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                  strokeWidth="2"
+                  d="M9 17V7h4a3 3 0 013 3v4M9 17h6M9 17v-4"
                 />
               </svg>
-              Подсказка как добраться
-            </button>
+              <p className="leading-relaxed">{parking}</p>
+            </div>
+
+            {/* Галерея фото-ориентиров */}
+            <div className="mt-4 pt-4 border-t border-stone-100">
+              <h3 className="text-xs uppercase tracking-wide text-stone-500 font-medium mb-2">
+                Фото-ориентиры
+              </h3>
+              <div className="carousel-scroll flex gap-2 overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth no-scrollbar -mx-1 px-1">
+                {ORIENTATION_PHOTOS.map((photo, idx) => (
+                  <div
+                    key={idx}
+                    className="shrink-0 snap-start w-[min(40vw,140px)] aspect-[4/3] rounded-lg overflow-hidden bg-stone-100"
+                  >
+                <Image
+                  src={photo.src}
+                  alt={photo.alt}
+                  width={140}
+                  height={105}
+                  className="w-full h-full object-cover"
+                  sizes="(max-width: 768px) 40vw, 140px"
+                  unoptimized
+                />
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
-
-      {/* Попап «Как добраться» */}
-      {isDirectionsPopupOpen && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="directions-popup-title"
-        >
-          <div
-            className="absolute inset-0 bg-black/40 backdrop-blur-sm"
-            onClick={() => setIsDirectionsPopupOpen(false)}
-            aria-hidden="true"
-          />
-          <div className="relative bg-white rounded-xl shadow-2xl max-w-lg w-full p-6 md:p-8 max-h-[80vh] overflow-y-auto">
-            <h3
-              id="directions-popup-title"
-              className="text-xl font-serif text-stone-800 mb-2"
-            >
-              {directions.title}
-            </h3>
-            <p className="text-primary font-medium mb-4">
-              {directions.address}
-            </p>
-            <div className="text-sm leading-relaxed text-stone-600 whitespace-pre-line">
-              {directions.text}
-            </div>
-            <button
-              type="button"
-              onClick={() => setIsDirectionsPopupOpen(false)}
-              className="mt-6 w-full py-3 bg-primary text-white rounded-lg font-medium hover:bg-orange-600 transition-colors"
-            >
-              Закрыть
-            </button>
-          </div>
-        </div>
-      )}
     </section>
   );
 }

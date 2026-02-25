@@ -5,8 +5,59 @@ import Image from "next/image";
 import { ProductModal } from "@/ui-lib";
 import { Product } from "@/types/product";
 
+const INITIAL_COUNT = 10; // 5 columns × 2 rows
+
 interface ProductGallerySectionProps {
   items: Product[];
+}
+
+function ProductCard({
+  product,
+  onOpen,
+}: {
+  product: Product;
+  onOpen: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onOpen}
+      className="group text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-lg"
+    >
+      <div className="aspect-square overflow-hidden rounded-lg mb-2 relative bg-stone-100">
+        <Image
+          src={product.mainImage}
+          alt={product.title}
+          fill
+          className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
+          sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 160px"
+        />
+      </div>
+      <h3 className="text-xs font-serif leading-tight mb-0.5 line-clamp-2">
+        {product.title}
+      </h3>
+      <p className="text-[9px] text-stone-400 uppercase tracking-wide truncate">
+        {product.finish}
+      </p>
+      {product.price > 0 && (
+        <div className="flex items-center gap-2 mt-1.5 flex-wrap">
+          {product.discountPercent != null && (
+            <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-bold bg-red-500/90 text-white">
+              −{product.discountPercent}%
+            </span>
+          )}
+          <p className="text-xs font-semibold text-primary">
+            {product.price.toFixed(0)} ₽
+          </p>
+          {product.originalPrice != null && (
+            <p className="text-[10px] text-stone-400 line-through">
+              {product.originalPrice.toFixed(0)} ₽
+            </p>
+          )}
+        </div>
+      )}
+    </button>
+  );
 }
 
 export default function ProductGallerySection({
@@ -14,6 +65,10 @@ export default function ProductGallerySection({
 }: ProductGallerySectionProps) {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
+
+  const visibleItems = items.slice(0, visibleCount);
+  const hasMore = items.length > visibleCount;
 
   const openModal = (product: Product) => {
     setSelectedProduct(product);
@@ -27,7 +82,7 @@ export default function ProductGallerySection({
 
   return (
     <section id="ceramics" className="py-10 md:py-12 px-6 bg-accent-earth overflow-x-hidden">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         <div className="mb-6 md:mb-8">
           <span className="section-label-wrap">
             <span className="section-label inline-flex items-center gap-1.5">
@@ -56,50 +111,26 @@ export default function ProductGallerySection({
             России.
           </p>
         </div>
-        <div className="carousel-scroll flex gap-4 md:gap-5 overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth no-scrollbar pb-4 -mx-6 px-6 [scroll-padding-inline:1.5rem]">
-          {items.map((product) => (
-            <button
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4">
+          {visibleItems.map((product) => (
+            <ProductCard
               key={product.id}
-              type="button"
-              onClick={() => openModal(product)}
-              className="group text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-xl shrink-0 snap-start w-[min(45vw,180px)] sm:w-[min(30vw,200px)] md:w-[min(22vw,220px)] lg:w-[min(18vw,240px)]"
-            >
-              <div className="aspect-[3/4] overflow-hidden rounded-xl mb-2.5 relative">
-                <Image
-                  src={product.mainImage}
-                  alt={product.title}
-                  width={280}
-                  height={373}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  sizes="(max-width: 640px) 45vw, (max-width: 768px) 30vw, (max-width: 1024px) 22vw, 240px"
-                />
-              </div>
-              <h3 className="text-sm font-serif leading-tight mb-0.5 line-clamp-2">
-                {product.title}
-              </h3>
-              <p className="text-[10px] text-stone-400 uppercase tracking-wide truncate">
-                {product.finish}
-              </p>
-              {product.price > 0 && (
-                <div className="flex items-center gap-2 mt-2 flex-wrap">
-                  {product.discountPercent != null && (
-                    <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-red-500/90 text-white">
-                      −{product.discountPercent}%
-                    </span>
-                  )}
-                  <p className="text-sm font-semibold text-primary">
-                    {product.price.toFixed(0)} ₽
-                  </p>
-                  {product.originalPrice != null && (
-                    <p className="text-xs text-stone-400 line-through">
-                      {product.originalPrice.toFixed(0)} ₽
-                    </p>
-                  )}
-                </div>
-              )}
-            </button>
+              product={product}
+              onOpen={() => openModal(product)}
+            />
           ))}
         </div>
+        {hasMore && (
+          <div className="mt-8 flex justify-center">
+            <button
+              type="button"
+              onClick={() => setVisibleCount(items.length)}
+              className="px-6 py-3 rounded-lg border-2 border-primary text-primary font-bold hover:bg-primary hover:text-white transition-colors"
+            >
+              Показать ещё
+            </button>
+          </div>
+        )}
       </div>
       {selectedProduct && (
         <ProductModal
