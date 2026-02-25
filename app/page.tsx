@@ -1,9 +1,11 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import AboutSection from "@/components/AboutSection";
-import ProductGallerySection from "@/components/ProductGallerySection";
 import StudioSection from "@/components/StudioSection";
+import MasterClassesSection from "@/components/MasterClassesSection";
 import TelegramNewsFeed from "@/components/TelegramNewsFeed";
+import ProductGallerySection from "@/components/ProductGallerySection";
+import ContactsSection from "@/components/ContactsSection";
 import Footer from "@/components/Footer";
 import {
   getProducts,
@@ -41,19 +43,13 @@ export default async function Home() {
         title={siteConfig.siteName}
         subTitle={siteConfig.heroSubTitle}
         motto={siteConfig.heroMotto}
-        ctaHref={siteConfig.heroCtaHref}
-        ctaLabel={siteConfig.heroCtaLabel}
       />
       <AboutSection data={aboutAuthor} />
-
+      <StudioSection artsItems={artsThemes} />
+      <MasterClassesSection />
       <TelegramNewsFeed items={telegramPosts} />
-      <StudioSection
-        artsItems={artsThemes}
-        productsItems={products}
-        directions={directions}
-      />
       <ProductGallerySection items={products} />
-
+      <ContactsSection directions={directions} />
       <Footer />
     </main>
   );

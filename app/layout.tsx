@@ -37,7 +37,7 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <body
-        className={`${cormorantGaramond.variable} ${inter.variable} ${mrsSaintDelafield.variable} font-sans antialiased`}
+        className={`${cormorantGaramond.variable} ${inter.variable} ${mrsSaintDelafield.variable} font-sans antialiased overflow-x-hidden`}
       >
         {children}
       </body>

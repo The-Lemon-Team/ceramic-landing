@@ -214,10 +214,22 @@ export default function ProductModal({
 
                     {/* Цена — после описания */}
                     {displayPrice && product.price > 0 && (
-                      <div className="pt-4 border-t border-stone-100">
-                        <p className="text-xl font-semibold text-stone-800">
-                          {product.price.toFixed(0)} ₽
-                        </p>
+                      <div className="pt-4 border-t border-stone-100 space-y-1">
+                        <div className="flex items-center gap-3 flex-wrap">
+                          {product.discountPercent != null && (
+                            <span className="inline-flex items-center px-2 py-1 rounded text-xs font-bold bg-red-500/90 text-white">
+                              −{product.discountPercent}%
+                            </span>
+                          )}
+                          <p className="text-xl font-semibold text-stone-800">
+                            {product.price.toFixed(0)} ₽
+                          </p>
+                          {product.originalPrice != null && (
+                            <p className="text-base text-stone-400 line-through">
+                              {product.originalPrice.toFixed(0)} ₽
+                            </p>
+                          )}
+                        </div>
                       </div>
                     )}
                     {!isGallery && (

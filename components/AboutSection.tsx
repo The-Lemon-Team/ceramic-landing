@@ -21,12 +21,12 @@ export default function AboutSection({ data }: AboutSectionProps) {
         aria-hidden
       />
       <div className="relative z-10 max-w-7xl px-6 mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-10 md:gap-12 items-center">
-          <div className="relative w-fit max-w-[308px] md:max-w-[352px] mx-auto md:mx-0">
+        <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-10 md:gap-12 items-start min-w-0">
+          <div className="relative w-full max-w-[308px] md:max-w-[352px] mx-auto md:mx-0 min-w-0">
             <div className="absolute -top-6 -left-6 w-32 h-32 bg-primary rounded-full blur-3xl"></div>
             {/* <div className="absolute -bottom-20 -right-20 z-0 w-48 h-48 bg-stone-200 rounded-full opacity-30"></div> */}
             <div
-              className="relative rounded-2xl overflow-hidden border-[10px] border-stone-50 shadow-xl"
+              className="relative w-full rounded-2xl overflow-hidden border-[10px] border-stone-50 shadow-xl box-border"
               style={{ aspectRatio: "3/5" }}
             >
               <Image
@@ -69,23 +69,25 @@ export default function AboutSection({ data }: AboutSectionProps) {
                   </svg>
                 </span>
               </span>
-              <h2 className="section-title mb-6">{data.authorName}</h2>
+              <h2 className="text-2xl md:text-3xl font-serif text-stone-800 mb-4">
+                {data.authorName}
+              </h2>
               {data.bio && (
-                <div className="space-y-5 text-stone-600 text-[1.0625rem] leading-relaxed whitespace-pre-line">
+                <div className="space-y-4 text-stone-600 text-sm md:text-base leading-relaxed whitespace-pre-line">
                   {data.bio.split("\n\n").map((para, i) => (
                     <p key={i}>{para}</p>
                   ))}
                 </div>
               )}
               {(data.closingText || data.signature) && (
-                <div className="mt-8 pt-8 border-t border-stone-100">
+                <div className="pt-6 border-t border-stone-100">
                   {data.closingText && (
-                    <p className="text-stone-400 text-sm mb-2">
+                    <p className="text-stone-400 text-xs md:text-sm mb-1.5">
                       {data.closingText}
                     </p>
                   )}
                   {data.signature && (
-                    <p className="font-script text-4xl text-stone-800">
+                    <p className="font-script text-2xl md:text-3xl text-stone-800">
                       {data.signature}
                     </p>
                   )}

@@ -4,16 +4,12 @@ interface HeroProps {
   title: string;
   subTitle: string;
   motto: string;
-  ctaHref: string;
-  ctaLabel: string;
 }
 
 export default function Hero({
   title,
   subTitle,
   motto,
-  ctaHref,
-  ctaLabel,
 }: HeroProps) {
   const headingBase = "text-white font-serif leading-tight";
   return (
@@ -43,12 +39,20 @@ export default function Hero({
           <p className="text-white/90 text-sm md:text-base font-sans font-light">
             {motto}
           </p>
-          <a
-            href={ctaHref}
-            className="bg-primary text-white px-8 py-3 rounded-lg font-bold text-lg hover:scale-105 transition-transform"
-          >
-            {ctaLabel}
-          </a>
+          <div className="flex flex-col sm:flex-row items-center gap-3">
+            <a
+              href="#ceramics"
+              className="w-full sm:w-auto text-center bg-primary text-white px-8 py-3 rounded-lg font-bold text-lg hover:scale-105 transition-transform"
+            >
+              Каталог
+            </a>
+            <a
+              href="#master-classes"
+              className="w-full sm:w-auto text-center bg-white/20 text-white px-8 py-3 rounded-lg font-bold text-lg border border-white/40 hover:bg-white/30 transition-colors"
+            >
+              Мастер-классы
+            </a>
+          </div>
         </div>
       </div>
     </section>

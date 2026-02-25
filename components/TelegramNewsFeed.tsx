@@ -44,7 +44,7 @@ export default function TelegramNewsFeed({ items }: TelegramNewsFeedProps) {
   };
 
   return (
-    <section id="news" className="bg-[#f0f5f6] dark:bg-[#0c181a] py-12">
+    <section id="news" className="bg-[#f0f5f6] dark:bg-[#0c181a] py-12 overflow-x-hidden">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6 md:mb-8">
           <div>

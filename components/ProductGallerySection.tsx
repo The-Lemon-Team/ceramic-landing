@@ -26,7 +26,7 @@ export default function ProductGallerySection({
   };
 
   return (
-    <section id="ceramics" className="py-10 md:py-12 px-6 bg-accent-earth">
+    <section id="ceramics" className="py-10 md:py-12 px-6 bg-accent-earth overflow-x-hidden">
       <div className="max-w-7xl mx-auto">
         <div className="mb-6 md:mb-8">
           <span className="section-label-wrap">
@@ -81,9 +81,21 @@ export default function ProductGallerySection({
                 {product.finish}
               </p>
               {product.price > 0 && (
-                <p className="text-sm font-semibold text-primary mt-2">
-                  {product.price.toFixed(0)} ₽
-                </p>
+                <div className="flex items-center gap-2 mt-2 flex-wrap">
+                  {product.discountPercent != null && (
+                    <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-red-500/90 text-white">
+                      −{product.discountPercent}%
+                    </span>
+                  )}
+                  <p className="text-sm font-semibold text-primary">
+                    {product.price.toFixed(0)} ₽
+                  </p>
+                  {product.originalPrice != null && (
+                    <p className="text-xs text-stone-400 line-through">
+                      {product.originalPrice.toFixed(0)} ₽
+                    </p>
+                  )}
+                </div>
               )}
             </button>
           ))}
