@@ -68,7 +68,7 @@ export default function TelegramNewsFeed({ items }: TelegramNewsFeedProps) {
             </p>
           </div>
           <a
-            className="flex items-center gap-2 bg-[#0088cc] text-white px-5 py-2.5 rounded-full text-sm font-bold hover:bg-[#0077b5] transition-colors shadow-lg shadow-[#0088cc]/20 self-start md:self-auto"
+            className="flex items-center gap-2 px-4 py-1.5 text-sm font-medium rounded-md bg-[#0088cc] text-white hover:bg-[#0077b5] transition-colors shadow-lg shadow-[#0088cc]/20 self-start md:self-auto"
             href="https://t.me/ceramic_loop"
             target="_blank"
             rel="noopener noreferrer"

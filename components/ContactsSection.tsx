@@ -42,7 +42,10 @@ const ORIENTATION_PHOTOS = [
 export default function ContactsSection({ directions }: ContactsSectionProps) {
   const hint =
     directions.hint ||
-    "Мы находимся в историческом здании на Петроградской. Заходите в черную арку, далее — вторая дверь направо, мы на 3 этаже. Если запутаетесь — просто нажмите кнопку «Петля» на домофоне, и мы вас сориентируем";
+    `Петроградская набережная, 22.
+7 минут пешком от м. Горьковская.
+Вход через главный вестибюль, 4 этаж, студия 412.
+Пожалуйста, возьмите с собой документ для прохода через пост охраны`;
   const parking =
     directions.parking || "Есть платная городская парковка прямо у входа";
   const yandexUrl =
@@ -78,15 +81,19 @@ export default function ContactsSection({ directions }: ContactsSectionProps) {
             </svg>
           </span>
         </span>
-        <h2 className="section-title mb-2">Как добраться</h2>
+        <h2 className="section-title mb-2">Адрес и контакты</h2>
         <p className="text-stone-600 text-base mb-6 max-w-lg">
           {directions.address}
         </p>
 
-        {/* Карта слева, подсказка справа */}
-        <div className="grid md:grid-cols-2 gap-8 mb-8 items-start">
+        <h3 className="text-lg font-semibold text-stone-800 mb-2">
+          Как добраться
+        </h3>
+
+        {/* Карта слева, подсказка справа — одинаковые по высоте */}
+        <div className="grid md:grid-cols-2 gap-8 mb-8 md:items-stretch">
           {/* Карта */}
-          <div className="relative rounded-xl overflow-hidden bg-stone-100 border border-stone-200 h-[280px] md:h-[320px]">
+          <div className="relative rounded-xl overflow-hidden bg-stone-100 border border-stone-200 h-[280px] md:h-full">
             <iframe
               src={directions.mapUrl}
               title="Карта"
@@ -97,9 +104,14 @@ export default function ContactsSection({ directions }: ContactsSectionProps) {
             />
           </div>
 
-          {/* Правая колонка: подсказка + кнопки + парковка */}
-          <div className="flex flex-col gap-4">
-            <p className="text-stone-600 text-sm leading-relaxed">{hint}</p>
+          {/* Правая колонка: подсказка + кнопки + парковка — высота как у карты */}
+          <div className="flex flex-col gap-4 md:min-h-[320px] overflow-hidden">
+            <h4 className="text-sm font-semibold text-stone-800">
+              Где нас найти
+            </h4>
+            <p className="text-stone-600 text-sm leading-relaxed whitespace-pre-line">
+              {hint}
+            </p>
 
             {/* Компактные кнопки в ряд */}
             <div className="flex flex-wrap gap-2">
@@ -107,7 +119,7 @@ export default function ContactsSection({ directions }: ContactsSectionProps) {
                 href={TELEGRAM_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-3 py-2 bg-[#0088cc] text-white rounded-lg text-sm font-medium hover:bg-[#0077b5] transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium rounded-md bg-[#0088cc] text-white hover:bg-[#0077b5] transition-colors"
               >
                 <svg
                   className="w-4 h-4 fill-current shrink-0"
@@ -122,7 +134,7 @@ export default function ContactsSection({ directions }: ContactsSectionProps) {
                 href={yandexUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-3 py-2 bg-stone-100 text-stone-800 rounded-lg text-sm font-medium hover:bg-stone-200 transition-colors border border-stone-200"
+                className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium rounded-md bg-stone-100 text-stone-800 border border-stone-200 hover:bg-stone-200 transition-colors"
                 title="Открыть в Яндекс.Картах"
               >
                 <svg
@@ -139,7 +151,7 @@ export default function ContactsSection({ directions }: ContactsSectionProps) {
                 href={googleUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-3 py-2 bg-stone-100 text-stone-800 rounded-lg text-sm font-medium hover:bg-stone-200 transition-colors border border-stone-200"
+                className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium rounded-md bg-stone-100 text-stone-800 border border-stone-200 hover:bg-stone-200 transition-colors"
                 title="Открыть в Google Maps"
               >
                 <svg
@@ -184,15 +196,15 @@ export default function ContactsSection({ directions }: ContactsSectionProps) {
                     key={idx}
                     className="shrink-0 snap-start w-[min(40vw,140px)] aspect-[4/3] rounded-lg overflow-hidden bg-stone-100"
                   >
-                <Image
-                  src={photo.src}
-                  alt={photo.alt}
-                  width={140}
-                  height={105}
-                  className="w-full h-full object-cover"
-                  sizes="(max-width: 768px) 40vw, 140px"
-                  unoptimized
-                />
+                    <Image
+                      src={photo.src}
+                      alt={photo.alt}
+                      width={140}
+                      height={105}
+                      className="w-full h-full object-cover"
+                      sizes="(max-width: 768px) 40vw, 140px"
+                      unoptimized
+                    />
                   </div>
                 ))}
               </div>

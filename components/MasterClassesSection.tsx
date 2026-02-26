@@ -53,7 +53,7 @@ export default function MasterClassesSection() {
                 href="https://t.me/ceramic_loop"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-lg font-bold hover:bg-orange-600 transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium rounded-md bg-primary text-white hover:bg-orange-600 transition-colors"
               >
                 Записаться на мастер-класс
                 <svg

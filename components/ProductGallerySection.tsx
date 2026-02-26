@@ -82,7 +82,7 @@ export default function ProductGallerySection({
 
   return (
     <section id="ceramics" className="py-10 md:py-12 px-6 bg-accent-earth overflow-x-hidden">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         <div className="mb-6 md:mb-8">
           <span className="section-label-wrap">
             <span className="section-label inline-flex items-center gap-1.5">
@@ -125,7 +125,7 @@ export default function ProductGallerySection({
             <button
               type="button"
               onClick={() => setVisibleCount(items.length)}
-              className="px-6 py-3 rounded-lg border-2 border-primary text-primary font-bold hover:bg-primary hover:text-white transition-colors"
+              className="px-4 py-1.5 text-sm rounded-md border border-primary text-primary font-medium hover:bg-primary hover:text-white transition-colors"
             >
               Показать ещё
             </button>

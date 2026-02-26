@@ -338,7 +338,7 @@ export default function StudioSection({
               </p>
               <a
                 href="#contacts"
-                className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-orange-600 transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium rounded-md bg-primary text-white hover:bg-orange-600 transition-colors"
               >
                 Обсудить заказ
                 <svg

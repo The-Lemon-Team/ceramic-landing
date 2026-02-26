@@ -80,8 +80,8 @@ export default function ProductModal({
               <Dialog.Panel
                 className="relative bg-white shadow-2xl overflow-y-auto rounded-2xl flex flex-col md:flex-row"
                 style={{
-                  width: "min(100%, 800px)",
-                  maxHeight: "min(820px, 90vh)",
+                  width: "min(100%, 840px)",
+                  maxHeight: "min(920px, 90vh)",
                 }}
               >
                 {/* Close Button */}
@@ -106,44 +106,21 @@ export default function ProductModal({
                 </button>
 
                 {/* Gallery Section */}
-                <div className="w-full md:w-[45%] p-6 md:p-8 flex flex-col lg:flex-row gap-4 bg-stone-50">
-                  {/* Thumbnails (Desktop) */}
-                  <div className="hidden lg:flex flex-col gap-2 order-1 shrink-0">
-                    {product.images.map((image, index) => (
-                      <button
-                        key={index}
-                        onClick={() => setSelectedImageIndex(index)}
-                        className={`w-14 h-14 rounded-lg overflow-hidden cursor-pointer transition-opacity shrink-0 border-2 border-transparent ${
-                          selectedImageIndex === index
-                            ? "border-primary opacity-100"
-                            : "opacity-60 hover:opacity-100"
-                        }`}
-                      >
-                        <Image
-                          src={image}
-                          alt={`${product.title} ${index + 1}`}
-                          width={56}
-                          height={56}
-                          className="w-full h-full object-cover"
-                        />
-                      </button>
-                    ))}
-                  </div>
-
+                <div className="w-full md:w-[48%] p-6 md:p-8 flex flex-col gap-4 bg-stone-50">
                   {/* Main Image */}
-                  <div className="flex-1 order-2 min-w-0">
-                    <div className="aspect-[4/5] max-h-[280px] md:max-h-[300px] bg-stone-200 rounded-xl overflow-hidden">
+                  <div className="flex-1 min-w-0">
+                    <div className="aspect-[4/5] max-h-[320px] md:max-h-[420px] bg-stone-200 rounded-xl overflow-hidden">
                       <Image
                         src={product.images[selectedImageIndex]}
                         alt={product.title}
-                        width={400}
-                        height={500}
+                        width={500}
+                        height={625}
                         className="w-full h-full object-cover"
-                        sizes="(max-width: 768px) 100vw, 360px"
+                        sizes="(max-width: 768px) 100vw, 400px"
                       />
                     </div>
-                    {/* Thumbnails (Mobile) */}
-                    <div className="flex lg:hidden gap-2 mt-3 overflow-x-auto pb-1">
+                    {/* Thumbnails — под главным фото */}
+                    <div className="flex gap-2 mt-3 overflow-x-auto pb-1">
                       {product.images.map((image, index) => (
                         <button
                           key={index}
@@ -151,7 +128,7 @@ export default function ProductModal({
                           className={`min-w-[56px] h-[56px] rounded-lg overflow-hidden transition-opacity shrink-0 border-2 ${
                             selectedImageIndex === index
                               ? "border-primary opacity-100"
-                              : "border-transparent opacity-60"
+                              : "border-transparent opacity-60 hover:opacity-100"
                           }`}
                         >
                           <Image
@@ -305,7 +282,7 @@ export default function ProductModal({
                             />
                           </svg>
                         </button>
-                        <button className="w-full border border-stone-200 text-stone-700 hover:border-primary hover:text-primary py-3 px-5 rounded-lg text-xs font-medium transition-all">
+                        <button className="w-full px-4 py-1.5 text-sm font-medium rounded-md border border-stone-200 text-stone-700 hover:border-primary hover:text-primary transition-all">
                           Подробнее
                         </button>
                       </div>
