@@ -6,7 +6,10 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./ui-lib/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/@premieroctet/next-admin/dist/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: "class",
+  presets: [require("@premieroctet/next-admin/preset")],
   theme: {
     extend: {
       colors: {

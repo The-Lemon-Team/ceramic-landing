@@ -1,4 +1,4 @@
-export const SITE_NAME = "Ceramic•Loop";
+export const SITE_NAME = "Ceramic Loop | Петля Керамики";
 
 export const HERO_CONFIG = {
   subTitle: "Керамика Санкт-Петербурга",
