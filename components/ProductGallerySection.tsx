@@ -9,6 +9,7 @@ const INITIAL_COUNT = 10; // 5 columns × 2 rows
 
 interface ProductGallerySectionProps {
   items: Product[];
+  showHeader?: boolean;
 }
 
 function ProductCard({
@@ -62,6 +63,7 @@ function ProductCard({
 
 export default function ProductGallerySection({
   items,
+  showHeader = true,
 }: ProductGallerySectionProps) {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -81,36 +83,41 @@ export default function ProductGallerySection({
   };
 
   return (
-    <section id="ceramics" className="py-10 md:py-12 px-6 bg-accent-earth overflow-x-hidden">
+    <section
+      id="ceramics"
+      className="py-10 md:py-12 px-6 bg-accent-earth overflow-x-hidden"
+    >
       <div className="max-w-7xl mx-auto">
-        <div className="mb-6 md:mb-8">
-          <span className="section-label-wrap">
-            <span className="section-label inline-flex items-center gap-1.5">
-              Керамика
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="text-primary shrink-0"
-                aria-hidden
-              >
-                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                <circle cx="8.5" cy="8.5" r="1.5" />
-                <path d="M21 15l-5-5L5 21" />
-              </svg>
+        {showHeader && (
+          <div className="mb-6 md:mb-8">
+            <span className="section-label-wrap">
+              <span className="section-label inline-flex items-center gap-1.5">
+                Керамика
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="text-primary shrink-0"
+                  aria-hidden
+                >
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                  <circle cx="8.5" cy="8.5" r="1.5" />
+                  <path d="M21 15l-5-5L5 21" />
+                </svg>
+              </span>
             </span>
-          </span>
-          <h2 className="section-title mb-4">Купить керамику</h2>
-          <p className="section-subtitle max-w-lg">
-            Авторская керамика ручной работы. Ограниченные серии, доставка по
-            России.
-          </p>
-        </div>
+            <h2 className="section-title mb-4">Купить керамику</h2>
+            <p className="section-subtitle max-w-lg">
+              Авторская керамика ручной работы. Ограниченные серии, доставка по
+              России.
+            </p>
+          </div>
+        )}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4">
           {visibleItems.map((product) => (
             <ProductCard

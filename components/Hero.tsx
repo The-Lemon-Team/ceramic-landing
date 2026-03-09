@@ -6,11 +6,7 @@ interface HeroProps {
   motto: string;
 }
 
-export default function Hero({
-  title,
-  subTitle,
-  motto,
-}: HeroProps) {
+export default function Hero({ title, subTitle, motto }: HeroProps) {
   const headingBase = "text-white font-serif leading-tight";
   return (
     <section className="relative w-full min-h-[85vh] overflow-hidden">
@@ -28,9 +24,7 @@ export default function Hero({
       />
       <div className="relative z-10 max-w-7xl mx-auto px-6 min-h-[85vh] flex items-center justify-center">
         <div className="max-w-2xl text-center flex flex-col items-center gap-6">
-          <h1
-            className={`${headingBase} text-3xl md:text-6xl font-semibold`}
-          >
+          <h1 className={`${headingBase} text-3xl md:text-6xl font-semibold`}>
             {title}
           </h1>
           <h2 className={`${headingBase} text-xl md:text-2xl font-medium`}>
@@ -41,13 +35,13 @@ export default function Hero({
           </p>
           <div className="flex flex-col sm:flex-row items-center gap-3">
             <a
-              href="#ceramics"
+              href="/#ceramics"
               className="w-full sm:w-auto text-center bg-primary text-white px-8 py-3 rounded-lg font-bold text-lg hover:scale-105 transition-transform"
             >
               Каталог
             </a>
             <a
-              href="#master-classes"
+              href="/#master-classes"
               className="w-full sm:w-auto text-center bg-white/20 text-white px-8 py-3 rounded-lg font-bold text-lg border border-white/40 hover:bg-white/30 transition-colors"
             >
               Мастер-классы

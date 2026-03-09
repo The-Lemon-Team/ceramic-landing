@@ -47,7 +47,7 @@ export default function DiarySection({ items }: DiarySectionProps) {
             {items.map((article) => (
               <li key={article.slug}>
                 <Link
-                  href={`#${article.slug}`}
+                  href={`/#${article.slug}`}
                   className="group flex gap-4 md:gap-6 py-5 md:py-6 text-left transition-colors hover:bg-stone-100/60 -mx-2 px-2 rounded-lg"
                 >
                   <div className="relative shrink-0 w-24 h-16 md:w-28 md:h-[5.25rem] rounded-lg overflow-hidden bg-stone-200">

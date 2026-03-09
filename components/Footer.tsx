@@ -31,22 +31,26 @@ export default function Footer() {
             </h5>
             <ul className="font-sans text-sm space-y-1.5 text-stone-500">
               <li>
-                <Link href="#" className="hover:text-primary transition-colors">
-                  Вазы
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-primary transition-colors">
-                  Тарелки
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-primary transition-colors">
+                <Link
+                  href="/shop/tiles"
+                  className="hover:text-primary transition-colors"
+                >
                   Плитка
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-primary transition-colors">
+                <Link
+                  href="/shop/plates"
+                  className="hover:text-primary transition-colors"
+                >
+                  Тарелки
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/shop/other"
+                  className="hover:text-primary transition-colors"
+                >
                   Прочее
                 </Link>
               </li>
@@ -109,16 +113,16 @@ export default function Footer() {
           <p className="copyright">© 2026 {SITE_NAME}. Все права защищены.</p>
           <div className="politics-links flex flex-row flex-wrap gap-2 md:gap-8 mt-4 pt-4 border-t border-primary md:mt-0 md:pt-0 md:border-0">
             <Link
-              href="#"
+              href="/policy"
               className="hover:text-stone-900 text-xs transition-colors whitespace-nowrap"
             >
               Политика конфиденциальности
             </Link>
             <Link
-              href="#"
+              href="/offer"
               className="hover:text-stone-900 transition-colors whitespace-nowrap"
             >
-              Условия использования
+              Оферта
             </Link>
           </div>
         </div>
