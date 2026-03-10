@@ -3,11 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "import:vk": "tsx scripts/import-vk-products.ts",
     "dev": "next dev",
-    "cms": "cd cms && npm run develop",
-    "cms:build": "cd cms && npm run build",
     "build": "next build",
+    "vercel-build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint"
   },
