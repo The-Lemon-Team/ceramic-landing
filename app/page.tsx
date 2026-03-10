@@ -17,6 +17,8 @@ import {
   getAboutAuthor,
 } from "@/lib/strapi";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const [
     products,
