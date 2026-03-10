@@ -9,7 +9,7 @@ generator nextAdmin {
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
-  directUrl = env("DATABASE_URL_UNPOOLED")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 enum TelegramPostCategory {
