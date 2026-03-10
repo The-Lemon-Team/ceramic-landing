@@ -19,7 +19,6 @@ jobs:
             *Керамика - Петля: Новый деплой!* ✅
 
             🚀 **Статус:** Успешно опубликован
-            📝 **Коммит:** `${{ github.event.deployment.description }}` 
             👤 **Автор:** ${{ github.actor }}
 
             🔗 [Посмотреть сайт](${{ github.event.deployment_status.target_url }})

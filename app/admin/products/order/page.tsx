@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   DndContext,
   DragEndEvent,
@@ -106,6 +107,7 @@ function SortableItem({
 }
 
 export default function ProductOrderAdminPage() {
+  const router = useRouter();
   const [items, setItems] = useState<ProductRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -196,6 +198,15 @@ export default function ProductOrderAdminPage() {
       <div className="mx-auto w-full max-w-3xl">
         <div className="flex items-start justify-between gap-4">
           <div>
+            <button
+              type="button"
+              onClick={() => router.push("/admin")}
+              className="mb-3 inline-flex items-center gap-2 rounded-md border border-stone-200 bg-white px-3 py-1.5 text-sm text-stone-700 hover:bg-stone-50"
+              aria-label="Назад в админку"
+              title="Назад"
+            >
+              ←<span>Админка</span>
+            </button>
             <h1 className="text-2xl font-serif text-stone-800">
               Порядок товаров
             </h1>
