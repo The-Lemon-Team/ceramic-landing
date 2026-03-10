@@ -1,0 +1,25 @@
+name: Vercel Deployment Notification
+
+on:
+  deployment_status: # Срабатывает, когда Vercel меняет статус деплоя
+
+jobs:
+  telegram_notify:
+    # Запускаем только если деплой завершился успешно и это был деплой в продакшн
+    if: github.event.deployment_status.state == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Telegram Message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          format: markdown
+          message: |
+            *Керамика - Бесконечность: Новый деплой!* ✅
+
+            🚀 **Статус:** Успешно опубликован
+            📝 **Коммит:** `${{ github.event.deployment.description }}` 
+            👤 **Автор:** ${{ github.actor }}
+
+            🔗 [Посмотреть сайт](${{ github.event.deployment_status.target_url }})
