@@ -16,7 +16,7 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           format: markdown
           message: |
-            *Керамика - Бесконечность: Новый деплой!* ✅
+            *Керамика - Петля: Новый деплой!* ✅
 
             🚀 **Статус:** Успешно опубликован
             📝 **Коммит:** `${{ github.event.deployment.description }}` 
