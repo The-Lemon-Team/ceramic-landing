@@ -1,0 +1,22 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: ceramic_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ceramic
+      POSTGRES_USER: ceramic
+      POSTGRES_PASSWORD: ceramic
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - "5440:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ceramic -d ceramic"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  postgres_data:

@@ -29,7 +29,7 @@ export async function getProducts(): Promise<
   }>
 > {
   try {
-    const data = await prisma.product.findMany({
+    const data = (await (prisma.product as any).findMany({
       include: {
         images: {
           orderBy: {
@@ -37,15 +37,13 @@ export async function getProducts(): Promise<
           },
         },
       },
-      orderBy: {
-        updatedAt: "desc",
-      },
-    });
+      orderBy: [{ sortOrder: "asc" }, { updatedAt: "desc" }],
+    })) as any[];
 
     if (data.length === 0) return staticProducts;
 
     return data.map((p) => {
-      const imagesFromRelation = (p.images ?? []).map((i) => i.url);
+      const imagesFromRelation = (p.images ?? []).map((i: any) => i.url);
       const images =
         imagesFromRelation.length > 0
           ? imagesFromRelation

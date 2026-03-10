@@ -2,6 +2,7 @@ import { PageProps } from "@premieroctet/next-admin";
 import { getNextAdminProps } from "@premieroctet/next-admin/appRouter";
 import { NextAdmin } from "@premieroctet/next-admin/adapters/next";
 import { prisma } from "@/prisma";
+import { options } from "../options";
 
 export default async function AdminPage({ params, searchParams }: PageProps) {
   const props = await getNextAdminProps({
@@ -10,6 +11,7 @@ export default async function AdminPage({ params, searchParams }: PageProps) {
     basePath: "/admin",
     apiBasePath: "/api/admin",
     prisma,
+    options,
   });
 
   return <NextAdmin {...props} />;

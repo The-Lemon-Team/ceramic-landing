@@ -46,6 +46,8 @@ model Product {
   originalPriceKopeks Int?
   discountPercent Int?
 
+  sortOrder      Int      @default(0)
+
   description    String
   category       String   @default("ГАЛЕРЕЯ")
   finish         String   @default("—")

@@ -158,8 +158,8 @@ async function main() {
   await prisma.productImage.deleteMany({});
   await prisma.product.deleteMany({});
 
-  for (const p of staticProducts) {
-    await prisma.product.create({
+  for (const [idx, p] of staticProducts.entries()) {
+    await (prisma.product as any).create({
       data: {
         title: p.title,
         slug: p.id,
@@ -167,6 +167,7 @@ async function main() {
         originalPriceKopeks:
           p.originalPrice != null ? Math.round(p.originalPrice * 100) : null,
         discountPercent: p.discountPercent ?? null,
+        sortOrder: idx,
         description: p.description,
         category: p.category,
         finish: p.finish,
