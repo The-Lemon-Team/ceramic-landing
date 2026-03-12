@@ -48,7 +48,7 @@ export default async function Home() {
       />
       <AboutSection data={aboutAuthor} />
       <StudioSection artsItems={artsThemes} />
-      <MasterClassesSection />
+      <MasterClassesSection text={siteConfig.masterClassesText} />
       <TelegramNewsFeed items={telegramPosts} />
       <ProductGallerySection items={products} />
       <ContactsSection directions={directions} />

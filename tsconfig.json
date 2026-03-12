@@ -22,6 +22,7 @@
     "components/**/*.ts",
     "components/**/*.tsx",
     "lib/**/*.ts",
+    "scripts/**/*.ts",
     "ui-lib/**/*.ts",
     "data/**/*.ts",
     "types/**/*.ts",

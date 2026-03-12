@@ -15,6 +15,10 @@ const nextConfig = {
         hostname: "images.unsplash.com",
       },
       {
+        protocol: "https",
+        hostname: "cdn.sanity.io",
+      },
+      {
         protocol: "http",
         hostname: "localhost",
         port: "1337",

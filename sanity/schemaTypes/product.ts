@@ -1,0 +1,94 @@
+import { defineField, defineType } from "sanity";
+
+export const product = defineType({
+  name: "product",
+  title: "Product",
+  type: "document",
+  fields: [
+    defineField({
+      name: "title",
+      title: "Title",
+      type: "string",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "slug",
+      title: "Slug",
+      type: "slug",
+      options: { source: "title" },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "price",
+      title: "Price",
+      type: "number",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "originalPrice",
+      title: "Original price",
+      type: "number",
+    }),
+    defineField({
+      name: "discountPercent",
+      title: "Discount percent",
+      type: "number",
+    }),
+    defineField({
+      name: "description",
+      title: "Description",
+      type: "text",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "category",
+      title: "Category",
+      type: "string",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "finish",
+      title: "Finish",
+      type: "string",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "dimensions",
+      title: "Dimensions",
+      type: "string",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "mainImage",
+      title: "Main image",
+      type: "image",
+      options: { hotspot: true },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "images",
+      title: "Images",
+      type: "array",
+      of: [
+        {
+          type: "image",
+          options: { hotspot: true },
+        },
+      ],
+      validation: (Rule) => Rule.required().min(1),
+    }),
+    defineField({
+      name: "thumbnail",
+      title: "Thumbnail",
+      type: "image",
+      options: { hotspot: true },
+      validation: (Rule) => Rule.required(),
+    }),
+  ],
+  preview: {
+    select: {
+      title: "title",
+      media: "thumbnail",
+    },
+  },
+});

@@ -1,6 +1,14 @@
 import Image from "next/image";
 
-export default function MasterClassesSection() {
+type Props = {
+  text?: string;
+};
+
+export default function MasterClassesSection({ text }: Props) {
+  const resolvedText =
+    text ||
+    "Если вы в Петербурге — приходите в студию. Не просто купить керамику, а сделать её своими руками под руководством Мастера. Сопричастность, эмоции и память на всю жизнь.";
+
   return (
     <section
       id="master-classes"
@@ -45,9 +53,7 @@ export default function MasterClassesSection() {
                 Мастер-классы
               </h2>
               <p className="text-base leading-relaxed text-stone-700 mb-8">
-                Если вы в Петербурге — приходите в студию. Не просто купить
-                керамику, а сделать её своими руками под руководством Мастера.
-                Сопричастность, эмоции и память на всю жизнь.
+                {resolvedText}
               </p>
               <a
                 href="https://t.me/ceramic_loop"
