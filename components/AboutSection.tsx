@@ -1,5 +1,5 @@
 import Image from "next/image";
-import type { AboutAuthorData } from "@/lib/strapi";
+import type { AboutAuthorData } from "@/lib/cms";
 
 type AboutSectionProps = {
   data: AboutAuthorData;

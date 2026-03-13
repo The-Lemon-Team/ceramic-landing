@@ -1,6 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { getNavItems, getSiteConfig } from "@/lib/strapi";
+import { getNavItems, getSiteConfig } from "@/lib/cms";
 
 export default async function OfferPage() {
   const [navItems, siteConfig] = await Promise.all([

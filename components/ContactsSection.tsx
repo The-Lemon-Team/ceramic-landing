@@ -6,7 +6,6 @@ export interface DirectionsData {
   title: string;
   address: string;
   mapUrl: string;
-  text: string;
   hint?: string;
   parking?: string;
   yandexMapsUrl?: string;

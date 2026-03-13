@@ -24,12 +24,6 @@ export const directions = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "text",
-      title: "Text",
-      type: "text",
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
       name: "hint",
       title: "Hint",
       type: "text",

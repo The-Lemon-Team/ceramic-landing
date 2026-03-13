@@ -15,7 +15,7 @@ import {
   getSiteConfig,
   getNavItems,
   getAboutAuthor,
-} from "@/lib/strapi";
+} from "@/lib/cms";
 
 export const dynamic = "force-dynamic";
 

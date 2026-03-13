@@ -2,7 +2,7 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProductGallerySection from "@/components/ProductGallerySection";
-import { getNavItems, getProducts, getSiteConfig } from "@/lib/strapi";
+import { getNavItems, getProducts, getSiteConfig } from "@/lib/cms";
 
 const FILTERS = [
   { key: "tiles", label: "Плитка", href: "/shop/tiles" },
