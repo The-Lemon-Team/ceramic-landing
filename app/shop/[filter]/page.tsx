@@ -28,9 +28,9 @@ function isPlates(dimensions: string) {
 export default async function ShopFilterPage({
   params,
 }: {
-  params: { filter?: string };
+  params: Promise<{ filter?: string }>;
 }) {
-  const { filter } = params;
+  const { filter } = await params;
   const activeFilter = normalizeFilter(filter);
 
   const [navItems, siteConfig, products] = await Promise.all([

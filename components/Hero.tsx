@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 interface HeroProps {
   title: string;
@@ -34,18 +35,18 @@ export default function Hero({ title, subTitle, motto }: HeroProps) {
             {motto}
           </p>
           <div className="flex flex-col sm:flex-row items-center gap-3">
-            <a
+            <Link
               href="/#ceramics"
               className="w-full sm:w-auto text-center bg-primary text-white px-8 py-3 rounded-lg font-bold text-lg hover:scale-105 transition-transform"
             >
               Каталог
-            </a>
-            <a
+            </Link>
+            <Link
               href="/#master-classes"
               className="w-full sm:w-auto text-center bg-white/20 text-white px-8 py-3 rounded-lg font-bold text-lg border border-white/40 hover:bg-white/30 transition-colors"
             >
               Мастер-классы
-            </a>
+            </Link>
           </div>
         </div>
       </div>
