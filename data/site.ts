@@ -1,5 +1,10 @@
 export const SITE_NAME = "Ceramic Loop | Петля Керамики";
 
+export const HERO_TITLE = {
+  ru: "Петля Керамики",
+  en: "Ceramic Loop",
+} as const;
+
 export const HERO_CONFIG = {
   subTitle: "Керамика Санкт-Петербурга",
   motto: "Керамические изделия, созданные с душой и теплом в нашей студии.",

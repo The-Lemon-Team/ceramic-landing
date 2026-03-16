@@ -42,7 +42,8 @@ export default async function Home() {
     <main className="min-h-screen bg-background-light">
       <Navbar items={navItems} siteName={siteConfig.siteName} />
       <Hero
-        title={siteConfig.siteName}
+        titleRu={siteConfig.heroTitleRu || siteConfig.siteName}
+        titleEn={siteConfig.heroTitleEn || siteConfig.siteName}
         subTitle={siteConfig.heroSubTitle}
         motto={siteConfig.heroMotto}
       />

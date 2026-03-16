@@ -38,8 +38,8 @@ export default function AboutSection({ data }: AboutSectionProps) {
               />
             </div>
             {data.quote && (
-              <div className="absolute -bottom-2 -left-10 bg-primary p-4 text-white rounded-lg shadow-xl hidden lg:block">
-                <p className="font-serif text-xl italic">
+              <div className="absolute -bottom-2 -left-10 bg-primary p-4 text-white rounded-lg shadow-xl hidden lg:flex items-center justify-center text-center">
+                <p className="font-serif text-xl italic text-center">
                   &quot;{data.quote}&quot;
                 </p>
               </div>

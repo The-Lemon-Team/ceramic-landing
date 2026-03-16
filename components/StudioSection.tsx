@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import ArtsGalleryModal from "./ArtsGalleryModal";
 import type { ArtsTheme } from "@/data/artsThemes";
@@ -8,19 +8,6 @@ import { assetUrl } from "@/lib/assetUrl";
 
 interface StudioSectionProps {
   artsItems: ArtsTheme[];
-}
-
-const hasImages = (theme: ArtsTheme) =>
-  theme.media.some((m) => m.type === "image");
-const hasVideos = (theme: ArtsTheme) =>
-  theme.media.some((m) => m.type === "video");
-
-function chunk<T>(arr: T[], size: number): T[][] {
-  const result: T[][] = [];
-  for (let i = 0; i < arr.length; i += size) {
-    result.push(arr.slice(i, i + size));
-  }
-  return result;
 }
 
 function GalleryCard({
@@ -34,121 +21,40 @@ function GalleryCard({
     <button
       type="button"
       onClick={onOpen}
-      className="gallery-item group text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-900 rounded-xl w-full min-w-0 flex flex-col h-full"
+      className="group relative block w-full overflow-hidden rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-900"
     >
-      <div className="aspect-[3/4] w-full min-h-[96px] max-h-[132px] sm:min-h-[112px] relative overflow-hidden rounded-xl bg-zinc-900 border border-white/5 shrink-0">
-        <Image
+      <div className="relative w-full aspect-square overflow-hidden">
+        <img
           src={assetUrl(theme.cover)}
           alt={theme.title}
-          fill
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
-          sizes="(max-width: 768px) 50vw, 25vw"
-          unoptimized
+          loading="lazy"
+          className="absolute inset-0 w-full h-full object-cover select-none transition-transform duration-500 ease-out group-hover:scale-105"
         />
-        <div className="absolute bottom-1.5 right-1.5 flex gap-1">
-          {hasImages(theme) && (
-            <span
-              className="w-6 h-6 rounded-full bg-black/50 flex items-center justify-center"
-              title="Изображения"
-              aria-hidden
-            >
-              <svg
-                className="w-3 h-3 text-white"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                <circle cx="8.5" cy="8.5" r="1.5" />
-                <path d="M21 15l-5-5L5 21" />
-              </svg>
-            </span>
-          )}
-          {hasVideos(theme) && (
-            <span
-              className="w-6 h-6 rounded-full bg-black/50 flex items-center justify-center"
-              title="Видео"
-              aria-hidden
-            >
-              <svg
-                className="w-3 h-3 text-white"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            </span>
-          )}
-        </div>
       </div>
-      <div className="mt-2 px-0.5 shrink-0 flex flex-col gap-1">
-        <p className="text-[10px] font-medium uppercase tracking-widest text-gray-300 line-clamp-1 group-hover:text-amber-400 transition-colors">
+
+      <div className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-500 ease-out group-hover:bg-black/50" />
+
+      <div className="pointer-events-none absolute inset-0 flex items-end p-4">
+        <p className="opacity-0 translate-y-2 transition-all duration-500 ease-out group-hover:opacity-100 group-hover:translate-y-0 text-sm md:text-base font-serif text-white/95 drop-shadow-sm">
           {theme.title}
-        </p>
-        <p className="text-[10px] uppercase tracking-widest text-stone-500 mt-0.5">
-          {theme.media.length}{" "}
-          {theme.media.length === 1
-            ? "файл"
-            : theme.media.length < 5
-            ? "файла"
-            : "файлов"}
         </p>
       </div>
     </button>
   );
 }
 
-export default function StudioSection({
-  artsItems,
-}: StudioSectionProps) {
+export default function StudioSection({ artsItems }: StudioSectionProps) {
   const [openedTheme, setOpenedTheme] = useState<ArtsTheme | null>(null);
-  const galleryMobileRef = useRef<HTMLDivElement>(null);
-  const galleryDesktopRef = useRef<HTMLDivElement>(null);
-  const [galleryShowPrev, setGalleryShowPrev] = useState(false);
-  const [galleryShowNext, setGalleryShowNext] = useState(true);
-
-  const galleryItems = useMemo(
-    () => [...artsItems, ...artsItems, ...artsItems, ...artsItems],
-    [artsItems]
-  );
-  const mobileSlides = useMemo(() => chunk(galleryItems, 4), [galleryItems]);
-  const desktopSlides = useMemo(() => chunk(galleryItems, 8), [galleryItems]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
     const hash = window.location.hash.slice(1);
     if (hash === "studio" || hash === "gallery") {
-      galleryMobileRef.current?.scrollTo({ left: 0 });
-      galleryDesktopRef.current?.scrollTo({ left: 0 });
+      document
+        .getElementById("studio")
+        ?.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, []);
-
-  const updateGalleryArrows = () => {
-    const isDesktop = typeof window !== "undefined" && window.innerWidth >= 768;
-    const el = (isDesktop ? galleryDesktopRef : galleryMobileRef).current;
-    if (!el) return;
-    const { scrollLeft, scrollWidth, clientWidth } = el;
-    setGalleryShowPrev(scrollLeft > 5);
-    setGalleryShowNext(scrollLeft < scrollWidth - clientWidth - 5);
-  };
-
-  useEffect(() => {
-    updateGalleryArrows();
-    window.addEventListener("resize", updateGalleryArrows);
-    return () => window.removeEventListener("resize", updateGalleryArrows);
-  }, []);
-
-  const scrollGallery = (dir: "prev" | "next") => {
-    const ref =
-      typeof window !== "undefined" && window.innerWidth >= 768
-        ? galleryDesktopRef
-        : galleryMobileRef;
-    const el = ref?.current;
-    if (!el) return;
-    const slideWidth = el.clientWidth;
-    const delta = dir === "prev" ? -slideWidth : slideWidth;
-    el.scrollBy({ left: delta, behavior: "smooth" });
-  };
 
   return (
     <section
@@ -234,97 +140,17 @@ export default function StudioSection({
             </p>
 
             {/* Галерея */}
-            <div className="flex-1 max-h-[380px] flex flex-col overflow-hidden relative">
-                {/* Мобильная карусель */}
-                <div
-                  ref={galleryMobileRef}
-                  onScroll={updateGalleryArrows}
-                  className="carousel-scroll carousel-scroll-thin flex md:hidden overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth flex-1 min-h-0 w-full pb-2"
-                >
-                  {mobileSlides.map((slideThemes, slideIndex) => (
-                    <div
-                      key={`m-${slideIndex}`}
-                      className="shrink-0 w-full min-w-full grid grid-cols-2 grid-rows-2 gap-3 content-start auto-rows-fr snap-start px-2 first:pl-0 last:pr-0"
-                      style={{ minHeight: "min(280px, 50vw)" }}
-                    >
-                      {slideThemes.map((theme, idx) => (
-                        <GalleryCard
-                          key={`${theme.id}-m-${slideIndex}-${idx}`}
-                          theme={theme}
-                          onOpen={() => setOpenedTheme(theme)}
-                        />
-                      ))}
-                    </div>
-                  ))}
-                </div>
-                {/* Десктопная карусель */}
-                <div
-                  ref={galleryDesktopRef}
-                  onScroll={updateGalleryArrows}
-                  className="carousel-scroll carousel-scroll-thin hidden md:flex overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth flex-1 min-h-0 w-full pb-2"
-                >
-                  {desktopSlides.map((slideThemes, slideIndex) => (
-                    <div
-                      key={`d-${slideIndex}`}
-                      className="shrink-0 w-full min-w-full grid grid-cols-4 grid-rows-2 gap-3 content-start auto-rows-fr snap-start px-2 first:pl-0 last:pr-0"
-                      style={{ minHeight: "240px" }}
-                    >
-                      {slideThemes.map((theme, idx) => (
-                        <GalleryCard
-                          key={`${theme.id}-d-${slideIndex}-${idx}`}
-                          theme={theme}
-                          onOpen={() => setOpenedTheme(theme)}
-                        />
-                      ))}
-                    </div>
-                  ))}
-                </div>
-                {/* Кнопки навигации */}
-                {galleryShowPrev && (
-                  <button
-                    type="button"
-                    onClick={() => scrollGallery("prev")}
-                    className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-colors"
-                    aria-label="Предыдущий слайд"
-                  >
-                    <svg
-                      className="w-5 h-5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M15 19l-7-7 7-7"
-                      />
-                    </svg>
-                  </button>
-                )}
-                {galleryShowNext && (
-                  <button
-                    type="button"
-                    onClick={() => scrollGallery("next")}
-                    className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-colors"
-                    aria-label="Следующий слайд"
-                  >
-                    <svg
-                      className="w-5 h-5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </button>
-                )}
+            <div className="shrink-0">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                {artsItems.slice(0, 6).map((theme) => (
+                  <GalleryCard
+                    key={theme.id}
+                    theme={theme}
+                    onOpen={() => setOpenedTheme(theme)}
+                  />
+                ))}
               </div>
+            </div>
 
             {/* Блок Индивидуальные заказы */}
             <div className="mt-6 p-5 rounded-xl bg-white/5 border border-white/10 shrink-0">

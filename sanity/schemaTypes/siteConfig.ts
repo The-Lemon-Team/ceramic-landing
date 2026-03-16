@@ -12,6 +12,16 @@ export const siteConfig = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: "heroTitleRu",
+      title: "Hero title (RU)",
+      type: "string",
+    }),
+    defineField({
+      name: "heroTitleEn",
+      title: "Hero title (EN)",
+      type: "string",
+    }),
+    defineField({
       name: "heroSubTitle",
       title: "Hero subtitle",
       type: "string",

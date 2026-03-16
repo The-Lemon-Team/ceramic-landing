@@ -2,18 +2,19 @@ import Image from "next/image";
 import Link from "next/link";
 
 interface HeroProps {
-  title: string;
+  titleRu: string;
+  titleEn: string;
   subTitle: string;
   motto: string;
 }
 
-export default function Hero({ title, subTitle, motto }: HeroProps) {
+export default function Hero({ titleRu, titleEn, subTitle, motto }: HeroProps) {
   const headingBase = "text-white font-serif leading-tight";
   return (
     <section className="relative w-full min-h-[85vh] overflow-hidden">
       <Image
         src="/images/hero.png"
-        alt={`Студия ${title}`}
+        alt={`Студия ${titleRu}`}
         fill
         className="object-cover"
         priority
@@ -25,8 +26,9 @@ export default function Hero({ title, subTitle, motto }: HeroProps) {
       />
       <div className="relative z-10 max-w-7xl mx-auto px-6 min-h-[85vh] flex items-center justify-center">
         <div className="max-w-2xl text-center flex flex-col items-center gap-6">
-          <h1 className={`${headingBase} text-3xl md:text-6xl font-semibold`}>
-            {title}
+          <h1 className={`${headingBase} text-2xl md:text-5xl font-semibold`}>
+            <span className="block">{titleEn}</span>
+            <span className="block mt-2">{titleRu}</span>
           </h1>
           <h2 className={`${headingBase} text-xl md:text-2xl font-medium`}>
             {subTitle}

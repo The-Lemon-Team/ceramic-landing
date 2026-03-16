@@ -10,7 +10,7 @@ import { TELEGRAM_POSTS } from "@/data/telegram-posts";
 import { DIRECTIONS } from "@/data/directions";
 import { ABOUT_AUTHOR } from "@/data/about-author";
 import { NAV_ITEMS } from "@/data/nav";
-import { HERO_CONFIG, SITE_NAME } from "@/data/site";
+import { HERO_CONFIG, HERO_TITLE, SITE_NAME } from "@/data/site";
 
 type SanitySlug = { _type: "slug"; current: string };
 
@@ -117,6 +117,8 @@ async function main() {
       _id: "siteConfig",
       _type: "siteConfig",
       siteName: SITE_NAME,
+      heroTitleRu: HERO_TITLE.ru,
+      heroTitleEn: HERO_TITLE.en,
       heroSubTitle: HERO_CONFIG.subTitle,
       heroMotto: HERO_CONFIG.motto,
       heroCtaHref: HERO_CONFIG.ctaHref,
