@@ -4,6 +4,7 @@ import { useState, Fragment, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Image from "next/image";
 import { Product } from "@/types/product";
+import { useCart } from "@/components/CartProvider";
 
 type ProductModalVariant = "shop" | "gallery";
 
@@ -26,6 +27,7 @@ export default function ProductModal({
 }: ProductModalProps) {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
+  const { addItem } = useCart();
   const isGallery = variant === "gallery";
   const displayPrice = !isGallery || showPrice;
 
@@ -34,8 +36,16 @@ export default function ProductModal({
   }, [product.id]);
 
   const handleAddToCart = () => {
-    // TODO: Implement cart functionality
-    console.log("Add to cart:", product, quantity);
+    addItem(
+      {
+        id: `product:${product.id}`,
+        kind: "product",
+        title: product.title,
+        price: product.price,
+        image: product.thumbnail || product.mainImage,
+      },
+      quantity,
+    );
     onClose();
   };
 

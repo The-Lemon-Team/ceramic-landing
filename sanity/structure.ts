@@ -14,13 +14,21 @@ export const structure: StructureResolver = (S) =>
           S.document().schemaType("aboutAuthor").documentId("aboutAuthor"),
         ),
       S.listItem()
+        .title("Studio section")
+        .child(
+          S.document().schemaType("studioSection").documentId("studioSection"),
+        ),
+      S.listItem()
         .title("Directions")
         .child(S.document().schemaType("directions").documentId("directions")),
       S.divider(),
       ...S.documentTypeListItems().filter(
         (item) =>
-          !["siteConfig", "aboutAuthor", "directions"].includes(
-            (item.getId() || "").toString(),
-          ),
+          ![
+            "siteConfig",
+            "aboutAuthor",
+            "studioSection",
+            "directions",
+          ].includes((item.getId() || "").toString()),
       ),
     ]);

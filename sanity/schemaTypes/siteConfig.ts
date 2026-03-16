@@ -51,5 +51,10 @@ export const siteConfig = defineType({
       type: "text",
       validation: (Rule) => Rule.required(),
     }),
+    defineField({
+      name: "vk",
+      title: "vk group:",
+      type: "string",
+    }),
   ],
 });

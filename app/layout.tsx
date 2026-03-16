@@ -5,6 +5,7 @@ import {
   Inter,
   Mrs_Saint_Delafield,
 } from "next/font/google";
+import { CartProvider } from "@/components/CartProvider";
 import "./globals.css";
 
 const cormorantGaramond = Cormorant_Garamond({
@@ -35,11 +36,26 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru">
+    <html lang="ru" suppressHydrationWarning>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `(() => {
+  try {
+    const stored = localStorage.getItem('theme');
+    const theme = stored === 'light' || stored === 'dark'
+      ? stored
+      : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const root = document.documentElement;
+    root.classList.toggle('dark', theme === 'dark');
+    root.style.colorScheme = theme;
+  } catch (_) {}
+})();`,
+        }}
+      />
       <body
-        className={`${cormorantGaramond.variable} ${inter.variable} ${mrsSaintDelafield.variable} font-sans antialiased overflow-x-hidden`}
+        className={`${cormorantGaramond.variable} ${inter.variable} ${mrsSaintDelafield.variable} font-sans antialiased overflow-x-hidden bg-background-light text-stone-900 dark:bg-background-dark dark:text-stone-50`}
       >
-        {children}
+        <CartProvider>{children}</CartProvider>
       </body>
     </html>
   );

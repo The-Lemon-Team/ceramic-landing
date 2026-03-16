@@ -30,7 +30,7 @@ export default function ProductCard({
             e.stopPropagation();
             onAddToCart(product);
           }}
-          className="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm text-stone-900 p-3 rounded-full opacity-0 group-hover:opacity-100 transition-opacity translate-y-2 group-hover:translate-y-0 duration-300 shadow-lg"
+          className="absolute bottom-4 right-4 bg-white/90 dark:bg-black/60 backdrop-blur-sm text-stone-900 dark:text-stone-50 p-3 rounded-full opacity-0 group-hover:opacity-100 transition-opacity translate-y-2 group-hover:translate-y-0 duration-300 shadow-lg"
           aria-label="В корзину"
         >
           <svg
@@ -50,12 +50,16 @@ export default function ProductCard({
       </div>
       <div className="flex justify-between items-start">
         <div>
-          <h4 className="text-xl font-serif mb-1">{product.title}</h4>
-          <p className="text-xs text-stone-400 uppercase tracking-wide">
+          <h4 className="text-xl font-serif mb-1 text-stone-900 dark:text-stone-50">
+            {product.title}
+          </h4>
+          <p className="text-xs text-stone-400 dark:text-stone-400 uppercase tracking-wide">
             {product.finish}
           </p>
         </div>
-        <span className="font-medium">{product.price} ₽</span>
+        <span className="font-medium text-stone-900 dark:text-stone-50">
+          {product.price} ₽
+        </span>
       </div>
     </div>
   );

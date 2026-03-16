@@ -1,6 +1,10 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import NavLink from "./NavLink";
+import { useCart } from "@/components/CartProvider";
+import ThemeToggle from "./ThemeToggle";
 
 export interface NavItem {
   href: string;
@@ -16,8 +20,10 @@ export default function Navbar({
   items,
   siteName = "Ceramic•Loop",
 }: NavbarProps) {
+  const { totalQuantity } = useCart();
+
   return (
-    <nav className="sticky top-0 z-50 bg-background-light/80 backdrop-blur-md border-b border-stone-200">
+    <nav className="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-stone-200 dark:border-stone-800">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           <Image
@@ -28,7 +34,7 @@ export default function Navbar({
             className="w-10 h-10 object-contain"
             priority
           />
-          <span className="text-xl font-serif font-bold tracking-tight">
+          <span className="text-xl font-serif font-bold tracking-tight text-stone-900 dark:text-stone-50">
             {siteName}
           </span>
         </Link>
@@ -40,8 +46,9 @@ export default function Navbar({
           ))}
         </div>
         <div className="flex items-center gap-4">
+          <ThemeToggle />
           <button
-            className="p-2 hover:bg-stone-100 rounded-full transition-colors"
+            className="p-2 hover:bg-stone-100 dark:hover:bg-white/10 rounded-full transition-colors text-stone-900 dark:text-stone-50"
             aria-label="Поиск"
           >
             <svg
@@ -59,8 +66,9 @@ export default function Navbar({
             </svg>
           </button>
           <div className="relative">
-            <button
-              className="p-2 hover:bg-stone-100 rounded-full transition-colors"
+            <Link
+              href="/cart"
+              className="inline-flex p-2 hover:bg-stone-100 dark:hover:bg-white/10 rounded-full transition-colors text-stone-900 dark:text-stone-50"
               aria-label="Корзина"
             >
               <svg
@@ -76,8 +84,12 @@ export default function Navbar({
                   d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
                 />
               </svg>
-            </button>
-            <span className="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full"></span>
+            </Link>
+            {totalQuantity > 0 && (
+              <span className="absolute -top-1 -right-1 min-w-5 h-5 px-1 rounded-full bg-primary text-white text-[11px] leading-5 text-center font-semibold">
+                {totalQuantity}
+              </span>
+            )}
           </div>
         </div>
       </div>

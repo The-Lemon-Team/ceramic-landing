@@ -18,9 +18,9 @@ export default function MasterClassesSection({ text }: Props) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-start">
           {/* Левая колонка — текст */}
           <div className="flex flex-col justify-center">
-            <div className="rounded-[5px] bg-white/50 px-6 py-8 md:px-10 md:py-10 border border-white/40 shadow-sm">
+            <div className="rounded-[5px] bg-white/50 dark:bg-white/5 px-6 py-8 md:px-10 md:py-10 border border-white/40 dark:border-white/10 shadow-sm">
               <span className="section-label-wrap">
-                <span className="text-xs uppercase tracking-[0.2em] font-bold text-stone-600 inline-flex items-center gap-1.5">
+                <span className="text-xs uppercase tracking-[0.2em] font-bold text-stone-600 dark:text-stone-300 inline-flex items-center gap-1.5">
                   Мастер-классы
                   <svg
                     width="12"
@@ -49,10 +49,10 @@ export default function MasterClassesSection({ text }: Props) {
                   </svg>
                 </span>
               </span>
-              <h2 className="text-4xl md:text-5xl font-serif text-stone-900 mb-4">
+              <h2 className="text-4xl md:text-5xl font-serif text-stone-900 dark:text-stone-50 mb-4">
                 Мастер-классы
               </h2>
-              <p className="text-base leading-relaxed text-stone-700 mb-8">
+              <p className="text-base leading-relaxed text-stone-700 dark:text-stone-300 mb-8">
                 {resolvedText}
               </p>
               <a
@@ -80,7 +80,7 @@ export default function MasterClassesSection({ text }: Props) {
           </div>
 
           {/* Правая колонка — изображение */}
-          <div className="relative w-full h-[360px] rounded-2xl overflow-hidden shadow-xl border border-stone-100">
+          <div className="relative w-full h-[360px] rounded-2xl overflow-hidden shadow-xl border border-stone-100 dark:border-white/10">
             <Image
               src="/images/masterclass.jpg"
               alt="Мастер-класс по керамике в студии"

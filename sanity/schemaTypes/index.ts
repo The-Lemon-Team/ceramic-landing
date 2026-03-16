@@ -11,6 +11,7 @@ import { navItem } from "@/sanity/schemaTypes/navItem";
 import { siteConfig } from "@/sanity/schemaTypes/siteConfig";
 import { aboutAuthor } from "@/sanity/schemaTypes/aboutAuthor";
 import { directions } from "@/sanity/schemaTypes/directions";
+import { studioSection } from "@/sanity/schemaTypes/studioSection";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -23,5 +24,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     siteConfig,
     aboutAuthor,
     directions,
+    studioSection,
   ],
 };

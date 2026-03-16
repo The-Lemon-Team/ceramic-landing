@@ -10,7 +10,7 @@ export default function NavLink({ href, children }: NavLinkProps) {
   return (
     <Link
       href={resolvedHref}
-      className="text-sm uppercase tracking-widest font-medium text-stone-600 hover:text-primary transition-colors"
+      className="text-sm uppercase tracking-widest font-medium text-stone-600 dark:text-stone-200 hover:text-primary transition-colors"
     >
       {children}
     </Link>

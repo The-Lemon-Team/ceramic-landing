@@ -1,50 +1,232 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment, useCallback } from "react";
 import Image from "next/image";
-import ArtsGalleryModal from "./ArtsGalleryModal";
-import type { ArtsTheme } from "@/data/artsThemes";
-import { assetUrl } from "@/lib/assetUrl";
+import { Dialog, Transition } from "@headlessui/react";
 
-interface StudioSectionProps {
-  artsItems: ArtsTheme[];
+type StudioPhoto = {
+  src: string;
+  alt: string;
+};
+
+const studioPhotos: StudioPhoto[] = [
+  {
+    src: "/images/studio/photo_2026-02-16_03-33-52.jpg",
+    alt: "Студия керамики",
+  },
+];
+
+function chunk<T>(arr: T[], size: number): T[][] {
+  const result: T[][] = [];
+  for (let i = 0; i < arr.length; i += size) {
+    result.push(arr.slice(i, i + size));
+  }
+  return result;
 }
 
-function GalleryCard({
-  theme,
+function StudioPhotoCard({
+  photo,
   onOpen,
 }: {
-  theme: ArtsTheme;
+  photo: StudioPhoto;
   onOpen: () => void;
 }) {
   return (
     <button
       type="button"
       onClick={onOpen}
-      className="group relative block w-full overflow-hidden rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-900"
+      className="group relative w-full aspect-[20/23] overflow-hidden rounded-2xl border border-white/10 bg-black/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-900"
     >
-      <div className="relative w-full aspect-square overflow-hidden">
-        <img
-          src={assetUrl(theme.cover)}
-          alt={theme.title}
-          loading="lazy"
-          className="absolute inset-0 w-full h-full object-cover select-none transition-transform duration-500 ease-out group-hover:scale-105"
-        />
-      </div>
-
-      <div className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-500 ease-out group-hover:bg-black/50" />
-
-      <div className="pointer-events-none absolute inset-0 flex items-end p-4">
-        <p className="opacity-0 translate-y-2 transition-all duration-500 ease-out group-hover:opacity-100 group-hover:translate-y-0 text-sm md:text-base font-serif text-white/95 drop-shadow-sm">
-          {theme.title}
-        </p>
-      </div>
+      <Image
+        src={photo.src}
+        alt={photo.alt}
+        fill
+        className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+        sizes="(max-width: 768px) 56vw, 224px"
+        priority={false}
+      />
+      <div className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/25" />
     </button>
   );
 }
 
-export default function StudioSection({ artsItems }: StudioSectionProps) {
-  const [openedTheme, setOpenedTheme] = useState<ArtsTheme | null>(null);
+function StudioGalleryModal({
+  photos,
+  index,
+  isOpen,
+  onClose,
+  onChange,
+}: {
+  photos: StudioPhoto[];
+  index: number;
+  isOpen: boolean;
+  onClose: () => void;
+  onChange: (nextIndex: number) => void;
+}) {
+  const current = photos[index];
+  const hasMultiple = photos.length > 1;
+
+  const goPrev = useCallback(() => {
+    onChange(index <= 0 ? photos.length - 1 : index - 1);
+  }, [index, photos.length, onChange]);
+
+  const goNext = useCallback(() => {
+    onChange(index >= photos.length - 1 ? 0 : index + 1);
+  }, [index, photos.length, onChange]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowLeft") goPrev();
+      if (e.key === "ArrowRight") goNext();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [isOpen, onClose, goPrev, goNext]);
+
+  return (
+    <Transition show={isOpen} as={Fragment}>
+      <Dialog className="relative z-50" onClose={onClose}>
+        <Transition.Child
+          as={Fragment}
+          enter="ease-out duration-200"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="ease-in duration-150"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <div
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm"
+            aria-hidden="true"
+          />
+        </Transition.Child>
+
+        <div className="fixed inset-0 overflow-y-auto p-4 md:p-6">
+          <div className="mx-auto w-full max-w-6xl">
+            <Dialog.Panel className="relative overflow-hidden rounded-2xl border border-white/10 bg-zinc-950 shadow-2xl">
+              <button
+                type="button"
+                onClick={onClose}
+                className="absolute top-4 right-4 z-20 w-10 h-10 flex items-center justify-center rounded-full text-white/80 hover:text-white hover:bg-white/10 transition-colors"
+                aria-label="Закрыть"
+              >
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+
+              <div className="p-4 md:p-6">
+                <div className="relative rounded-2xl border border-white/10 bg-black overflow-hidden">
+                  <div className="relative w-full h-[70vh] min-h-[420px]">
+                    {current && (
+                      <Image
+                        src={current.src}
+                        alt={current.alt}
+                        fill
+                        className="object-contain"
+                        sizes="100vw"
+                        priority
+                      />
+                    )}
+                  </div>
+
+                  {hasMultiple && (
+                    <>
+                      <button
+                        type="button"
+                        onClick={goPrev}
+                        className="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
+                        aria-label="Предыдущее"
+                      >
+                        <svg
+                          className="w-5 h-5"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M15 19l-7-7 7-7"
+                          />
+                        </svg>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={goNext}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
+                        aria-label="Следующее"
+                      >
+                        <svg
+                          className="w-5 h-5"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 5l7 7-7 7"
+                          />
+                        </svg>
+                      </button>
+                    </>
+                  )}
+                </div>
+
+                {hasMultiple && (
+                  <div className="mt-4 carousel-scroll carousel-scroll-thin flex gap-2 overflow-x-auto pb-2">
+                    {photos.map((p, i) => (
+                      <button
+                        key={p.src}
+                        type="button"
+                        onClick={() => onChange(i)}
+                        className={`relative shrink-0 w-16 h-16 rounded-xl overflow-hidden border-2 transition-all ${
+                          i === index
+                            ? "border-amber-400"
+                            : "border-transparent opacity-70 hover:opacity-100"
+                        }`}
+                        aria-label={`Открыть ${i + 1}`}
+                      >
+                        <Image
+                          src={p.src}
+                          alt={p.alt}
+                          fill
+                          className="object-cover"
+                          sizes="64px"
+                        />
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </Dialog.Panel>
+          </div>
+        </div>
+      </Dialog>
+    </Transition>
+  );
+}
+
+export default function StudioSection({ photos }: { photos?: StudioPhoto[] }) {
+  const [openedIndex, setOpenedIndex] = useState<number | null>(null);
+  const effectivePhotos = photos && photos.length > 0 ? photos : studioPhotos;
+  const slides = chunk(effectivePhotos, 6);
+  const coverPhoto = effectivePhotos[0] ?? studioPhotos[0];
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -59,7 +241,7 @@ export default function StudioSection({ artsItems }: StudioSectionProps) {
   return (
     <section
       id="studio"
-      className="w-full bg-[#1a1612] md:px-6 md:py-12 font-sans text-white relative overflow-hidden"
+      className="w-full bg-background-dark md:px-6 md:py-12 font-sans text-white relative overflow-hidden"
     >
       {/* Фоновое изображение */}
       <div className="absolute inset-0 z-0 w-full">
@@ -67,7 +249,7 @@ export default function StudioSection({ artsItems }: StudioSectionProps) {
           src="/images/studio/background.jpg"
           alt=""
           fill
-          className="object-cover opacity-30 scale-105 blur-sm"
+          className="object-cover opacity-40 scale-105 blur-sm"
           sizes="100vw"
           priority
           aria-hidden
@@ -80,8 +262,8 @@ export default function StudioSection({ artsItems }: StudioSectionProps) {
           {/* ЛЕВАЯ КОЛОНКА: фото (только md+, на мобилке фото встроено в контент ниже) */}
           <div className="hidden md:block w-full md:w-1/2 order-1 aspect-square md:aspect-auto overflow-hidden shrink-0 relative">
             <Image
-              src="/images/studio/photo_2026-02-16_03-33-52.jpg"
-              alt=""
+              src={coverPhoto.src}
+              alt={coverPhoto.alt}
               fill
               className="object-cover"
               sizes="50vw"
@@ -122,8 +304,8 @@ export default function StudioSection({ artsItems }: StudioSectionProps) {
             {/* Изображение: только на мобилке, между заголовком и табами */}
             <div className="block md:hidden w-full aspect-square overflow-hidden shrink-0 relative rounded-xl mb-5">
               <Image
-                src="/images/studio/photo_2026-02-16_03-33-52.jpg"
-                alt="Студия керамики"
+                src={coverPhoto.src}
+                alt={coverPhoto.alt}
                 fill
                 className="object-cover"
                 sizes="100vw"
@@ -141,14 +323,28 @@ export default function StudioSection({ artsItems }: StudioSectionProps) {
 
             {/* Галерея */}
             <div className="shrink-0">
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                {artsItems.slice(0, 6).map((theme) => (
-                  <GalleryCard
-                    key={theme.id}
-                    theme={theme}
-                    onOpen={() => setOpenedTheme(theme)}
-                  />
-                ))}
+              <div className="rounded-2xl border border-white/10 bg-black/20 p-3 md:p-4">
+                <div className="carousel-scroll carousel-scroll-thin flex overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth pb-2">
+                  {slides.map((items, slideIndex) => (
+                    <div
+                      key={`slide-${slideIndex}`}
+                      className="shrink-0 w-full min-w-full snap-start px-1 first:pl-0 last:pr-0"
+                    >
+                      <div className="mx-auto w-4/5 grid grid-cols-3 grid-rows-2 gap-3">
+                        {items.map((photo, idx) => {
+                          const absoluteIndex = slideIndex * 6 + idx;
+                          return (
+                            <StudioPhotoCard
+                              key={`${photo.src}-${absoluteIndex}`}
+                              photo={photo}
+                              onOpen={() => setOpenedIndex(absoluteIndex)}
+                            />
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 
@@ -186,10 +382,12 @@ export default function StudioSection({ artsItems }: StudioSectionProps) {
         </div>
       </div>
 
-      <ArtsGalleryModal
-        theme={openedTheme}
-        isOpen={!!openedTheme}
-        onClose={() => setOpenedTheme(null)}
+      <StudioGalleryModal
+        photos={effectivePhotos}
+        index={openedIndex ?? 0}
+        isOpen={openedIndex !== null}
+        onClose={() => setOpenedIndex(null)}
+        onChange={(i) => setOpenedIndex(i)}
       />
     </section>
   );

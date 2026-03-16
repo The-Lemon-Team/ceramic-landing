@@ -16,12 +16,12 @@ export default function ArtsSection({ items }: ArtsSectionProps) {
   return (
     <section
       id="arts"
-      className="pt-14 md:pt-12 pb-8 md:pb-10 bg-white overflow-hidden"
+      className="pt-14 md:pt-12 pb-8 md:pb-10 bg-white dark:bg-background-dark overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-6">
         <div className="mb-6 md:mb-8">
           <span className="section-label-wrap">
-            <span className="section-label text-stone-400 inline-flex items-center gap-1.5">
+            <span className="section-label text-stone-400 dark:text-stone-300 inline-flex items-center gap-1.5">
               Арты
               <svg
                 width="12"
@@ -32,7 +32,7 @@ export default function ArtsSection({ items }: ArtsSectionProps) {
                 strokeWidth="1.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="text-stone-500 shrink-0"
+                className="text-stone-500 dark:text-stone-400 shrink-0"
                 aria-hidden
               >
                 <path d="M4 20h16" />
@@ -54,7 +54,7 @@ export default function ArtsSection({ items }: ArtsSectionProps) {
               onClick={() => setOpenedTheme(theme)}
               className="group text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-xl overflow-hidden"
             >
-              <div className="aspect-square relative overflow-hidden rounded-xl bg-stone-100">
+              <div className="aspect-square relative overflow-hidden rounded-xl bg-stone-100 dark:bg-white/10">
                 <Image
                   src={assetUrl(theme.cover)}
                   alt={theme.title}
@@ -79,16 +79,16 @@ export default function ArtsSection({ items }: ArtsSectionProps) {
                 )}
               </div>
               <div className="mt-2 px-0.5">
-                <p className="text-sm font-serif text-stone-700 line-clamp-1 group-hover:text-primary transition-colors">
+                <p className="text-sm font-serif text-stone-700 dark:text-stone-50 line-clamp-1 group-hover:text-primary transition-colors">
                   {theme.title}
                 </p>
-                <p className="text-[10px] uppercase tracking-widest text-stone-400 mt-0.5">
+                <p className="text-[10px] uppercase tracking-widest text-stone-400 dark:text-stone-400 mt-0.5">
                   {theme.media.length}{" "}
                   {theme.media.length === 1
                     ? "файл"
                     : theme.media.length < 5
-                    ? "файла"
-                    : "файлов"}
+                      ? "файла"
+                      : "файлов"}
                 </p>
               </div>
             </button>

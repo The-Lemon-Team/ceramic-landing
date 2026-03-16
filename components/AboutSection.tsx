@@ -13,11 +13,11 @@ export default function AboutSection({ data }: AboutSectionProps) {
     >
       {/* Градиенты для мягкого перехода между секциями */}
       <div
-        className="absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-white to-transparent pointer-events-none z-[1]"
+        className="absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-white dark:from-background-dark to-transparent pointer-events-none z-[1]"
         aria-hidden
       />
       <div
-        className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white to-transparent pointer-events-none z-[1]"
+        className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white dark:from-background-dark to-transparent pointer-events-none z-[1]"
         aria-hidden
       />
       <div className="relative z-10 max-w-7xl px-6 mx-auto">
@@ -26,7 +26,7 @@ export default function AboutSection({ data }: AboutSectionProps) {
             <div className="absolute -top-6 -left-6 w-32 h-32 bg-primary rounded-full blur-3xl"></div>
             {/* <div className="absolute -bottom-20 -right-20 z-0 w-48 h-48 bg-stone-200 rounded-full opacity-30"></div> */}
             <div
-              className="relative w-full rounded-2xl overflow-hidden border-[10px] border-stone-50 shadow-xl box-border"
+              className="relative w-full rounded-2xl overflow-hidden border-[10px] border-stone-50 dark:border-white/10 shadow-xl box-border"
               style={{ aspectRatio: "3/5" }}
             >
               <Image
@@ -46,7 +46,7 @@ export default function AboutSection({ data }: AboutSectionProps) {
             )}
           </div>
           <div className="flex flex-col justify-center">
-            <div className="rounded-[5px] bg-white/50 px-6 py-8 md:px-10 md:py-10 border border-white/40 shadow-sm">
+            <div className="rounded-[5px] bg-white/50 dark:bg-white/5 px-6 py-8 md:px-10 md:py-10 border border-white/40 dark:border-white/10 shadow-sm">
               <span className="section-label-wrap">
                 <span className="section-label text-stone-500 inline-flex items-center gap-1.5">
                   {data.sectionLabel}
@@ -55,7 +55,7 @@ export default function AboutSection({ data }: AboutSectionProps) {
                     height="12"
                     viewBox="0 0 24 24"
                     fill="currentColor"
-                    className="text-stone-600 shrink-0"
+                    className="text-stone-600 dark:text-stone-300 shrink-0"
                     aria-hidden
                   >
                     <path
@@ -69,25 +69,25 @@ export default function AboutSection({ data }: AboutSectionProps) {
                   </svg>
                 </span>
               </span>
-              <h2 className="text-2xl md:text-3xl font-serif text-stone-800 mb-4">
+              <h2 className="text-2xl md:text-3xl font-serif text-stone-800 dark:text-stone-50 mb-4">
                 {data.authorName}
               </h2>
               {data.bio && (
-                <div className="space-y-4 text-stone-600 text-sm md:text-base leading-relaxed whitespace-pre-line">
+                <div className="space-y-4 text-stone-600 dark:text-stone-300 text-sm md:text-base leading-relaxed whitespace-pre-line">
                   {data.bio.split("\n\n").map((para, i) => (
                     <p key={i}>{para}</p>
                   ))}
                 </div>
               )}
               {(data.closingText || data.signature) && (
-                <div className="pt-6 border-t border-stone-100">
+                <div className="pt-6 border-t border-stone-100 dark:border-white/10">
                   {data.closingText && (
-                    <p className="text-stone-400 text-xs md:text-sm mb-1.5">
+                    <p className="text-stone-400 dark:text-stone-400 text-xs md:text-sm mb-1.5">
                       {data.closingText}
                     </p>
                   )}
                   {data.signature && (
-                    <p className="font-script text-2xl md:text-3xl text-stone-800">
+                    <p className="font-script text-2xl md:text-3xl text-stone-800 dark:text-stone-50">
                       {data.signature}
                     </p>
                   )}

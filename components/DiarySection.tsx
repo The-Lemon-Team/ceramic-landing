@@ -10,7 +10,7 @@ export default function DiarySection({ items }: DiarySectionProps) {
   return (
     <section
       id="diary"
-      className="bg-stone-100 border-t border-stone-200 py-12 md:py-14"
+      className="bg-stone-100 dark:bg-black/30 border-t border-stone-200 dark:border-white/10 py-12 md:py-14"
     >
       <div className="max-w-7xl mx-auto px-6">
         <div className="mb-6 md:mb-8">
@@ -43,14 +43,14 @@ export default function DiarySection({ items }: DiarySectionProps) {
           </p>
         </div>
         <div className="max-w-4xl">
-          <ul className="space-y-0 divide-y divide-stone-200/80">
+          <ul className="space-y-0 divide-y divide-stone-200/80 dark:divide-white/10">
             {items.map((article) => (
               <li key={article.slug}>
                 <Link
                   href={`/#${article.slug}`}
-                  className="group flex gap-4 md:gap-6 py-5 md:py-6 text-left transition-colors hover:bg-stone-100/60 -mx-2 px-2 rounded-lg"
+                  className="group flex gap-4 md:gap-6 py-5 md:py-6 text-left transition-colors hover:bg-stone-100/60 dark:hover:bg-white/5 -mx-2 px-2 rounded-lg"
                 >
-                  <div className="relative shrink-0 w-24 h-16 md:w-28 md:h-[5.25rem] rounded-lg overflow-hidden bg-stone-200">
+                  <div className="relative shrink-0 w-24 h-16 md:w-28 md:h-[5.25rem] rounded-lg overflow-hidden bg-stone-200 dark:bg-white/10">
                     <Image
                       src={article.image}
                       alt={article.alt}
@@ -63,14 +63,14 @@ export default function DiarySection({ items }: DiarySectionProps) {
                     <span className="text-[10px] md:text-xs uppercase tracking-widest text-primary font-semibold">
                       {article.category}
                     </span>
-                    <h3 className="font-serif text-lg md:text-xl text-stone-800 mt-0.5 group-hover:text-primary transition-colors">
+                    <h3 className="font-serif text-lg md:text-xl text-stone-800 dark:text-stone-50 mt-0.5 group-hover:text-primary transition-colors">
                       {article.title}
                     </h3>
-                    <p className="text-stone-500 text-sm mt-1 line-clamp-2">
+                    <p className="text-stone-500 dark:text-stone-300 text-sm mt-1 line-clamp-2">
                       {article.excerpt}
                     </p>
                   </div>
-                  <span className="shrink-0 self-center text-stone-300 group-hover:text-primary transition-colors">
+                  <span className="shrink-0 self-center text-stone-300 dark:text-stone-500 group-hover:text-primary transition-colors">
                     <svg
                       className="w-4 h-4"
                       fill="none"
@@ -93,7 +93,7 @@ export default function DiarySection({ items }: DiarySectionProps) {
           <p className="mt-6">
             <Link
               href="#"
-              className="inline-flex items-center gap-2 text-sm text-stone-500 hover:text-primary transition-colors"
+              className="inline-flex items-center gap-2 text-sm text-stone-500 dark:text-stone-300 hover:text-primary transition-colors"
             >
               Читать все записи
               <svg

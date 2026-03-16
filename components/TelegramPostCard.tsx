@@ -2,10 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { TelegramPost } from "@/types/telegram-post";
 
-const borderMuted = "border-[#e7f1f3] dark:border-[#1e2f33]";
-const timestampClasses = "text-[10px] text-[#4c8d9a] font-medium shrink-0";
+const borderMuted = "border-[#e7f1f3] dark:border-white/10";
+const timestampClasses =
+  "text-[10px] text-[#4c8d9a] dark:text-[#7ab8c4] font-medium shrink-0";
 const telegramLinkClasses =
-  "text-[#0088cc] text-[11px] font-bold flex items-center gap-1 group/link";
+  "text-[#1f6f8b] dark:text-[#7ab8c4] text-[11px] font-bold flex items-center gap-1 group/link";
 const telegramLinkIcon =
   "w-3.5 h-3.5 group-hover/link:translate-x-1 transition-transform";
 
@@ -26,7 +27,7 @@ interface TelegramPostCardProps {
 export default function TelegramPostCard({ post }: TelegramPostCardProps) {
   return (
     <div
-      className={`min-w-[260px] md:min-w-[360px] snap-start bg-white dark:bg-[#15272a] rounded-lg shadow-sm hover:shadow-md transition-shadow flex flex-col border ${borderMuted}`}
+      className={`min-w-[260px] md:min-w-[360px] snap-start bg-white dark:bg-[#0b0f10] rounded-lg shadow-md shadow-black/15 hover:shadow-lg hover:shadow-black/20 dark:shadow-sm dark:hover:shadow-md transition-shadow flex flex-col border ${borderMuted}`}
     >
       {post.image ? (
         <div className="h-48 md:h-72 w-full relative rounded-t-lg overflow-hidden">
@@ -38,7 +39,7 @@ export default function TelegramPostCard({ post }: TelegramPostCardProps) {
           />
         </div>
       ) : (
-        <div className="p-4 flex flex-col flex-1 gap-3 justify-center bg-primary/5 rounded-t-lg">
+        <div className="p-4 flex flex-col flex-1 gap-3 justify-center bg-primary/5 dark:bg-white/5 rounded-t-lg">
           <div className="flex justify-between items-center gap-2">
             <span className="text-[10px] font-bold text-primary bg-primary/10 px-1.5 py-0.5 rounded uppercase tracking-wider">
               {formatCategory(post.category)}
@@ -47,7 +48,7 @@ export default function TelegramPostCard({ post }: TelegramPostCardProps) {
           </div>
           <div className="flex flex-col gap-1.5">
             <svg
-              className="w-8 h-8 text-[#0088cc]"
+              className="w-8 h-8 text-[#1f6f8b] dark:text-[#7ab8c4]"
               fill="currentColor"
               viewBox="0 0 24 24"
             >
@@ -83,7 +84,7 @@ export default function TelegramPostCard({ post }: TelegramPostCardProps) {
       {post.image && (
         <div className="p-3 md:p-5 flex flex-col flex-1 gap-2 md:gap-3 min-h-[9rem] md:min-h-[12rem]">
           <div className="flex justify-between items-center gap-2">
-            <span className="text-[10px] font-bold text-[#0088cc] bg-[#0088cc]/10 px-1.5 py-0.5 rounded uppercase tracking-wider">
+            <span className="text-[10px] font-bold text-[#1f6f8b] dark:text-[#7ab8c4] bg-[#1f6f8b]/10 dark:bg-white/5 px-1.5 py-0.5 rounded uppercase tracking-wider">
               {formatCategory(post.category)}
             </span>
             <span className={timestampClasses}>{post.timestamp}</span>

@@ -15,6 +15,7 @@ import {
   getSiteConfig,
   getNavItems,
   getAboutAuthor,
+  getStudioSection,
 } from "@/lib/cms";
 
 export const dynamic = "force-dynamic";
@@ -28,6 +29,7 @@ export default async function Home() {
     siteConfig,
     navItems,
     aboutAuthor,
+    studioSection,
   ] = await Promise.all([
     getProducts(),
     getArtsThemes(),
@@ -36,10 +38,11 @@ export default async function Home() {
     getSiteConfig(),
     getNavItems(),
     getAboutAuthor(),
+    getStudioSection(),
   ]);
 
   return (
-    <main className="min-h-screen bg-background-light">
+    <main className="min-h-screen bg-background-light dark:bg-background-dark">
       <Navbar items={navItems} siteName={siteConfig.siteName} />
       <Hero
         titleRu={siteConfig.heroTitleRu || siteConfig.siteName}
@@ -47,12 +50,19 @@ export default async function Home() {
         subTitle={siteConfig.heroSubTitle}
         motto={siteConfig.heroMotto}
       />
+      <div className="hidden dark:block h-px bg-white/10" aria-hidden />
       <AboutSection data={aboutAuthor} />
-      <StudioSection artsItems={artsThemes} />
+      <div className="hidden dark:block h-px bg-white/10" aria-hidden />
+      <StudioSection photos={studioSection?.gallery} />
+      <div className="hidden dark:block h-px bg-white/10" aria-hidden />
       <MasterClassesSection text={siteConfig.masterClassesText} />
+      <div className="h-px bg-primary/60 dark:bg-white/10" aria-hidden />
       <TelegramNewsFeed items={telegramPosts} />
+      <div className="h-px bg-primary/60 dark:bg-white/10" aria-hidden />
       <ProductGallerySection items={products} />
+      <div className="h-px bg-primary/60 dark:bg-white/10" aria-hidden />
       <ContactsSection directions={directions} />
+      <div className="h-px bg-primary/60 dark:bg-white/10" aria-hidden />
       <Footer />
     </main>
   );

@@ -4,9 +4,9 @@ import { useRef, useState } from "react";
 import { TelegramPost } from "@/types/telegram-post";
 import TelegramPostCard from "./TelegramPostCard";
 
-const borderMuted = "border-[#e7f1f3] dark:border-[#1e2f33]";
+const borderMuted = "border-[#e7f1f3] dark:border-white/10";
 const scrollButtonClasses =
-  "bg-white dark:bg-[#1a2e32] shadow-lg rounded-full p-2 hover:bg-primary hover:text-white transition-colors";
+  "bg-white dark:bg-[#0b0f10] shadow-lg rounded-full p-2 hover:bg-primary hover:text-white transition-colors";
 const arrowIconClasses = "w-5 h-5";
 
 interface TelegramNewsFeedProps {
@@ -44,12 +44,15 @@ export default function TelegramNewsFeed({ items }: TelegramNewsFeedProps) {
   };
 
   return (
-    <section id="news" className="bg-[#f0f5f6] dark:bg-[#0c181a] py-12 overflow-x-hidden">
+    <section
+      id="news"
+      className="bg-[#f0f5f6] dark:bg-black py-12 overflow-x-hidden"
+    >
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6 md:mb-8">
           <div>
             <span className="mb-2 block">
-              <span className="text-xs uppercase tracking-[0.2em] font-bold text-[#0088cc] inline-flex items-center gap-1.5">
+              <span className="text-xs uppercase tracking-[0.2em] font-bold text-[#1f6f8b] dark:text-[#7ab8c4] inline-flex items-center gap-1.5">
                 Телеграм
                 <svg
                   className="w-3 h-3 shrink-0 fill-current"
@@ -68,7 +71,7 @@ export default function TelegramNewsFeed({ items }: TelegramNewsFeedProps) {
             </p>
           </div>
           <a
-            className="flex items-center gap-2 px-4 py-1.5 text-sm font-medium rounded-md bg-[#0088cc] text-white hover:bg-[#0077b5] transition-colors shadow-lg shadow-[#0088cc]/20 self-start md:self-auto"
+            className="flex items-center gap-2 px-4 py-1.5 text-sm font-medium rounded-md bg-[#1f6f8b] text-white hover:bg-[#195d74] transition-colors shadow-lg shadow-black/30 self-start md:self-auto"
             href="https://t.me/ceramic_loop"
             target="_blank"
             rel="noopener noreferrer"

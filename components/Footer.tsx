@@ -5,8 +5,8 @@ import { SITE_NAME } from "@/data/site";
 export default function Footer() {
   return (
     <>
-      <div className="border-t border-stone-100" />
-      <footer className="bg-white pt-12 px-6 pb-8 md:pt-20 md:pb-10">
+      <div className="border-t border-stone-100 dark:border-white/10" />
+      <footer className="bg-white dark:bg-background-dark pt-12 px-6 pb-8 md:pt-20 md:pb-10">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-12 gap-8 mb-8">
             <div className="md:col-span-4">
@@ -18,20 +18,20 @@ export default function Footer() {
                   height={40}
                   className="w-10 h-10 object-contain"
                 />
-                <span className="text-xl font-serif font-bold text-stone-800">
+                <span className="text-xl font-serif font-bold text-stone-800 dark:text-stone-50">
                   {SITE_NAME}
                 </span>
               </Link>
-              <p className="font-sans text-sm leading-relaxed text-stone-500 max-w-xs">
+              <p className="font-sans text-sm leading-relaxed text-stone-500 dark:text-stone-300 max-w-xs">
                 Не просто студия, а пространство, где керамика хранит время и
                 остаётся с вами навсегда.
               </p>
             </div>
             <div className="md:col-span-2">
-              <h5 className="font-sans text-xs uppercase tracking-[0.2em] font-bold text-stone-600 mb-2.5">
+              <h5 className="font-sans text-xs uppercase tracking-[0.2em] font-bold text-stone-600 dark:text-stone-300 mb-2.5">
                 Магазин
               </h5>
-              <ul className="font-sans text-sm space-y-1.5 text-stone-500">
+              <ul className="font-sans text-sm space-y-1.5 text-stone-500 dark:text-stone-300">
                 <li>
                   <Link
                     href="/shop/tiles"
@@ -59,10 +59,10 @@ export default function Footer() {
               </ul>
             </div>
             <div className="md:col-span-2">
-              <h5 className="font-sans text-xs uppercase tracking-[0.2em] font-bold text-stone-600 mb-2.5">
+              <h5 className="font-sans text-xs uppercase tracking-[0.2em] font-bold text-stone-600 dark:text-stone-300 mb-2.5">
                 Студия
               </h5>
-              <ul className="font-sans text-sm space-y-1.5 text-stone-500">
+              <ul className="font-sans text-sm space-y-1.5 text-stone-500 dark:text-stone-300">
                 <li>
                   <Link
                     href="#"
@@ -98,13 +98,13 @@ export default function Footer() {
               </ul>
             </div>
             <div className="md:col-span-4">
-              <h5 className="font-sans text-xs uppercase tracking-[0.2em] font-bold text-stone-600 mb-2.5">
+              <h5 className="font-sans text-xs uppercase tracking-[0.2em] font-bold text-stone-600 dark:text-stone-300 mb-2.5">
                 Социальные сети
               </h5>
               <div className="flex gap-4">
                 <Link
                   href="#"
-                  className="w-10 h-10 border border-stone-200 rounded-full flex items-center justify-center text-stone-400 hover:border-primary hover:text-primary transition-all"
+                  className="w-10 h-10 border border-stone-200 dark:border-white/10 rounded-full flex items-center justify-center text-stone-400 hover:border-primary hover:text-primary transition-all"
                   aria-label="Instagram"
                 >
                   <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
@@ -113,7 +113,7 @@ export default function Footer() {
                 </Link>
                 <Link
                   href="#"
-                  className="w-10 h-10 border border-stone-200 rounded-full flex items-center justify-center text-stone-400 hover:border-primary hover:text-primary transition-all"
+                  className="w-10 h-10 border border-stone-200 dark:border-white/10 rounded-full flex items-center justify-center text-stone-400 hover:border-primary hover:text-primary transition-all"
                   aria-label="Telegram"
                 >
                   <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
@@ -123,19 +123,19 @@ export default function Footer() {
               </div>
             </div>
           </div>
-          <div className="border-t border-primary" />
-          <div className="flex flex-col md:flex-row justify-between pt-6 font-sans text-xs uppercase tracking-[0.2em] text-stone-400">
+          <div className="border-t border-primary dark:border-white/10 w-screen relative left-1/2 -translate-x-1/2" />
+          <div className="flex flex-col md:flex-row justify-between pt-6 font-sans text-xs uppercase tracking-[0.2em] text-stone-400 dark:text-stone-400">
             <p className="copyright">© 2026 {SITE_NAME}. Все права защищены.</p>
             <div className="politics-links flex flex-row flex-wrap gap-2 md:gap-8 mt-4 md:mt-0">
               <Link
                 href="/policy"
-                className="hover:text-stone-900 text-xs transition-colors whitespace-nowrap"
+                className="hover:text-stone-900 dark:hover:text-stone-50 text-xs transition-colors whitespace-nowrap"
               >
                 Политика конфиденциальности
               </Link>
               <Link
                 href="/offer"
-                className="hover:text-stone-900 transition-colors whitespace-nowrap"
+                className="hover:text-stone-900 dark:hover:text-stone-50 transition-colors whitespace-nowrap"
               >
                 Оферта
               </Link>

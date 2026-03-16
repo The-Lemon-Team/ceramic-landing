@@ -245,6 +245,7 @@ export async function getSiteConfig() {
     heroCtaHref?: string;
     heroCtaLabel?: string;
     masterClassesText?: string;
+    vk?: string;
   }>(
     groq`*[_type == "siteConfig"][0] {
       siteName,
@@ -254,7 +255,8 @@ export async function getSiteConfig() {
       heroMotto,
       heroCtaHref,
       heroCtaLabel,
-      masterClassesText
+      masterClassesText,
+      vk
     }`,
   );
 
@@ -269,6 +271,7 @@ export async function getSiteConfig() {
       heroCtaLabel: HERO_CONFIG.ctaLabel,
       masterClassesText:
         "Если вы в Петербурге — приходите в студию. Не просто купить\nкерамику, а сделать её своими руками под руководством Мастера.\nСопричастность, эмоции и память на всю жизнь.",
+      vk: "https://vk.ru/ceramic.loop",
     });
 
   return {
@@ -284,6 +287,7 @@ export async function getSiteConfig() {
     masterClassesText:
       d.masterClassesText ||
       "Если вы в Петербурге — приходите в студию. Не просто купить\nкерамику, а сделать её своими руками под руководством Мастера.\nСопричастность, эмоции и память на всю жизнь.",
+    vk: d.vk || "https://vk.ru/ceramic.loop",
   };
 }
 
@@ -342,4 +346,46 @@ export async function getNavItems() {
   return data
     .map((n) => ({ href: n.href ?? "", label: n.label ?? "" }))
     .filter((n) => Boolean(n.href) && Boolean(n.label));
+}
+
+export type StudioGalleryPhoto = {
+  src: string;
+  alt: string;
+};
+
+export type StudioSectionData = {
+  title?: string;
+  description?: string;
+  gallery: StudioGalleryPhoto[];
+};
+
+export async function getStudioSection(): Promise<StudioSectionData | null> {
+  const d = await sanityFetch<{
+    title?: string;
+    description?: string;
+    gallery?: Array<{ src?: string; alt?: string }>;
+  }>(
+    groq`*[_type == "studioSection" && _id == "studioSection"][0] {
+      title,
+      description,
+      "gallery": gallery[]{
+        "src": asset->url,
+        "alt": coalesce(alt, "")
+      }
+    }`,
+  );
+
+  if (!d) return null;
+
+  const gallery = Array.isArray(d.gallery)
+    ? d.gallery
+        .map((p) => ({ src: p.src ?? "", alt: p.alt ?? "" }))
+        .filter((p) => Boolean(p.src))
+    : [];
+
+  return {
+    title: d.title ?? undefined,
+    description: d.description ?? undefined,
+    gallery,
+  };
 }

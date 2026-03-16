@@ -25,7 +25,7 @@ function ProductCard({
       onClick={onOpen}
       className="group text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-lg"
     >
-      <div className="aspect-square overflow-hidden rounded-lg mb-2 relative bg-stone-100">
+      <div className="aspect-square overflow-hidden rounded-lg mb-2 relative bg-stone-100 dark:bg-white/10">
         <Image
           src={product.mainImage}
           alt={product.title}
@@ -34,10 +34,10 @@ function ProductCard({
           sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 160px"
         />
       </div>
-      <h3 className="text-xs font-serif leading-tight mb-0.5 line-clamp-2">
+      <h3 className="text-xs font-serif leading-tight mb-0.5 line-clamp-2 text-stone-900 dark:text-stone-50">
         {product.title}
       </h3>
-      <p className="text-[9px] text-stone-400 uppercase tracking-wide truncate">
+      <p className="text-[9px] text-stone-400 dark:text-stone-400 uppercase tracking-wide truncate">
         {product.finish}
       </p>
       {product.price > 0 && (
@@ -85,7 +85,7 @@ export default function ProductGallerySection({
   return (
     <section
       id="ceramics"
-      className="py-10 md:py-12 px-6 bg-accent-earth overflow-x-hidden"
+      className="py-10 md:py-12 px-6 bg-accent-earth dark:bg-accent-earth-dark overflow-x-hidden"
     >
       <div className="max-w-7xl mx-auto">
         {showHeader && (
