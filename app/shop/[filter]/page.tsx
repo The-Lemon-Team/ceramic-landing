@@ -39,6 +39,8 @@ export default async function ShopFilterPage({
     getProducts(),
   ]);
 
+  const siteName = siteConfig.titleRu;
+
   const filteredProducts = products.filter((p) => {
     if (activeFilter === "tiles") return isTiles(p.dimensions);
     if (activeFilter === "plates") return isPlates(p.dimensions);
@@ -47,7 +49,7 @@ export default async function ShopFilterPage({
 
   return (
     <main className="min-h-screen bg-background-light flex flex-col">
-      <Navbar items={navItems} siteName={siteConfig.siteName} />
+      <Navbar items={navItems} siteName={siteName} />
 
       <div className="max-w-7xl mx-auto w-full px-6 pt-10 md:pt-12">
         <h1 className="text-4xl md:text-5xl font-serif text-stone-800">

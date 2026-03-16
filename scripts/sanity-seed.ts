@@ -10,7 +10,7 @@ import { TELEGRAM_POSTS } from "@/data/telegram-posts";
 import { DIRECTIONS } from "@/data/directions";
 import { ABOUT_AUTHOR } from "@/data/about-author";
 import { NAV_ITEMS } from "@/data/nav";
-import { HERO_CONFIG, HERO_TITLE, SITE_NAME } from "@/data/site";
+import { HERO_CONFIG, HERO_TITLE } from "@/data/site";
 
 type SanitySlug = { _type: "slug"; current: string };
 
@@ -116,14 +116,16 @@ async function main() {
     docs.push({
       _id: "siteConfig",
       _type: "siteConfig",
-      siteName: SITE_NAME,
-      heroTitleRu: HERO_TITLE.ru,
-      heroTitleEn: HERO_TITLE.en,
+      titleRu: HERO_TITLE.ru,
+      titleEn: HERO_TITLE.en,
       heroSubTitle: HERO_CONFIG.subTitle,
       heroMotto: HERO_CONFIG.motto,
       heroCtaHref: HERO_CONFIG.ctaHref,
       heroCtaLabel: HERO_CONFIG.ctaLabel,
       masterClassesText: MASTER_CLASSES_TEXT,
+      telegramUrl: "https://t.me/ceramic_loop",
+      instagramUrl: "",
+      vkUrl: "https://vk.ru/ceramic.loop",
     });
 
     docs.push({
@@ -251,7 +253,8 @@ async function main() {
   docs.push({
     _id: "siteConfig",
     _type: "siteConfig",
-    siteName: SITE_NAME,
+    titleRu: HERO_TITLE.ru,
+    titleEn: HERO_TITLE.en,
     heroSubTitle: HERO_CONFIG.subTitle,
     heroMotto: HERO_CONFIG.motto,
     heroCtaHref: HERO_CONFIG.ctaHref,

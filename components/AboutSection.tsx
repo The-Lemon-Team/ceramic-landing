@@ -9,15 +9,15 @@ export default function AboutSection({ data }: AboutSectionProps) {
   return (
     <section
       id="about"
-      className="relative py-20 bg-pattern-charlie-brown overflow-hidden"
+      className="relative py-20 bg-pattern-charlie-brown dark:bg-[rgb(28_26_24)] overflow-hidden"
     >
       {/* Градиенты для мягкого перехода между секциями */}
       <div
-        className="absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-white dark:from-background-dark to-transparent pointer-events-none z-[1]"
+        className="absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-white dark:from-[rgb(28_26_24)] to-transparent pointer-events-none z-[1]"
         aria-hidden
       />
       <div
-        className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white dark:from-background-dark to-transparent pointer-events-none z-[1]"
+        className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white dark:from-[rgb(28_26_24)] to-transparent pointer-events-none z-[1]"
         aria-hidden
       />
       <div className="relative z-10 max-w-7xl px-6 mx-auto">

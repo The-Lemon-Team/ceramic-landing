@@ -6,20 +6,16 @@ export const siteConfig = defineType({
   type: "document",
   fields: [
     defineField({
-      name: "siteName",
-      title: "Site name",
+      name: "titleRu",
+      title: "Title (ru)",
       type: "string",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "heroTitleRu",
-      title: "Hero title (RU)",
+      name: "titleEn",
+      title: "Title (en)",
       type: "string",
-    }),
-    defineField({
-      name: "heroTitleEn",
-      title: "Hero title (EN)",
-      type: "string",
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "heroSubTitle",
@@ -52,9 +48,19 @@ export const siteConfig = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "vk",
-      title: "vk group:",
-      type: "string",
+      name: "telegramUrl",
+      title: "Ссылка на telegram",
+      type: "url",
+    }),
+    defineField({
+      name: "instagramUrl",
+      title: "Ссылка на instagram",
+      type: "url",
+    }),
+    defineField({
+      name: "vkUrl",
+      title: "Ссылка на вк",
+      type: "url",
     }),
   ],
 });

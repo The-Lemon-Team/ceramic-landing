@@ -12,7 +12,7 @@ export default function MasterClassesSection({ text }: Props) {
   return (
     <section
       id="master-classes"
-      className="py-20 px-6 bg-pattern-charlie-brown overflow-hidden"
+      className="py-20 px-6 bg-pattern-charlie-brown dark:bg-[rgb(28_26_24)] overflow-hidden"
     >
       <div className="max-w-7xl mx-auto relative">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-start">

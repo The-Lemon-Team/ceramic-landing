@@ -24,7 +24,7 @@ export default function Navbar({
 
   return (
     <nav className="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-stone-200 dark:border-stone-800">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 h-[var(--header-height)] flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           <Image
             src="/images/logo.png"
@@ -35,7 +35,8 @@ export default function Navbar({
             priority
           />
           <span className="text-xl font-serif font-bold tracking-tight text-stone-900 dark:text-stone-50">
-            {siteName}
+            <span className="md:hidden">Петля Керамики</span>
+            <span className="hidden md:inline">{siteName}</span>
           </span>
         </Link>
         <div className="hidden md:flex items-center gap-8">

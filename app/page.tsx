@@ -41,12 +41,14 @@ export default async function Home() {
     getStudioSection(),
   ]);
 
+  const siteName = siteConfig.titleRu;
+
   return (
     <main className="min-h-screen bg-background-light dark:bg-background-dark">
-      <Navbar items={navItems} siteName={siteConfig.siteName} />
+      <Navbar items={navItems} siteName={siteName} />
       <Hero
-        titleRu={siteConfig.heroTitleRu || siteConfig.siteName}
-        titleEn={siteConfig.heroTitleEn || siteConfig.siteName}
+        titleRu={siteConfig.titleRu}
+        titleEn={siteConfig.titleEn}
         subTitle={siteConfig.heroSubTitle}
         motto={siteConfig.heroMotto}
       />

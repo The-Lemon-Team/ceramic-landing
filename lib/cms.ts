@@ -2,7 +2,7 @@ import { products as staticProducts } from "@/data/products";
 import { artsThemes as staticArtsThemes } from "@/data/artsThemes";
 import { TELEGRAM_POSTS } from "@/data/telegram-posts";
 import { DIRECTIONS } from "@/data/directions";
-import { SITE_NAME, HERO_CONFIG, HERO_TITLE } from "@/data/site";
+import { HERO_CONFIG, HERO_TITLE } from "@/data/site";
 import { NAV_ITEMS } from "@/data/nav";
 import { ABOUT_AUTHOR } from "@/data/about-author";
 import { getSanityClient } from "@/lib/sanityClient";
@@ -237,47 +237,49 @@ export async function getDirections() {
 
 export async function getSiteConfig() {
   const d = await sanityFetch<{
-    siteName?: string;
-    heroTitleRu?: string;
-    heroTitleEn?: string;
+    titleRu?: string;
+    titleEn?: string;
     heroSubTitle?: string;
     heroMotto?: string;
     heroCtaHref?: string;
     heroCtaLabel?: string;
     masterClassesText?: string;
-    vk?: string;
+    telegramUrl?: string;
+    instagramUrl?: string;
+    vkUrl?: string;
   }>(
     groq`*[_type == "siteConfig"][0] {
-      siteName,
-      heroTitleRu,
-      heroTitleEn,
+      titleRu,
+      titleEn,
       heroSubTitle,
       heroMotto,
       heroCtaHref,
       heroCtaLabel,
       masterClassesText,
-      vk
+      telegramUrl,
+      instagramUrl,
+      vkUrl
     }`,
   );
 
   if (!d)
     return fallbackToStatic(null, {
-      siteName: SITE_NAME,
-      heroTitleRu: HERO_TITLE.ru,
-      heroTitleEn: HERO_TITLE.en,
+      titleRu: HERO_TITLE.ru,
+      titleEn: HERO_TITLE.en,
       heroSubTitle: HERO_CONFIG.subTitle,
       heroMotto: HERO_CONFIG.motto,
       heroCtaHref: HERO_CONFIG.ctaHref,
       heroCtaLabel: HERO_CONFIG.ctaLabel,
       masterClassesText:
         "Если вы в Петербурге — приходите в студию. Не просто купить\nкерамику, а сделать её своими руками под руководством Мастера.\nСопричастность, эмоции и память на всю жизнь.",
-      vk: "https://vk.ru/ceramic.loop",
+      telegramUrl: "https://t.me/ceramic_loop",
+      instagramUrl: "",
+      vkUrl: "https://vk.ru/ceramic.loop",
     });
 
   return {
-    siteName: d.siteName || "Ceramic•Loop",
-    heroTitleRu: d.heroTitleRu || HERO_TITLE.ru,
-    heroTitleEn: d.heroTitleEn || HERO_TITLE.en,
+    titleRu: d.titleRu || HERO_TITLE.ru,
+    titleEn: d.titleEn || HERO_TITLE.en,
     heroSubTitle: d.heroSubTitle || "Керамика Санкт-Петербурга",
     heroMotto:
       d.heroMotto ||
@@ -287,7 +289,9 @@ export async function getSiteConfig() {
     masterClassesText:
       d.masterClassesText ||
       "Если вы в Петербурге — приходите в студию. Не просто купить\nкерамику, а сделать её своими руками под руководством Мастера.\nСопричастность, эмоции и память на всю жизнь.",
-    vk: d.vk || "https://vk.ru/ceramic.loop",
+    telegramUrl: d.telegramUrl || "https://t.me/ceramic_loop",
+    instagramUrl: d.instagramUrl || "",
+    vkUrl: d.vkUrl || "https://vk.ru/ceramic.loop",
   };
 }
 

@@ -7,6 +7,10 @@
   html {
     @apply antialiased;
   }
+
+  :root {
+    --header-height: 72px;
+  }
 }
 
 /* Unified section heading styles */

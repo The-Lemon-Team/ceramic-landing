@@ -1,5 +1,3 @@
-export const SITE_NAME = "Ceramic Loop | Петля Керамики";
-
 export const HERO_TITLE = {
   ru: "Петля Керамики",
   en: "Ceramic Loop",

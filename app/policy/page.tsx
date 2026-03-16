@@ -8,9 +8,11 @@ export default async function PolicyPage() {
     getSiteConfig(),
   ]);
 
+  const siteName = siteConfig.titleRu;
+
   return (
     <main className="min-h-screen bg-background-light flex flex-col">
-      <Navbar items={navItems} siteName={siteConfig.siteName} />
+      <Navbar items={navItems} siteName={siteName} />
       <div className="max-w-4xl mx-auto px-6 py-16 md:py-20">
         <h1 className="text-4xl md:text-5xl font-serif text-stone-800">
           Политика конфиденциальности

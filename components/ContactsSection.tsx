@@ -58,7 +58,7 @@ export default function ContactsSection({ directions }: ContactsSectionProps) {
   return (
     <section
       id="contacts"
-      className="py-16 md:py-20 px-6 bg-white dark:bg-background-dark border-t border-stone-100 dark:border-white/10 scroll-mt-20"
+      className="py-16 md:py-20 px-6 bg-white dark:bg-[rgb(28_26_24)] border-t border-stone-100 dark:border-white/10 scroll-mt-20"
     >
       <div className="max-w-7xl mx-auto">
         <span className="section-label-wrap">
@@ -120,7 +120,7 @@ export default function ContactsSection({ directions }: ContactsSectionProps) {
                 id="telegram-address-link"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full inline-flex justify-center items-center gap-2 px-4 py-1.5 text-sm font-medium rounded-md bg-[#0088cc] text-white hover:bg-[#0077b5] transition-colors"
+                className="w-full inline-flex justify-center items-center gap-2 px-4 py-1.5 text-sm font-medium rounded-md bg-[#229ED9] text-white hover:bg-[#1E8FC3] transition-colors"
               >
                 <svg
                   className="w-4 h-4 fill-current shrink-0"
