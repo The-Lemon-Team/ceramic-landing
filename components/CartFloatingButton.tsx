@@ -1,10 +1,16 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useCart } from "@/components/CartProvider";
 
 export default function CartFloatingButton() {
   const { totalQuantity } = useCart();
+  const pathname = usePathname();
+
+  if (pathname === "/studio" || pathname.startsWith("/studio/")) {
+    return null;
+  }
 
   return (
     <div className="hidden md:block fixed inset-x-0 bottom-6 z-[60] pointer-events-none">
