@@ -38,6 +38,17 @@
     scrollbar-width: none;
   }
 
+  .cart-page {
+    max-width: 100%;
+    min-width: 0;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  .cart-page > * {
+    min-width: 0;
+  }
+
   .carousel-scroll {
     overscroll-behavior-x: contain;
   }

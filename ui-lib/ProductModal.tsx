@@ -27,7 +27,7 @@ export default function ProductModal({
 }: ProductModalProps) {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
-  const { addItem } = useCart();
+  const { addItem, notifyAdded } = useCart();
   const isGallery = variant === "gallery";
   const displayPrice = !isGallery || showPrice;
 
@@ -47,6 +47,7 @@ export default function ProductModal({
       quantity,
     );
     onClose();
+    window.setTimeout(() => notifyAdded(), 200);
   };
 
   const decreaseQuantity = () => {
@@ -72,7 +73,7 @@ export default function ProductModal({
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black/40 backdrop-blur-sm" />
+          <div className="fixed inset-0 bg-black/40 dark:bg-black/70 backdrop-blur-sm" />
         </Transition.Child>
 
         {/* Modal */}
@@ -88,7 +89,7 @@ export default function ProductModal({
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel
-                className="relative bg-white shadow-2xl overflow-y-auto rounded-2xl flex flex-col md:flex-row"
+                className="relative bg-white dark:bg-stone-850 shadow-2xl overflow-y-auto rounded-2xl flex flex-col md:flex-row"
                 style={{
                   width: "min(100%, 840px)",
                   maxHeight: "min(920px, 90vh)",
@@ -97,7 +98,7 @@ export default function ProductModal({
                 {/* Close Button */}
                 <button
                   onClick={onClose}
-                  className="absolute top-4 right-4 z-20 w-10 h-10 flex items-center justify-center rounded-full text-stone-500 hover:text-stone-800 hover:bg-stone-100 transition-colors"
+                  className="absolute top-4 right-4 z-20 w-10 h-10 flex items-center justify-center rounded-full text-stone-500 dark:text-stone-300 hover:text-stone-800 dark:hover:text-white hover:bg-stone-100 dark:hover:bg-white/10 transition-colors"
                   aria-label="Закрыть"
                 >
                   <svg
@@ -116,10 +117,10 @@ export default function ProductModal({
                 </button>
 
                 {/* Gallery Section */}
-                <div className="w-full md:w-[48%] p-6 md:p-8 flex flex-col gap-4 bg-stone-50">
+                <div className="w-full md:w-[48%] p-6 md:p-8 flex flex-col gap-4 bg-stone-50 dark:bg-stone-900/30">
                   {/* Main Image */}
                   <div className="flex-1 min-w-0">
-                    <div className="aspect-[4/5] max-h-[320px] md:max-h-[420px] bg-stone-200 rounded-xl overflow-hidden">
+                    <div className="aspect-[4/5] max-h-[260px] md:max-h-[340px] bg-stone-200 dark:bg-stone-800 rounded-xl overflow-hidden">
                       <Image
                         src={product.images[selectedImageIndex]}
                         alt={product.title}
@@ -155,43 +156,43 @@ export default function ProductModal({
                 </div>
 
                 {/* Details Section */}
-                <div className="w-full md:w-[55%] p-6 md:p-8 flex flex-col bg-white overflow-y-auto">
+                <div className="w-full md:w-[55%] p-6 md:p-8 flex flex-col dark:bg-stone-850 overflow-y-auto">
                   <div className="flex-grow space-y-5">
                     {!isGallery && (
                       <span className="text-[10px] tracking-[0.2em] uppercase font-medium text-primary block">
                         {product.category}
                       </span>
                     )}
-                    <Dialog.Title className="text-2xl md:text-3xl font-serif text-stone-800 leading-tight">
+                    <Dialog.Title className="text-2xl md:text-3xl font-serif text-stone-800 dark:text-stone-50 leading-tight">
                       {product.title}
                     </Dialog.Title>
 
                     {/* Описание */}
                     <div>
-                      <p className="text-sm leading-relaxed text-stone-600">
+                      <p className="text-sm leading-relaxed text-stone-600 dark:text-stone-300">
                         {product.description}
                       </p>
                     </div>
 
                     {/* Покрытие и размеры */}
                     {(product.finish !== "—" || product.dimensions !== "—") && (
-                      <div className="py-4 border-t border-stone-100 space-y-2">
+                      <div className="py-4 border-t border-stone-100 dark:border-white/10 space-y-2">
                         {product.finish !== "—" && (
                           <div className="flex gap-2 text-sm">
-                            <span className="font-medium text-stone-800 shrink-0">
+                            <span className="font-medium text-stone-800 dark:text-stone-100 shrink-0">
                               Покрытие:
                             </span>
-                            <span className="text-stone-500">
+                            <span className="text-stone-500 dark:text-stone-300">
                               {product.finish}
                             </span>
                           </div>
                         )}
                         {product.dimensions !== "—" && (
                           <div className="flex gap-2 text-sm">
-                            <span className="font-medium text-stone-800 shrink-0">
+                            <span className="font-medium text-stone-800 dark:text-stone-100 shrink-0">
                               Размеры:
                             </span>
-                            <span className="text-stone-500">
+                            <span className="text-stone-500 dark:text-stone-300">
                               {product.dimensions}
                             </span>
                           </div>
@@ -201,18 +202,18 @@ export default function ProductModal({
 
                     {/* Цена — после описания */}
                     {displayPrice && product.price > 0 && (
-                      <div className="pt-4 border-t border-stone-100 space-y-1">
+                      <div className="pt-4 border-t border-stone-100 dark:border-white/10 space-y-1">
                         <div className="flex items-center gap-3 flex-wrap">
                           {product.discountPercent != null && (
                             <span className="inline-flex items-center px-2 py-1 rounded text-xs font-bold bg-red-500/90 text-white">
                               −{product.discountPercent}%
                             </span>
                           )}
-                          <p className="text-xl font-semibold text-stone-800">
+                          <p className="text-xl font-semibold text-stone-800 dark:text-stone-50">
                             {product.price.toFixed(0)} ₽
                           </p>
                           {product.originalPrice != null && (
-                            <p className="text-base text-stone-400 line-through">
+                            <p className="text-base text-stone-400 dark:text-stone-500 line-through">
                               {product.originalPrice.toFixed(0)} ₽
                             </p>
                           )}
@@ -221,13 +222,13 @@ export default function ProductModal({
                     )}
                     {!isGallery && (
                       <div className="mt-6 space-y-2">
-                        <label className="block text-[9px] tracking-widest uppercase font-semibold text-stone-400">
+                        <label className="block text-[9px] tracking-widest uppercase font-semibold text-stone-400 dark:text-stone-400">
                           Количество
                         </label>
-                        <div className="flex items-center border border-stone-200 w-fit rounded-md">
+                        <div className="flex items-center border border-stone-200 dark:border-white/10 w-fit rounded-md">
                           <button
                             onClick={decreaseQuantity}
-                            className="px-2 py-1.5 text-stone-500 hover:text-primary transition-colors"
+                            className="px-2 py-1.5 text-stone-500 dark:text-stone-300 hover:text-primary transition-colors"
                             aria-label="Уменьшить количество"
                           >
                             <svg
@@ -244,12 +245,12 @@ export default function ProductModal({
                               />
                             </svg>
                           </button>
-                          <span className="px-3 py-1.5 text-sm text-stone-800 font-medium">
+                          <span className="px-3 py-1.5 text-sm text-stone-800 dark:text-stone-50 font-medium">
                             {quantity}
                           </span>
                           <button
                             onClick={increaseQuantity}
-                            className="px-2 py-1.5 text-stone-500 hover:text-primary transition-colors"
+                            className="px-2 py-1.5 text-stone-500 dark:text-stone-300 hover:text-primary transition-colors"
                             aria-label="Увеличить количество"
                           >
                             <svg
@@ -292,11 +293,11 @@ export default function ProductModal({
                             />
                           </svg>
                         </button>
-                        <button className="w-full px-4 py-1.5 text-sm font-medium rounded-md border border-stone-200 text-stone-700 hover:border-primary hover:text-primary transition-all">
+                        <button className="w-full px-4 py-1.5 text-sm font-medium rounded-md border border-stone-200 dark:border-white/10 text-stone-700 dark:text-stone-200 hover:border-primary hover:text-primary transition-all">
                           Подробнее
                         </button>
                       </div>
-                      <div className="mt-6 flex flex-wrap gap-3 text-[10px] text-stone-400 uppercase tracking-wider">
+                      <div className="mt-6 flex flex-wrap gap-3 text-[10px] text-stone-400 dark:text-stone-400 uppercase tracking-wider">
                         <div className="flex items-center gap-1.5">
                           <svg
                             className="w-3.5 h-3.5 shrink-0"

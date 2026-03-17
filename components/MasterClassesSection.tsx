@@ -14,10 +14,10 @@ export default function MasterClassesSection({ text }: Props) {
       id="master-classes"
       className="py-20 px-6 bg-pattern-charlie-brown dark:bg-[rgb(28_26_24)] overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto relative">
+      <div className="max-w-7xl mx-auto relative px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-start">
           {/* Левая колонка — текст */}
-          <div className="flex flex-col justify-center">
+          <div className="order-2 md:order-1 flex flex-col justify-center">
             <div className="rounded-[5px] bg-white/50 dark:bg-white/5 px-6 py-8 md:px-10 md:py-10 border border-white/40 dark:border-white/10 shadow-sm">
               <span className="section-label-wrap">
                 <span className="text-xs uppercase tracking-[0.2em] font-bold text-stone-600 dark:text-stone-300 inline-flex items-center gap-1.5">
@@ -80,7 +80,7 @@ export default function MasterClassesSection({ text }: Props) {
           </div>
 
           {/* Правая колонка — изображение */}
-          <div className="relative w-full h-[360px] rounded-2xl overflow-hidden shadow-xl border border-stone-100 dark:border-white/10">
+          <div className="order-1 md:order-2 relative w-full h-[360px] rounded-2xl overflow-hidden shadow-xl border border-stone-100 dark:border-white/10">
             <Image
               src="/images/masterclass.jpg"
               alt="Мастер-класс по керамике в студии"

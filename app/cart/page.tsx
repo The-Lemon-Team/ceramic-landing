@@ -8,9 +8,9 @@ export default function CartPage() {
   const { items, totalPrice, clear, removeItem, setQuantity } = useCart();
 
   return (
-    <main className="min-h-screen bg-background-light dark:bg-background-dark">
-      <div className="max-w-5xl mx-auto px-6 py-10">
-        <div className="flex items-center justify-between gap-4 mb-8">
+    <main className="min-h-screen bg-background-light dark:bg-background-dark overflow-x-hidden">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-10">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8 min-w-0">
           <div>
             <h1 className="text-3xl md:text-4xl font-serif text-stone-900 dark:text-stone-50">
               Корзина
@@ -21,7 +21,7 @@ export default function CartPage() {
           </div>
           <Link
             href="/"
-            className="text-sm uppercase tracking-widest font-medium text-stone-600 dark:text-stone-300 hover:text-primary transition-colors"
+            className="text-sm uppercase tracking-widest font-medium text-stone-600 dark:text-stone-300 hover:text-primary transition-colors self-start sm:self-auto"
           >
             На главную
           </Link>
@@ -29,9 +29,7 @@ export default function CartPage() {
 
         {items.length === 0 ? (
           <div className="rounded-2xl border border-stone-200 dark:border-white/10 bg-white/70 dark:bg-white/5 p-8">
-            <p className="text-stone-700 dark:text-stone-200">
-              Корзина пуста.
-            </p>
+            <p className="text-stone-700 dark:text-stone-200">Корзина пуста.</p>
             <div className="mt-4">
               <Link
                 href="/#ceramics"
@@ -42,12 +40,12 @@ export default function CartPage() {
             </div>
           </div>
         ) : (
-          <div className="grid md:grid-cols-[1fr_320px] gap-8">
+          <div className="grid md:grid-cols-[1fr_320px] gap-8 cart-page">
             <div className="space-y-4">
               {items.map((item) => (
                 <div
                   key={item.id}
-                  className="rounded-2xl border border-stone-200 dark:border-white/10 bg-white dark:bg-white/5 p-4 flex gap-4"
+                  className="w-full max-w-full min-w-0 overflow-hidden rounded-2xl border border-stone-200 dark:border-white/10 bg-white dark:bg-white/5 p-4 flex gap-4"
                 >
                   <div className="relative w-20 h-20 rounded-xl overflow-hidden bg-stone-100 dark:bg-white/10 shrink-0">
                     {item.image ? (
@@ -64,7 +62,7 @@ export default function CartPage() {
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start justify-between gap-4">
-                      <div>
+                      <div className="min-w-0 flex-1">
                         <p className="text-sm uppercase tracking-widest text-stone-500 dark:text-stone-400">
                           {item.kind === "product" ? "Товар" : "Арт"}
                         </p>
@@ -75,17 +73,19 @@ export default function CartPage() {
                       <button
                         type="button"
                         onClick={() => removeItem(item.id)}
-                        className="text-sm text-stone-500 hover:text-stone-900 dark:text-stone-400 dark:hover:text-white transition-colors"
+                        className="text-sm shrink-0 text-stone-500 hover:text-stone-900 dark:text-stone-400 dark:hover:text-white transition-colors"
                       >
                         Удалить
                       </button>
                     </div>
 
-                    <div className="mt-3 flex items-center justify-between gap-4">
-                      <div className="inline-flex items-center rounded-xl border border-stone-200 dark:border-white/10 overflow-hidden">
+                    <div className="mt-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                      <div className="inline-flex w-fit self-start sm:self-auto items-center rounded-xl border border-stone-200 dark:border-white/10 overflow-hidden">
                         <button
                           type="button"
-                          onClick={() => setQuantity(item.id, Math.max(1, item.quantity - 1))}
+                          onClick={() =>
+                            setQuantity(item.id, Math.max(1, item.quantity - 1))
+                          }
                           className="w-10 h-10 flex items-center justify-center text-stone-700 dark:text-stone-200 hover:bg-stone-100 dark:hover:bg-white/10 transition-colors"
                           aria-label="Уменьшить количество"
                         >
@@ -96,7 +96,9 @@ export default function CartPage() {
                         </span>
                         <button
                           type="button"
-                          onClick={() => setQuantity(item.id, item.quantity + 1)}
+                          onClick={() =>
+                            setQuantity(item.id, item.quantity + 1)
+                          }
                           className="w-10 h-10 flex items-center justify-center text-stone-700 dark:text-stone-200 hover:bg-stone-100 dark:hover:bg-white/10 transition-colors"
                           aria-label="Увеличить количество"
                         >
@@ -104,7 +106,7 @@ export default function CartPage() {
                         </button>
                       </div>
 
-                      <div className="text-right">
+                      <div className="text-right sm:shrink-0">
                         <p className="text-sm text-stone-500 dark:text-stone-400">
                           {item.price} ₽ × {item.quantity}
                         </p>

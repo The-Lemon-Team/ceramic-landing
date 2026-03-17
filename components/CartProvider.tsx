@@ -6,6 +6,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 
@@ -32,6 +33,11 @@ type CartContextValue = {
   removeItem: (id: string) => void;
   setQuantity: (id: string, quantity: number) => void;
   clear: () => void;
+  addedModalOpen: boolean;
+  addedModalSecondsLeft: number;
+  notifyAdded: () => void;
+  closeAddedModal: () => void;
+  lastAddedItem: CartItem | null;
 };
 
 const CartContext = createContext<CartContextValue | null>(null);
@@ -63,6 +69,10 @@ function safeParseCart(raw: string | null): CartState | null {
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [state, setState] = useState<CartState>({ items: [] });
   const [hydrated, setHydrated] = useState(false);
+  const [addedModalOpen, setAddedModalOpen] = useState(false);
+  const [addedModalSecondsLeft, setAddedModalSecondsLeft] = useState(2);
+  const addedIntervalRef = useRef<number | null>(null);
+  const [lastAddedItem, setLastAddedItem] = useState<CartItem | null>(null);
 
   useEffect(() => {
     const fromStorage = safeParseCart(window.localStorage.getItem(STORAGE_KEY));
@@ -75,25 +85,73 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   }, [state, hydrated]);
 
+  const closeAddedModal = useCallback(() => {
+    setAddedModalOpen(false);
+    setAddedModalSecondsLeft(2);
+    if (addedIntervalRef.current != null) {
+      window.clearInterval(addedIntervalRef.current);
+      addedIntervalRef.current = null;
+    }
+  }, []);
+
+  const notifyAdded = useCallback(() => {
+    if (addedIntervalRef.current != null) {
+      window.clearInterval(addedIntervalRef.current);
+      addedIntervalRef.current = null;
+    }
+
+    setAddedModalOpen(true);
+    setAddedModalSecondsLeft(2);
+
+    addedIntervalRef.current = window.setInterval(() => {
+      setAddedModalSecondsLeft((s) => {
+        if (s <= 1) {
+          window.setTimeout(() => {
+            setAddedModalOpen(false);
+            setAddedModalSecondsLeft(2);
+          }, 0);
+          if (addedIntervalRef.current != null) {
+            window.clearInterval(addedIntervalRef.current);
+            addedIntervalRef.current = null;
+          }
+          return 0;
+        }
+        return s - 1;
+      });
+    }, 1000);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (addedIntervalRef.current != null) {
+        window.clearInterval(addedIntervalRef.current);
+        addedIntervalRef.current = null;
+      }
+    };
+  }, []);
+
   const addItem = useCallback(
     (item: Omit<CartItem, "quantity">, quantity: number = 1) => {
       const qty = Math.max(1, quantity);
       setState((prev) => {
         const existingIndex = prev.items.findIndex((i) => i.id === item.id);
         if (existingIndex === -1) {
+          setLastAddedItem({ ...item, quantity: qty });
           return {
             items: [...prev.items, { ...item, quantity: qty }],
           };
         }
         const next = [...prev.items];
-        next[existingIndex] = {
+        const updated: CartItem = {
           ...next[existingIndex],
           quantity: next[existingIndex].quantity + qty,
         };
+        next[existingIndex] = updated;
+        setLastAddedItem(updated);
         return { items: next };
       });
     },
-    []
+    [],
   );
 
   const removeItem = useCallback((id: string) => {
@@ -113,12 +171,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const totalQuantity = useMemo(
     () => state.items.reduce((sum, i) => sum + i.quantity, 0),
-    [state.items]
+    [state.items],
   );
 
   const totalPrice = useMemo(
     () => state.items.reduce((sum, i) => sum + i.price * i.quantity, 0),
-    [state.items]
+    [state.items],
   );
 
   const value: CartContextValue = useMemo(
@@ -130,8 +188,26 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       removeItem,
       setQuantity,
       clear,
+      addedModalOpen,
+      addedModalSecondsLeft,
+      notifyAdded,
+      closeAddedModal,
+      lastAddedItem,
     }),
-    [state.items, totalQuantity, totalPrice, addItem, removeItem, setQuantity, clear]
+    [
+      state.items,
+      totalQuantity,
+      totalPrice,
+      addItem,
+      removeItem,
+      setQuantity,
+      clear,
+      addedModalOpen,
+      addedModalSecondsLeft,
+      notifyAdded,
+      closeAddedModal,
+      lastAddedItem,
+    ],
   );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

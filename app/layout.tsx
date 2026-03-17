@@ -5,6 +5,8 @@ import {
   Mrs_Saint_Delafield,
 } from "next/font/google";
 import { CartProvider } from "@/components/CartProvider";
+import CartFloatingButton from "@/components/CartFloatingButton";
+import AddedToCartModal from "@/components/AddedToCartModal";
 import "./globals.css";
 
 const cormorantGaramond = Cormorant_Garamond({
@@ -54,7 +56,11 @@ export default function RootLayout({
       <body
         className={`${cormorantGaramond.variable} ${inter.variable} ${mrsSaintDelafield.variable} font-sans antialiased overflow-x-hidden bg-background-light text-stone-900 dark:bg-background-dark dark:text-stone-50`}
       >
-        <CartProvider>{children}</CartProvider>
+        <CartProvider>
+          {children}
+          <AddedToCartModal />
+          <CartFloatingButton />
+        </CartProvider>
       </body>
     </html>
   );

@@ -48,7 +48,7 @@ export default function ArtsGalleryModal({
 }: ArtsGalleryModalProps) {
   const [index, setIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
-  const { addItem } = useCart();
+  const { addItem, notifyAdded } = useCart();
   const media = theme?.media ?? [];
   const current = media[index];
   const hasMultiple = media.length > 1;
@@ -94,6 +94,7 @@ export default function ArtsGalleryModal({
       quantity,
     );
     onClose();
+    window.setTimeout(() => notifyAdded(), 200);
   };
 
   return (
