@@ -35,14 +35,14 @@ function StudioPhotoCard({
     <button
       type="button"
       onClick={onOpen}
-      className="group relative w-full aspect-[20/23] overflow-hidden rounded-2xl border border-white/10 bg-black/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-900"
+      className="group relative w-full aspect-[4/3] md:aspect-[16/9] overflow-hidden rounded-xl border border-white/10 bg-black/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-900"
     >
       <Image
         src={photo.src}
         alt={photo.alt}
         fill
         className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-        sizes="(max-width: 768px) 56vw, 224px"
+        sizes="(max-width: 768px) 100vw, 50vw"
         priority={false}
       />
       <div className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/25" />
@@ -330,7 +330,7 @@ export default function StudioSection({ photos }: { photos?: StudioPhoto[] }) {
                       key={`slide-${slideIndex}`}
                       className="shrink-0 w-full min-w-full snap-start px-1 first:pl-0 last:pr-0"
                     >
-                      <div className="mx-auto w-4/5 grid grid-cols-3 grid-rows-2 gap-3">
+                      <div className="w-full grid grid-cols-2 grid-rows-3 md:grid-cols-3 md:grid-rows-2 gap-3">
                         {items.map((photo, idx) => {
                           const absoluteIndex = slideIndex * 6 + idx;
                           return (
