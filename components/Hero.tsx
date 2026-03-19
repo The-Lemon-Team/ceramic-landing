@@ -27,14 +27,18 @@ export default function Hero({ titleRu, titleEn, subTitle, motto }: HeroProps) {
       <div className="relative z-10 max-w-7xl mx-auto px-6 min-h-[calc(100dvh-var(--header-height))] flex items-center justify-center -mt-[12vh]">
         <div className="max-w-2xl text-center flex flex-col items-center gap-5">
           <h1
-            className={`${headingBase} text-5xl sm:text-4xl md:text-6xl font-semibold drop-shadow-sm`}
+            className={`${headingBase} text-4xl sm:text-4xl md:text-6xl font-semibold drop-shadow-sm`}
           >
             <span className="block">{titleEn}</span>
             <span className="block mt-2">{titleRu}</span>
           </h1>
+          <span
+            aria-hidden
+            className="block h-[1px] w-20 sm:w-16 bg-primary/90 rounded-full mx-auto mt-1"
+          />
           <div className="flex flex-col items-center gap-2">
             <h2
-              className={`${headingBase} text-xl sm:text-2xl md:text-2xl font-medium drop-shadow-sm`}
+              className={`${headingBase} text-lg sm:text-2xl md:text-2xl font-bold drop-shadow-sm`}
             >
               {subTitle}
             </h2>

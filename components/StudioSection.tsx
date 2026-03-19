@@ -258,7 +258,7 @@ export default function StudioSection({ photos }: { photos?: StudioPhoto[] }) {
 
       {/* Основной контейнер — совпадает с отступами других секций */}
       <div className="relative z-10 max-w-7xl px-6 mx-auto">
-        <div className="w-full md:bg-black/40 md:backdrop-blur-3xl md:rounded-3xl overflow-hidden flex flex-col md:flex-row min-h-[600px] md:border md:border-white/10 md:shadow-2xl">
+        <div className="w-full pt-10 md:bg-black/40 md:backdrop-blur-3xl md:rounded-3xl overflow-hidden flex flex-col md:flex-row min-h-[600px] md:border md:border-white/10 md:shadow-2xl">
           {/* ЛЕВАЯ КОЛОНКА: фото (только md+, на мобилке фото встроено в контент ниже) */}
           <div className="hidden md:block w-full md:w-1/2 order-1 aspect-square md:aspect-auto overflow-hidden shrink-0 relative">
             <Image
@@ -273,7 +273,7 @@ export default function StudioSection({ photos }: { photos?: StudioPhoto[] }) {
           </div>
 
           {/* ПРАВАЯ КОЛОНКА: контент. На мобилке порядок: заголовок → изображение → табы → контент */}
-          <div className="w-full md:w-1/2 flex flex-col order-2 min-h-0 overflow-hidden p-4 md:pt-8 pt-12">
+          <div className="w-full md:w-1/2 flex flex-col order-2 min-h-0 overflow-hidden md:pt-10 md:pl-20">
             {/* Заголовок: Студия (иконка) + Студия (заголовок) */}
             <div className="mb-4 md:mb-6 shrink-0">
               <div className="flex items-center gap-2 text-amber-400 mb-2">

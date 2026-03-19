@@ -9,7 +9,7 @@ export default function AboutSection({ data }: AboutSectionProps) {
   return (
     <section
       id="about"
-      className="relative py-20 bg-pattern-charlie-brown dark:bg-[rgb(28_26_24)] overflow-hidden"
+      className="relative py-10 md:py-20 bg-pattern-charlie-brown dark:bg-[rgb(28_26_24)] overflow-hidden"
     >
       {/* Градиенты для мягкого перехода между секциями */}
       <div
@@ -22,9 +22,36 @@ export default function AboutSection({ data }: AboutSectionProps) {
       />
       <div className="relative z-10 max-w-7xl px-6 mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-10 md:gap-12 items-start min-w-0">
-          <div className="relative w-full max-w-[308px] md:max-w-[352px] mx-auto md:mx-0 min-w-0">
+          <div className="relative w-full max-w-none md:mx-0 md:max-w-[352px] md:w-full md:justify-self-start min-w-0">
             <div className="absolute -top-6 -left-6 w-32 h-32 bg-primary rounded-full blur-3xl"></div>
             {/* <div className="absolute -bottom-20 -right-20 z-0 w-48 h-48 bg-stone-200 rounded-full opacity-30"></div> */}
+            <div className="px-2 md:px-6 md:hidden mb-4 relative">
+              <span className="section-label-wrap">
+                <span className="section-label text-md text-stone-500 dark:text-stone-50 inline-flex items-center gap-1.5">
+                  {data.sectionLabel}
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="text-stone-600 dark:text-stone-50 shrink-0"
+                    aria-hidden
+                  >
+                    <path
+                      d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3M10 1v3M14 1v3"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      fill="none"
+                    />
+                  </svg>
+                </span>
+              </span>
+              <h2 className="text-3xl font-serif text-stone-800 dark:text-stone-50 mt-2">
+                {data.authorName}
+              </h2>
+            </div>
             <div
               className="relative w-full rounded-2xl overflow-hidden border-[10px] border-stone-50 dark:border-white/10 shadow-xl box-border"
               style={{ aspectRatio: "3/5" }}
@@ -34,11 +61,11 @@ export default function AboutSection({ data }: AboutSectionProps) {
                 alt={data.photoAlt}
                 width={352}
                 height={587}
-                className="w-full aspect-[3/5] object-cover"
+                className="w-full aspect-[3/5] object-cover h-full"
               />
             </div>
             {data.quote && (
-              <div className="absolute -bottom-2 -left-10 bg-primary p-4 text-white rounded-lg shadow-xl hidden lg:flex items-center justify-center text-center">
+              <div className="absolute -bottom-2 bg-primary p-4 text-white rounded-lg shadow-xl hidden lg:flex items-center justify-center text-center">
                 <p className="font-serif text-xl italic text-center">
                   &quot;{data.quote}&quot;
                 </p>
@@ -73,14 +100,14 @@ export default function AboutSection({ data }: AboutSectionProps) {
                 {data.authorName}
               </h2>
               {data.bio && (
-                <div className="space-y-4 text-stone-600 dark:text-stone-300 text-sm md:text-base leading-relaxed whitespace-pre-line">
+                <div className="space-y-4 pb-6 text-stone-600 dark:text-stone-300 text-sm md:text-base leading-relaxed whitespace-pre-line">
                   {data.bio.split("\n\n").map((para, i) => (
                     <p key={i}>{para}</p>
                   ))}
                 </div>
               )}
               {(data.closingText || data.signature) && (
-                <div className="pt-6 border-t border-stone-100 dark:border-white/10">
+                <div className="pt-6 border-t border-stone-100 dark:border-white/40">
                   {data.closingText && (
                     <p className="text-stone-400 dark:text-stone-400 text-xs md:text-sm mb-1.5">
                       {data.closingText}
