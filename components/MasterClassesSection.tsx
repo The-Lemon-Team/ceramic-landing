@@ -12,14 +12,49 @@ export default function MasterClassesSection({ text }: Props) {
   return (
     <section
       id="master-classes"
-      className="py-20 px-6 bg-pattern-charlie-brown dark:bg-[rgb(28_26_24)] overflow-hidden"
+      className="py-10 px-8 md:px-6 md:py-12 bg-pattern-charlie-brown dark:bg-[rgb(28_26_24)] overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto relative px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-start">
+      <div className="max-w-7xl mx-auto">
+        <span className="section-label-wrap">
+          <span className="text-xs uppercase tracking-[0.2em] font-bold text-stone-600 dark:text-stone-300 inline-flex items-center gap-1.5">
+            Мастер-классы
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              className="shrink-0"
+              aria-hidden
+            >
+              <path
+                d="M12 14l9-5-9-5-9 5 9 5z"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                fill="none"
+              />
+              <path
+                d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                fill="none"
+              />
+            </svg>
+          </span>
+        </span>
+        <h2 className="text-3xl font-serif text-stone-900 dark:text-stone-50 mb-6">
+          Мастер-классы
+        </h2>
+      </div>
+      <div className="max-w-7xl mx-auto relative">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 items-start">
           {/* Левая колонка — текст */}
           <div className="order-2 md:order-1 flex flex-col justify-center">
-            <div className="rounded-[5px] bg-white/50 dark:bg-white/5 px-6 py-8 md:px-10 md:py-10 border border-white/40 dark:border-white/10 shadow-sm">
-              <h2 className="text-4xl md:text-5xl font-serif text-stone-900 dark:text-stone-50 mb-4 hidden md:block">
+            <div className="rounded-[5px] bg-white/50 dark:bg-white/5 px-6 py-8 md:px-10 md:py-10 border border-white/40 dark:border-white/10 shadow-md">
+              <h2 className="text-4xl md:text-5xl font-serif text-stone-900 dark:text-stone-50 mb-4">
                 Мастер-классы
               </h2>
               <p className="text-base leading-relaxed text-stone-700 dark:text-stone-300 mb-8">
@@ -50,42 +85,7 @@ export default function MasterClassesSection({ text }: Props) {
           </div>
 
           {/* Правая колонка — изображение */}
-          <div className="order-1 md:order-2 relative w-full h-[360px] rounded-2xl overflow-hidden shadow-xl border border-stone-100 dark:border-white/10">
-            <div className="md:hidden absolute left-4 top-4 z-10">
-              <span className="section-label-wrap">
-                <span className="text-xs uppercase tracking-[0.2em] font-bold text-stone-600 dark:text-stone-300 inline-flex items-center gap-1.5">
-                  Мастер-классы
-                  <svg
-                    width="12"
-                    height="12"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    className="shrink-0"
-                    aria-hidden
-                  >
-                    <path
-                      d="M12 14l9-5-9-5-9 5 9 5z"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      fill="none"
-                    />
-                    <path
-                      d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      fill="none"
-                    />
-                  </svg>
-                </span>
-              </span>
-              <h2 className="text-3xl font-serif text-stone-900 dark:text-stone-50 mt-2">
-                Мастер-классы
-              </h2>
-            </div>
+          <div className="order-1 md:order-2 relative w-full h-[360px] rounded-md overflow-hidden shadow-md border border-stone-100 dark:border-white/10">
             <Image
               src="/images/masterclass.jpg"
               alt="Мастер-класс по керамике в студии"

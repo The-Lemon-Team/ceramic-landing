@@ -9,7 +9,7 @@ export default function AboutSection({ data }: AboutSectionProps) {
   return (
     <section
       id="about"
-      className="relative py-10 md:py-20 bg-pattern-charlie-brown dark:bg-[rgb(28_26_24)] overflow-hidden"
+      className="relative py-10 md:py-12 bg-pattern-charlie-brown dark:bg-[rgb(28_26_24)] overflow-hidden"
     >
       {/* Градиенты для мягкого перехода между секциями */}
       <div
@@ -21,11 +21,11 @@ export default function AboutSection({ data }: AboutSectionProps) {
         aria-hidden
       />
       <div className="relative z-10 max-w-7xl px-6 mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-10 md:gap-12 items-start min-w-0">
+        <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-6 md:gap-10 md:gap-12 items-start min-w-0">
           <div className="relative w-full max-w-none md:mx-0 md:max-w-[352px] md:w-full md:justify-self-start min-w-0">
             <div className="absolute -top-6 -left-6 w-32 h-32 bg-primary rounded-full blur-3xl"></div>
             {/* <div className="absolute -bottom-20 -right-20 z-0 w-48 h-48 bg-stone-200 rounded-full opacity-30"></div> */}
-            <div className="px-2 md:px-6 md:hidden mb-4 relative">
+            <div className="px-0 md:px-6 md:hidden mb-4 relative">
               <span className="section-label-wrap">
                 <span className="section-label text-md text-stone-500 dark:text-stone-50 inline-flex items-center gap-1.5">
                   {data.sectionLabel}
@@ -48,12 +48,12 @@ export default function AboutSection({ data }: AboutSectionProps) {
                   </svg>
                 </span>
               </span>
-              <h2 className="text-3xl font-serif text-stone-800 dark:text-stone-50 mt-2">
+              <h2 className="text-3xl font-serif text-stone-800 dark:text-stone-50 ">
                 {data.authorName}
               </h2>
             </div>
             <div
-              className="relative w-full rounded-2xl overflow-hidden border-[10px] border-stone-50 dark:border-white/10 shadow-xl box-border"
+              className="relative w-full rounded-md overflow-hidden border-[10px] border-stone-50 dark:border-white/10 shadow-md box-border"
               style={{ aspectRatio: "3/5" }}
             >
               <Image
@@ -73,8 +73,8 @@ export default function AboutSection({ data }: AboutSectionProps) {
             )}
           </div>
           <div className="flex flex-col justify-center">
-            <div className="rounded-[5px] bg-white/50 dark:bg-white/5 px-6 py-8 md:px-10 md:py-10 border border-white/40 dark:border-white/10 shadow-sm">
-              <span className="section-label-wrap">
+            <div className="rounded-[5px] bg-white/50 dark:bg-white/5 px-6 py-8 md:px-10 md:py-10 border border-white/40 dark:border-white/10 shadow-md">
+              <span className="section-label-wrap mb-2">
                 <span className="section-label text-stone-500 inline-flex items-center gap-1.5">
                   {data.sectionLabel}
                   <svg
@@ -107,7 +107,7 @@ export default function AboutSection({ data }: AboutSectionProps) {
                 </div>
               )}
               {(data.closingText || data.signature) && (
-                <div className="pt-6 border-t border-stone-100 dark:border-white/40">
+                <div className="pt-6 border-t border-stone-200 dark:border-white/40">
                   {data.closingText && (
                     <p className="text-stone-400 dark:text-stone-400 text-xs md:text-sm mb-1.5">
                       {data.closingText}

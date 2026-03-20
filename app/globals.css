@@ -16,7 +16,7 @@
 /* Unified section heading styles */
 @layer components {
   .section-label-wrap {
-    @apply mb-2 block;
+    @apply mb-0 block md:mb-2;
   }
   .section-label {
     @apply text-xs uppercase tracking-[0.2em] font-bold text-primary;

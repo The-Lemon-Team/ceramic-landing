@@ -46,11 +46,11 @@ export default function TelegramNewsFeed({ items }: TelegramNewsFeedProps) {
   return (
     <section
       id="news"
-      className="bg-[#f0f5f6] dark:bg-[rgb(28_26_24)] py-12 overflow-x-hidden"
+      className="bg-[#f0f5f6] dark:bg-[rgb(28_26_24)] py-10 overflow-x-hidden"
     >
       <div className="max-w-7xl mx-auto px-6">
         <div className="md:hidden mb-6">
-          <span className="mb-2 block">
+          <span className="md:mb-2 block">
             <span className="text-xs uppercase tracking-[0.2em] font-bold text-[#1f6f8b] dark:text-[#7ab8c4] inline-flex items-center gap-1.5">
               Телеграм
               <svg
@@ -62,7 +62,7 @@ export default function TelegramNewsFeed({ items }: TelegramNewsFeedProps) {
               </svg>
             </span>
           </span>
-          <h2 className="text-3xl font-serif text-[#0d191b] dark:text-white mb-3">
+          <h2 className="text-3xl font-serif text-[#0d191b] dark:text-white mb-1 md:mb-4">
             Наша лента
           </h2>
           <p className="text-sm leading-relaxed text-[#4c8d9a] dark:text-[#7ab8c4] max-w-lg">

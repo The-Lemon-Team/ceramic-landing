@@ -58,7 +58,7 @@ export default function ContactsSection({ directions }: ContactsSectionProps) {
   return (
     <section
       id="contacts"
-      className="py-16 md:py-20 px-6 bg-white dark:bg-[rgb(28_26_24)] border-t border-stone-100 dark:border-white/10 scroll-mt-20"
+      className="py-10 px-6 bg-white dark:bg-[rgb(28_26_24)] border-t border-stone-100 dark:border-white/10 scroll-mt-20"
     >
       <div className="max-w-7xl mx-auto">
         <span className="section-label-wrap">
@@ -81,13 +81,13 @@ export default function ContactsSection({ directions }: ContactsSectionProps) {
             </svg>
           </span>
         </span>
-        <h2 className="section-title mb-2">Адрес и контакты</h2>
-        <p className="text-stone-600 dark:text-stone-300 text-base mb-6 max-w-lg">
+        <h2 className="section-title mb-6">Адрес и контакты</h2>
+        <p className="text-stone-600 dark:text-stone-300 text-base mb-2 max-w-lg">
           {directions.address}
         </p>
 
         <h3 className="text-lg font-semibold text-stone-800 dark:text-stone-50 mb-2">
-          Как добраться
+          Как добраться:
         </h3>
 
         {/* Карта слева, подсказка справа — одинаковые по высоте */}

@@ -257,8 +257,8 @@ export default function StudioSection({ photos }: { photos?: StudioPhoto[] }) {
       </div>
 
       {/* Основной контейнер — совпадает с отступами других секций */}
-      <div className="relative z-10 max-w-7xl px-6 mx-auto">
-        <div className="w-full pt-10 md:bg-black/40 md:backdrop-blur-3xl md:rounded-3xl overflow-hidden flex flex-col md:flex-row min-h-[600px] md:border md:border-white/10 md:shadow-2xl">
+      <div className="relative z-10 max-w-7xl px-6 md:px-0 mx-auto">
+        <div className="w-full pt-10 md:pt-0 md:bg-black/40 md:backdrop-blur-3xl md:rounded-3xl overflow-hidden flex flex-col md:flex-row min-h-[600px] md:border md:border-white/10 md:shadow-2xl">
           {/* ЛЕВАЯ КОЛОНКА: фото (только md+, на мобилке фото встроено в контент ниже) */}
           <div className="hidden md:block w-full md:w-1/2 order-1 aspect-square md:aspect-auto overflow-hidden shrink-0 relative">
             <Image
@@ -273,10 +273,10 @@ export default function StudioSection({ photos }: { photos?: StudioPhoto[] }) {
           </div>
 
           {/* ПРАВАЯ КОЛОНКА: контент. На мобилке порядок: заголовок → изображение → табы → контент */}
-          <div className="w-full md:w-1/2 flex flex-col order-2 min-h-0 overflow-hidden md:pt-10 md:pl-20">
+          <div className="w-full md:w-1/2 flex flex-col order-2 min-h-0 overflow-hidden md:p-8 pb-8">
             {/* Заголовок: Студия (иконка) + Студия (заголовок) */}
-            <div className="mb-4 md:mb-6 shrink-0">
-              <div className="flex items-center gap-2 text-amber-400 mb-2">
+            <div className="mb-4 shrink-0">
+              <div className="flex items-center gap-2 text-amber-400 mb-0 md:mb-2">
                 <span className="text-[10px] tracking-[0.3em] uppercase font-bold">
                   Студия
                 </span>
@@ -302,7 +302,7 @@ export default function StudioSection({ photos }: { photos?: StudioPhoto[] }) {
             </div>
 
             {/* Изображение: только на мобилке, между заголовком и табами */}
-            <div className="block md:hidden w-full aspect-square overflow-hidden shrink-0 relative rounded-xl mb-5">
+            <div className="block md:hidden w-full aspect-square overflow-hidden shrink-0 relative rounded-md mb-4">
               <Image
                 src={coverPhoto.src}
                 alt={coverPhoto.alt}
@@ -314,7 +314,7 @@ export default function StudioSection({ photos }: { photos?: StudioPhoto[] }) {
             </div>
 
             {/* Описание */}
-            <p className="text-gray-300 leading-relaxed text-sm font-light mb-5 shrink-0">
+            <p className="text-gray-300 leading-relaxed text-sm font-light mb-4 shrink-0">
               Авторская керамика ручной работы в Санкт-Петербурге. В студии
               создаём ограниченные серии: от эскиза до обжига. Работаем с
               разными массами и глазурями, часть процесса снимаем на видео. Ниже
@@ -349,7 +349,7 @@ export default function StudioSection({ photos }: { photos?: StudioPhoto[] }) {
             </div>
 
             {/* Блок Индивидуальные заказы */}
-            <div className="mt-6 p-5 rounded-xl bg-white/5 border border-white/10 shrink-0">
+            <div className="mt-4 p-5 rounded-xl bg-white/5 border border-white/10 shrink-0">
               <h3 className="text-amber-400 text-sm font-bold uppercase tracking-wider mb-2">
                 Индивидуальные заказы
               </h3>
