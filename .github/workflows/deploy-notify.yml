@@ -21,4 +21,4 @@ jobs:
             🚀 **Статус:** Успешно опубликован
             👤 **Автор:** ${{ github.actor }}
 
-            🔗 [Посмотреть сайт](${{ github.event.deployment_status.target_url }})
+            🔗 [Посмотреть сайт](https://www.ceramic-loop.ru/)
