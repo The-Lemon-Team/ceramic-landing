@@ -78,7 +78,7 @@ export default function TelegramNewsFeed({ items }: TelegramNewsFeedProps) {
                 overline="Телеграм"
                 title="Наша лента"
                 overlineClassName="text-[0.75rem] uppercase tracking-[0.2em] font-bold text-[#1f6f8b] dark:text-[#7ab8c4] inline-flex items-center gap-1.5"
-                titleClassName="text-4xl md:text-5xl font-serif text-[#0d191b] dark:text-white"
+                titleClassName="text-3xl md:text-4xl font-serif text-[#0d191b] dark:text-white"
                 icon={
                   <svg
                     className="w-3 h-3 shrink-0 fill-current"

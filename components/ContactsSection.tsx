@@ -67,7 +67,7 @@ export default function ContactsSection({ directions }: ContactsSectionProps) {
           overline="Контакты"
           title="Адрес и контакты"
           overlineClassName="section-label text-stone-500 inline-flex items-center gap-1.5"
-          titleClassName="section-title mb-6"
+          titleClassName="text-3xl md:text-4xl font-serif text-[#0d191b] dark:text-white mb-6"
           icon={
             <svg
               width="12"

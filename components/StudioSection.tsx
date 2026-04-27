@@ -281,7 +281,7 @@ export default function StudioSection({ photos }: { photos?: StudioPhoto[] }) {
                 overline="Студия"
                 title="Студия"
                 overlineClassName="text-[0.75rem] uppercase tracking-[0.3em] font-bold text-amber-400 inline-flex items-center gap-2"
-                titleClassName="text-3xl md:text-5xl font-serif"
+                titleClassName="text-3xl md:text-4xl font-serif"
                 titleColorClassName="text-white"
                 icon={
                   <svg
