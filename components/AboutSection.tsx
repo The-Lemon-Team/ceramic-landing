@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { AboutAuthorData } from "@/lib/cms";
+import Titles from "./Titles";
 
 type AboutSectionProps = {
   data: AboutAuthorData;
@@ -9,7 +10,7 @@ export default function AboutSection({ data }: AboutSectionProps) {
   return (
     <section
       id="about"
-      className="relative py-10 md:py-12 bg-pattern-charlie-brown dark:bg-[rgb(28_26_24)] overflow-hidden"
+      className="relative py-10 px-8 md:py-10 md:px-[8px] bg-pattern-charlie-brown dark:bg-[rgb(28_26_24)] overflow-hidden"
     >
       {/* Градиенты для мягкого перехода между секциями */}
       <div
@@ -20,15 +21,18 @@ export default function AboutSection({ data }: AboutSectionProps) {
         className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white dark:from-[rgb(28_26_24)] to-transparent pointer-events-none z-[1]"
         aria-hidden
       />
-      <div className="relative z-10 max-w-7xl px-6 mx-auto">
+      <div className="relative z-10 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-6 md:gap-10 md:gap-12 items-start min-w-0">
           <div className="relative w-full max-w-none md:mx-0 md:max-w-[352px] md:w-full md:justify-self-start min-w-0">
             <div className="absolute -top-6 -left-6 w-32 h-32 bg-primary rounded-full blur-3xl"></div>
             {/* <div className="absolute -bottom-20 -right-20 z-0 w-48 h-48 bg-stone-200 rounded-full opacity-30"></div> */}
-            <div className="px-0 md:px-6 md:hidden mb-4 relative">
-              <span className="section-label-wrap">
-                <span className="section-label text-md text-stone-500 dark:text-stone-50 inline-flex items-center gap-1.5">
-                  {data.sectionLabel}
+            <div className="px-0 md:px-6 md:hidden mb-6 relative">
+              <Titles
+                overline={data.sectionLabel}
+                title={data.authorName}
+                overlineClassName="text-[0.75rem] uppercase tracking-[0.2em] font-bold text-stone-500 dark:text-stone-50 inline-flex items-center gap-1.5"
+                titleClassName="text-3xl font-serif text-stone-800 dark:text-stone-50"
+                icon={
                   <svg
                     width="12"
                     height="12"
@@ -46,11 +50,8 @@ export default function AboutSection({ data }: AboutSectionProps) {
                       fill="none"
                     />
                   </svg>
-                </span>
-              </span>
-              <h2 className="text-3xl font-serif text-stone-800 dark:text-stone-50 ">
-                {data.authorName}
-              </h2>
+                }
+              />
             </div>
             <div
               className="relative w-full rounded-md overflow-hidden border-[10px] border-stone-50 dark:border-white/10 shadow-md box-border"
@@ -74,33 +75,35 @@ export default function AboutSection({ data }: AboutSectionProps) {
           </div>
           <div className="flex flex-col justify-center">
             <div className="rounded-[5px] bg-white/50 dark:bg-white/5 px-6 py-8 md:px-10 md:py-10 border border-white/40 dark:border-white/10 shadow-md">
-              <span className="section-label-wrap mb-2">
-                <span className="section-label text-stone-500 inline-flex items-center gap-1.5">
-                  {data.sectionLabel}
-                  <svg
-                    width="12"
-                    height="12"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    className="text-stone-600 dark:text-stone-300 shrink-0"
-                    aria-hidden
-                  >
-                    <path
-                      d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3M10 1v3M14 1v3"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      fill="none"
-                    />
-                  </svg>
-                </span>
-              </span>
-              <h2 className="text-2xl md:text-3xl font-serif text-stone-800 dark:text-stone-50 mb-4">
-                {data.authorName}
-              </h2>
+              <div className="mb-6">
+                <Titles
+                  overline={data.sectionLabel}
+                  title={data.authorName}
+                  overlineClassName="text-[0.75rem] uppercase tracking-[0.2em] font-bold text-stone-300 inline-flex items-center gap-1.5"
+                  titleClassName="text-2xl md:text-3xl font-serif text-stone-800 dark:text-stone-50"
+                  icon={
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="text-stone-600 dark:text-stone-300 shrink-0"
+                      aria-hidden
+                    >
+                      <path
+                        d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3M10 1v3M14 1v3"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        fill="none"
+                      />
+                    </svg>
+                  }
+                />
+              </div>
               {data.bio && (
-                <div className="space-y-4 pb-6 text-stone-600 dark:text-stone-300 text-sm md:text-base leading-relaxed whitespace-pre-line">
+                <div className="space-y-4 pb-6 text-stone-600 dark:text-stone-300 text-[0.875rem] leading-relaxed whitespace-pre-line">
                   {data.bio.split("\n\n").map((para, i) => (
                     <p key={i}>{para}</p>
                   ))}

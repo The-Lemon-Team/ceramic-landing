@@ -5,6 +5,7 @@ import Image from "next/image";
 import type { ArtsTheme } from "@/data/artsThemes";
 import ArtsGalleryModal from "./ArtsGalleryModal";
 import { assetUrl } from "@/lib/assetUrl";
+import Titles from "./Titles";
 
 interface ArtsSectionProps {
   items: ArtsTheme[];
@@ -16,13 +17,17 @@ export default function ArtsSection({ items }: ArtsSectionProps) {
   return (
     <section
       id="arts"
-      className="pt-14 md:pt-12 pb-8 md:pb-10 bg-white dark:bg-background-dark overflow-hidden"
+      className="py-10 px-8 md:py-10 md:px-[8px] bg-white dark:bg-background-dark overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto">
         <div className="mb-6 md:mb-8">
-          <span className="section-label-wrap">
-            <span className="section-label text-stone-400 dark:text-stone-300 inline-flex items-center gap-1.5">
-              Арты
+          <Titles
+            className="section-label-wrap"
+            overline="Арты"
+            title="Зарисовки и арты"
+            overlineClassName="section-label text-stone-400 dark:text-stone-300 inline-flex items-center gap-1.5"
+            titleClassName="section-title mb-4"
+            icon={
               <svg
                 width="12"
                 height="12"
@@ -38,9 +43,8 @@ export default function ArtsSection({ items }: ArtsSectionProps) {
                 <path d="M4 20h16" />
                 <path d="M6 20v-6l6-6 4 4 6-6v6" />
               </svg>
-            </span>
-          </span>
-          <h2 className="section-title mb-4">Зарисовки и арты</h2>
+            }
+          />
           <p className="section-subtitle max-w-xl">
             Эскизы, наброски и то, чем хочется поделиться — не только керамика.
           </p>

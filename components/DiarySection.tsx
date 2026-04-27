@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { DiaryArticle } from "@/data/diary-articles";
+import Titles from "./Titles";
 
 interface DiarySectionProps {
   items: DiaryArticle[];
@@ -10,13 +11,17 @@ export default function DiarySection({ items }: DiarySectionProps) {
   return (
     <section
       id="diary"
-      className="bg-stone-100 dark:bg-black/30 border-t border-stone-200 dark:border-white/10 py-12 md:py-14"
+      className="bg-stone-100 dark:bg-black/30 border-t border-stone-200 dark:border-white/10 py-10 px-8 md:py-10 md:px-[8px]"
     >
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto">
         <div className="mb-6 md:mb-8">
-          <span className="section-label-wrap">
-            <span className="section-label inline-flex items-center gap-1.5">
-              Дневник
+          <Titles
+            className="section-label-wrap"
+            overline="Дневник"
+            title="Статьи"
+            overlineClassName="section-label inline-flex items-center gap-1.5"
+            titleClassName="section-title text-3xl md:text-4xl mb-4"
+            icon={
               <svg
                 width="12"
                 height="12"
@@ -34,9 +39,8 @@ export default function DiarySection({ items }: DiarySectionProps) {
                 <path d="M8 7h8" />
                 <path d="M8 11h8" />
               </svg>
-            </span>
-          </span>
-          <h2 className="section-title text-3xl md:text-4xl mb-4">Статьи</h2>
+            }
+          />
           <p className="section-subtitle max-w-lg">
             Процесс, студия и мысли о керамике — короткие заметки и полезные
             тексты.

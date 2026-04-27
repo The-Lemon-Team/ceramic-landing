@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { ProductModal } from "@/ui-lib";
 import { Product } from "@/types/product";
+import Titles from "./Titles";
 
 const INITIAL_COUNT = 10; // 5 columns × 2 rows
 
@@ -85,14 +86,18 @@ export default function ProductGallerySection({
   return (
     <section
       id="ceramics"
-      className="py-10 md:py-12 px-6 bg-accent-earth dark:bg-accent-earth-dark overflow-x-hidden"
+      className="py-10 md:py-10 px-8 md:px-[8px] bg-accent-earth dark:bg-accent-earth-dark overflow-x-hidden"
     >
       <div className="max-w-7xl mx-auto">
         {showHeader && (
           <div className="mb-6 md:mb-8">
-            <span className="section-label-wrap">
-              <span className="section-label inline-flex items-center gap-1.5">
-                Керамика
+            <Titles
+              className="section-label-wrap"
+              overline="Керамика"
+              title="Купить керамику"
+              overlineClassName="section-label inline-flex items-center gap-1.5"
+              titleClassName="section-title mb-4"
+              icon={
                 <svg
                   width="12"
                   height="12"
@@ -109,9 +114,8 @@ export default function ProductGallerySection({
                   <circle cx="8.5" cy="8.5" r="1.5" />
                   <path d="M21 15l-5-5L5 21" />
                 </svg>
-              </span>
-            </span>
-            <h2 className="section-title mb-4">Купить керамику</h2>
+              }
+            />
             <p className="section-subtitle max-w-lg">
               Авторская керамика ручной работы. Ограниченные серии, доставка по
               России.

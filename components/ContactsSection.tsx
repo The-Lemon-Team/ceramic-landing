@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Titles from "./Titles";
 
 export interface DirectionsData {
   title: string;
@@ -58,12 +59,16 @@ export default function ContactsSection({ directions }: ContactsSectionProps) {
   return (
     <section
       id="contacts"
-      className="py-10 px-6 bg-white dark:bg-[rgb(28_26_24)] border-t border-stone-100 dark:border-white/10 scroll-mt-20"
+      className="py-10 px-8 md:py-10 md:px-[8px] bg-white dark:bg-[rgb(28_26_24)] border-t border-stone-100 dark:border-white/10 scroll-mt-20"
     >
       <div className="max-w-7xl mx-auto">
-        <span className="section-label-wrap">
-          <span className="section-label text-stone-500 inline-flex items-center gap-1.5">
-            Контакты
+        <Titles
+          className="section-label-wrap"
+          overline="Контакты"
+          title="Адрес и контакты"
+          overlineClassName="section-label text-stone-500 inline-flex items-center gap-1.5"
+          titleClassName="section-title mb-6"
+          icon={
             <svg
               width="12"
               height="12"
@@ -79,9 +84,8 @@ export default function ContactsSection({ directions }: ContactsSectionProps) {
               <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
               <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
-          </span>
-        </span>
-        <h2 className="section-title mb-6">Адрес и контакты</h2>
+          }
+        />
         <p className="text-stone-600 dark:text-stone-300 text-base mb-2 max-w-lg">
           {directions.address}
         </p>

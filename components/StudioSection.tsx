@@ -3,6 +3,7 @@
 import { useState, useEffect, Fragment, useCallback } from "react";
 import Image from "next/image";
 import { Dialog, Transition } from "@headlessui/react";
+import Titles from "./Titles";
 
 type StudioPhoto = {
   src: string;
@@ -241,7 +242,7 @@ export default function StudioSection({ photos }: { photos?: StudioPhoto[] }) {
   return (
     <section
       id="studio"
-      className="w-full bg-background-dark md:px-6 md:py-12 font-sans text-white relative overflow-hidden"
+      className="w-full bg-background-dark py-10 px-8 md:py-10 md:px-[8px] font-sans text-white relative overflow-hidden"
     >
       {/* Фоновое изображение */}
       <div className="absolute inset-0 z-0 w-full">
@@ -257,8 +258,8 @@ export default function StudioSection({ photos }: { photos?: StudioPhoto[] }) {
       </div>
 
       {/* Основной контейнер — совпадает с отступами других секций */}
-      <div className="relative z-10 max-w-7xl px-6 md:px-0 mx-auto">
-        <div className="w-full pt-10 md:pt-0 md:bg-black/40 md:backdrop-blur-3xl md:rounded-3xl overflow-hidden flex flex-col md:flex-row min-h-[600px] md:border md:border-white/10 md:shadow-2xl">
+      <div className="relative z-10 max-w-7xl mx-auto">
+        <div className="w-full md:bg-black/40 md:backdrop-blur-3xl md:rounded-3xl overflow-hidden flex flex-col md:flex-row min-h-[600px] md:border md:border-white/10 md:shadow-2xl">
           {/* ЛЕВАЯ КОЛОНКА: фото (только md+, на мобилке фото встроено в контент ниже) */}
           <div className="hidden md:block w-full md:w-1/2 order-1 aspect-square md:aspect-auto overflow-hidden shrink-0 relative">
             <Image
@@ -275,34 +276,35 @@ export default function StudioSection({ photos }: { photos?: StudioPhoto[] }) {
           {/* ПРАВАЯ КОЛОНКА: контент. На мобилке порядок: заголовок → изображение → табы → контент */}
           <div className="w-full md:w-1/2 flex flex-col order-2 min-h-0 overflow-hidden md:p-8 pb-8">
             {/* Заголовок: Студия (иконка) + Студия (заголовок) */}
-            <div className="mb-4 shrink-0">
-              <div className="flex items-center gap-2 text-amber-400 mb-0 md:mb-2">
-                <span className="text-[10px] tracking-[0.3em] uppercase font-bold">
-                  Студия
-                </span>
-                <svg
-                  width="12"
-                  height="12"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="shrink-0"
-                  aria-hidden
-                >
-                  <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
-                  <polyline points="9 22 9 12 15 12 15 22" />
-                </svg>
-              </div>
-              <h2 className="text-3xl md:text-5xl font-serif text-white">
-                Студия
-              </h2>
+            <div className="mb-6 shrink-0">
+              <Titles
+                overline="Студия"
+                title="Студия"
+                overlineClassName="text-[0.75rem] uppercase tracking-[0.3em] font-bold text-amber-400 inline-flex items-center gap-2"
+                titleClassName="text-3xl md:text-5xl font-serif"
+                titleColorClassName="text-white"
+                icon={
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="shrink-0"
+                    aria-hidden
+                  >
+                    <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                    <polyline points="9 22 9 12 15 12 15 22" />
+                  </svg>
+                }
+              />
             </div>
 
             {/* Изображение: только на мобилке, между заголовком и табами */}
-            <div className="block md:hidden w-full aspect-square overflow-hidden shrink-0 relative rounded-md mb-4">
+            <div className="block md:hidden w-full aspect-square overflow-hidden shrink-0 relative rounded-md mb-6">
               <Image
                 src={coverPhoto.src}
                 alt={coverPhoto.alt}

@@ -13,11 +13,11 @@ export default function CartFloatingButton() {
   }
 
   return (
-    <div className="hidden md:block fixed inset-x-0 bottom-6 z-[60] pointer-events-none">
-      <div className="mx-auto relative px-6 flex justify-end pointer-events-auto">
+    <div className="hidden md:block fixed inset-x-0 bottom-6 z-[60] pointer-events-none floating-shop">
+      <div className="mx-auto relative px-6 flex justify-end">
         <Link
           href="/cart"
-          className="relative inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary text-white shadow-xl hover:bg-orange-600 transition-colors"
+          className="pointer-events-auto relative inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary text-white shadow-xl hover:bg-orange-600 transition-colors"
           aria-label="Корзина"
         >
           <svg
