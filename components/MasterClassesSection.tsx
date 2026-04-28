@@ -209,10 +209,10 @@ export default function MasterClassesSection({ text }: Props) {
       className="py-10 px-8 md:py-10 md:px-[8px] bg-pattern-charlie-brown dark:bg-[rgb(28_26_24)] overflow-hidden"
     >
       <div className="max-w-7xl mx-auto relative">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 items-start md:items-stretch">
+        <div className="flex flex-col md:flex-row md:justify-center gap-6 md:gap-12 items-start md:items-stretch">
           {/* Левая колонка — текст */}
-          <div className="order-2 md:order-1 flex flex-col justify-center">
-            <div className="rounded-[5px] bg-white/50 dark:bg-white/5 px-6 py-8 md:px-10 md:py-10 border border-white/40 dark:border-white/10 shadow-md">
+          <div className="order-2 md:order-1 flex w-full md:min-w-0 md:flex-[0_1_560px] md:max-w-[560px] flex-col justify-center">
+            <div className="overflow-hidden rounded-[5px] bg-white/50 dark:bg-white/5 px-6 py-8 md:px-10 md:py-10 border border-white/40 dark:border-white/10 shadow-md">
               <div className="mb-4">
                 <Titles
                   overline="Мастер-классы"
@@ -269,17 +269,17 @@ export default function MasterClassesSection({ text }: Props) {
                 })}
               </div>
 
-              <p className="text-[0.875rem] leading-relaxed text-stone-700 dark:text-stone-300 mb-8">
+              <p className="max-h-[6.5rem] overflow-hidden text-[14px] leading-relaxed text-stone-700 dark:text-stone-300 mb-8">
                 {activeClass.description}
               </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+              <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 mb-8">
                 {activeClass.badges.map((badge) => (
                   <button
                     key={badge.id}
                     type="button"
                     onClick={() => setOpenedBadge(badge)}
-                    className="rounded-md border border-stone-200 dark:border-white/10 bg-stone-100/80 dark:bg-white/5 p-3 text-left badge-info hover:bg-stone-200/70 dark:hover:bg-white/10 transition-colors"
+                    className="w-full sm:flex-[1_1_calc(50%-0.375rem)] rounded-md border border-stone-200 dark:border-white/10 bg-stone-100/80 dark:bg-white/5 p-3 text-left badge-info hover:bg-stone-200/70 dark:hover:bg-white/10 transition-colors"
                   >
                     <div className="flex items-start gap-2.5">
                       <span className="w-8 h-8 rounded-md bg-white dark:bg-white/10 border border-stone-200 dark:border-white/10 flex items-center justify-center shrink-0">
@@ -356,7 +356,7 @@ export default function MasterClassesSection({ text }: Props) {
           </div>
 
           {/* Правая колонка — изображение */}
-          <div className="order-1 md:order-2 relative w-full h-[460px] md:h-auto md:min-h-[640px] rounded-md overflow-hidden shadow-md border border-stone-100 dark:border-white/10">
+          <div className="order-1 md:order-2 relative w-full md:min-w-0 md:flex-[0_1_560px] md:max-w-[560px] h-[460px] md:h-auto md:min-h-[640px] rounded-md overflow-hidden shadow-md border border-stone-100 dark:border-white/10">
             <Image
               src={activeClass.image}
               alt={activeClass.imageAlt}
@@ -457,15 +457,11 @@ function InfoModalBase({
           </p>
 
           {images.length > 0 && (
-            <div
-              className={`grid gap-3 ${
-                images.length > 1 ? "grid-cols-1 sm:grid-cols-2" : "grid-cols-1"
-              }`}
-            >
+            <div className="flex flex-col sm:flex-row gap-3">
               {images.slice(0, 2).map((image) => (
                 <div
                   key={`${image.src}-${image.alt}`}
-                  className="relative rounded-md overflow-hidden border border-stone-200 dark:border-white/10 h-44"
+                  className="relative w-full sm:flex-1 rounded-md overflow-hidden border border-stone-200 dark:border-white/10 h-44"
                 >
                   <Image
                     src={image.src}
