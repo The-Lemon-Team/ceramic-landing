@@ -7,6 +7,11 @@ import {
   artsThemeVideo,
 } from "@/sanity/schemaTypes/artsTheme";
 import { telegramPost } from "@/sanity/schemaTypes/telegramPost";
+import {
+  vkPost,
+  vkPostImage,
+  vkPostStats,
+} from "@/sanity/schemaTypes/vkPost";
 import { navItem } from "@/sanity/schemaTypes/navItem";
 import { siteConfig } from "@/sanity/schemaTypes/siteConfig";
 import { aboutAuthor } from "@/sanity/schemaTypes/aboutAuthor";
@@ -20,6 +25,9 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     artsThemeVideo,
     artsTheme,
     telegramPost,
+    vkPostImage,
+    vkPostStats,
+    vkPost,
     navItem,
     siteConfig,
     aboutAuthor,

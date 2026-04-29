@@ -29,6 +29,8 @@ export const structure: StructureResolver = (S) =>
             "aboutAuthor",
             "studioSection",
             "directions",
+            "vkPostImage",
+            "vkPostStats",
           ].includes((item.getId() || "").toString()),
       ),
     ]);

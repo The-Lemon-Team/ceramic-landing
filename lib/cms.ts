@@ -1,15 +1,29 @@
 import { products as staticProducts } from "@/data/products";
 import { artsThemes as staticArtsThemes } from "@/data/artsThemes";
 import { TELEGRAM_POSTS } from "@/data/telegram-posts";
+import { VK_POSTS } from "@/data/vk-posts";
 import { DIRECTIONS } from "@/data/directions";
 import { HERO_CONFIG, HERO_TITLE } from "@/data/site";
 import { NAV_ITEMS } from "@/data/nav";
 import { ABOUT_AUTHOR } from "@/data/about-author";
 import { getSanityClient } from "@/lib/sanityClient";
+import { VkPost } from "@/types/vk-post";
 import groq from "groq";
 
 function fallbackToStatic<T>(cmsData: T | null, staticData: T): T {
   return cmsData ?? staticData;
+}
+
+function formatVkTimestamp(value: string) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+
+  return new Intl.DateTimeFormat("ru-RU", {
+    day: "numeric",
+    month: "short",
+  })
+    .format(date)
+    .replace(".", "");
 }
 
 async function sanityFetch<T>(query: string, params?: Record<string, unknown>) {
@@ -196,6 +210,80 @@ export async function getTelegramPosts() {
     timestamp: p.timestamp ?? "",
     telegramUrl: p.telegramUrl ?? undefined,
   }));
+}
+
+export async function getVkPosts(): Promise<VkPost[]> {
+  const data = await sanityFetch<
+    Array<{
+      _id: string;
+      sourceId?: string;
+      ownerId?: string;
+      communityName?: string;
+      communityAvatar?: string;
+      communityUrl?: string;
+      postUrl?: string;
+      text?: string;
+      publishedAt?: string;
+      images?: Array<{
+        _key?: string;
+        src?: string;
+        alt?: string;
+      }>;
+      stats?: {
+        likes?: number;
+        comments?: number;
+        reposts?: number;
+        views?: number;
+      };
+    }>
+  >(
+    groq`*[_type == "vkPost" && coalesce(isVisible, true) == true] | order(publishedAt desc) {
+      _id,
+      sourceId,
+      ownerId,
+      communityName,
+      "communityAvatar": communityAvatar.asset->url,
+      communityUrl,
+      postUrl,
+      text,
+      publishedAt,
+      "images": images[]{
+        _key,
+        "src": image.asset->url,
+        alt
+      },
+      stats
+    }`,
+  );
+
+  if (!data || data.length === 0) return fallbackToStatic(null, VK_POSTS);
+
+  return data
+    .map((p) => {
+      const publishedAt = p.publishedAt ?? "";
+
+      return {
+        id: p._id,
+        sourceId: p.sourceId ?? p._id,
+        ownerId: p.ownerId ?? undefined,
+        communityName: p.communityName ?? "Ceramic Loop",
+        communityAvatar: p.communityAvatar ?? undefined,
+        communityUrl: p.communityUrl ?? "https://vk.ru/ceramic.loop",
+        postUrl: p.postUrl ?? "https://vk.ru/ceramic.loop",
+        text: p.text ?? "",
+        publishedAt,
+        timestamp: formatVkTimestamp(publishedAt),
+        images: (p.images ?? [])
+          .map((image, index) => ({
+            id: image._key ?? `${p._id}-image-${index}`,
+            src: image.src ?? "",
+            alt: image.alt ?? p.text ?? "",
+          }))
+          .filter((image) => Boolean(image.src)),
+        stats: p.stats,
+      };
+    })
+    .filter((p) => Boolean(p.sourceId) && Boolean(p.text));
 }
 
 export async function getDirections() {

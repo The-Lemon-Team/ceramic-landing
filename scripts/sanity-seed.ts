@@ -7,6 +7,7 @@ import { createClient } from "@sanity/client";
 import { products } from "@/data/products";
 import { artsThemes, type ArtsMediaItem } from "@/data/artsThemes";
 import { TELEGRAM_POSTS } from "@/data/telegram-posts";
+import { VK_POSTS } from "@/data/vk-posts";
 import { DIRECTIONS } from "@/data/directions";
 import { ABOUT_AUTHOR } from "@/data/about-author";
 import { NAV_ITEMS } from "@/data/nav";
@@ -189,6 +190,28 @@ async function main() {
       });
     }
 
+    for (const p of VK_POSTS) {
+      docs.push({
+        _id: `vkPost.${p.sourceId}`,
+        _type: "vkPost",
+        sourceId: p.sourceId,
+        ownerId: p.ownerId ?? null,
+        communityName: p.communityName,
+        communityAvatarUrl: p.communityAvatar ?? null,
+        communityUrl: p.communityUrl,
+        postUrl: p.postUrl,
+        text: p.text,
+        publishedAt: p.publishedAt,
+        images: p.images.map((image) => ({
+          _type: "vkPostImage",
+          originalUrl: image.src,
+          alt: image.alt ?? null,
+        })),
+        stats: p.stats ?? null,
+        isVisible: true,
+      });
+    }
+
     NAV_ITEMS.forEach((n: { href: string; label: string }, idx: number) => {
       docs.push({
         _id: `navItem.${idx}`,
@@ -343,6 +366,34 @@ async function main() {
       text: p.text,
       timestamp: p.timestamp,
       telegramUrl: p.telegramUrl ?? null,
+    });
+  }
+
+  for (const p of VK_POSTS) {
+    docs.push({
+      _id: `vkPost.${p.sourceId}`,
+      _type: "vkPost",
+      sourceId: p.sourceId,
+      ownerId: p.ownerId ?? null,
+      communityName: p.communityName,
+      communityAvatar: await toImageField(p.communityAvatar ?? null),
+      communityAvatarUrl: p.communityAvatar ?? null,
+      communityUrl: p.communityUrl,
+      postUrl: p.postUrl,
+      text: p.text,
+      publishedAt: p.publishedAt,
+      images: (
+        await Promise.all(
+          p.images.map(async (image) => ({
+            _type: "vkPostImage",
+            image: await toImageField(image.src),
+            originalUrl: image.src,
+            alt: image.alt ?? null,
+          })),
+        )
+      ).filter((image) => image.image || image.originalUrl),
+      stats: p.stats ?? null,
+      isVisible: true,
     });
   }
 

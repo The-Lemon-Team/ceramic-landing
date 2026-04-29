@@ -3,14 +3,14 @@ import Hero from "@/components/Hero";
 import AboutSection from "@/components/AboutSection";
 import StudioSection from "@/components/StudioSection";
 import MasterClassesSection from "@/components/MasterClassesSection";
-import TelegramNewsFeed from "@/components/TelegramNewsFeed";
+import VkNewsFeed from "@/components/VkNewsFeed";
 import ProductGallerySection from "@/components/ProductGallerySection";
 import ContactsSection from "@/components/ContactsSection";
 import Footer from "@/components/Footer";
 import {
   getProducts,
   getArtsThemes,
-  getTelegramPosts,
+  getVkPosts,
   getDirections,
   getSiteConfig,
   getNavItems,
@@ -24,7 +24,7 @@ export default async function Home() {
   const [
     products,
     artsThemes,
-    telegramPosts,
+    vkPosts,
     directions,
     siteConfig,
     navItems,
@@ -33,7 +33,7 @@ export default async function Home() {
   ] = await Promise.all([
     getProducts(),
     getArtsThemes(),
-    getTelegramPosts(),
+    getVkPosts(),
     getDirections(),
     getSiteConfig(),
     getNavItems(),
@@ -57,9 +57,9 @@ export default async function Home() {
       <div className="hidden dark:block h-px bg-white/10" aria-hidden />
       <StudioSection photos={studioSection?.gallery} />
       <div className="hidden dark:block h-px bg-white/10" aria-hidden />
-      <MasterClassesSection text={siteConfig.masterClassesText} />
+      <MasterClassesSection />
       <div className="h-px bg-primary/60 dark:bg-white/10" aria-hidden />
-      <TelegramNewsFeed items={telegramPosts} />
+      <VkNewsFeed items={vkPosts} />
       <div className="h-px bg-primary/60 dark:bg-white/10" aria-hidden />
       <ProductGallerySection items={products} />
       <div className="h-px bg-primary/60 dark:bg-white/10" aria-hidden />
