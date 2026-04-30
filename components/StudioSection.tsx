@@ -36,7 +36,7 @@ function StudioPhotoCard({
     <button
       type="button"
       onClick={onOpen}
-      className="group relative w-full aspect-[4/3] md:aspect-[16/9] overflow-hidden rounded-xl border border-white/10 bg-black/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-900"
+      className="group relative w-full aspect-[4/3] md:aspect-auto md:h-full overflow-hidden rounded-xl border border-white/10 bg-black/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-900"
     >
       <Image
         src={photo.src}
@@ -224,7 +224,8 @@ function StudioGalleryModal({
 }
 
 export default function StudioSection({ photos }: { photos?: StudioPhoto[] }) {
-  const [openedIndex, setOpenedIndex] = useState<number | null>(null);
+  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
+  const [galleryIndex, setGalleryIndex] = useState(0);
   const effectivePhotos = photos && photos.length > 0 ? photos : studioPhotos;
   const slides = chunk(effectivePhotos, 6);
   const coverPhoto = effectivePhotos[0] ?? studioPhotos[0];
@@ -259,22 +260,22 @@ export default function StudioSection({ photos }: { photos?: StudioPhoto[] }) {
 
       {/* Основной контейнер — совпадает с отступами других секций */}
       <div className="relative z-10 max-w-7xl mx-auto">
-        <div className="w-full md:bg-black/40 md:backdrop-blur-3xl md:rounded-3xl overflow-hidden flex flex-col md:flex-row min-h-[600px] md:border md:border-white/10 md:shadow-2xl">
+        <div className="w-full md:bg-black/40 md:backdrop-blur-3xl md:rounded-3xl overflow-hidden flex flex-col md:flex-row min-h-[600px] md:min-h-[680px] md:border md:border-white/10 md:shadow-2xl">
           {/* ЛЕВАЯ КОЛОНКА: фото (только md+, на мобилке фото встроено в контент ниже) */}
-          <div className="hidden md:block w-full md:w-1/2 order-1 aspect-square md:aspect-auto overflow-hidden shrink-0 relative">
+          <div className="hidden md:block w-full md:w-[58%] order-1 aspect-square md:aspect-auto overflow-hidden shrink-0 relative">
             <Image
               src={coverPhoto.src}
               alt={coverPhoto.alt}
               fill
               className="object-cover"
-              sizes="50vw"
+              sizes="58vw"
               priority
               aria-hidden
             />
           </div>
 
           {/* ПРАВАЯ КОЛОНКА: контент. На мобилке порядок: заголовок → изображение → табы → контент */}
-          <div className="w-full md:w-1/2 flex flex-col order-2 min-h-0 overflow-hidden md:p-8 pb-8">
+          <div className="w-full md:w-[42%] flex flex-col order-2 min-h-0 overflow-hidden md:p-8 pb-8">
             {/* Заголовок: Студия (иконка) + Студия (заголовок) */}
             <div className="mb-6 shrink-0">
               <Titles
@@ -304,7 +305,7 @@ export default function StudioSection({ photos }: { photos?: StudioPhoto[] }) {
             </div>
 
             {/* Изображение: только на мобилке, между заголовком и табами */}
-            <div className="block md:hidden w-full aspect-square overflow-hidden shrink-0 relative rounded-md mb-6">
+            <div className="block md:hidden w-full aspect-[4/5] overflow-hidden shrink-0 relative rounded-md mb-6">
               <Image
                 src={coverPhoto.src}
                 alt={coverPhoto.alt}
@@ -324,22 +325,25 @@ export default function StudioSection({ photos }: { photos?: StudioPhoto[] }) {
             </p>
 
             {/* Галерея */}
-            <div className="shrink-0">
-              <div className="rounded-2xl border border-white/10 bg-black/20 p-3 md:p-4">
-                <div className="carousel-scroll carousel-scroll-thin flex overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth pb-2">
+            <div className="md:flex-1 md:min-h-0">
+              <div className="h-full rounded-2xl border border-white/10 bg-black/20 p-3 md:p-4">
+                <div className="carousel-scroll carousel-scroll-thin flex h-full overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth pb-2">
                   {slides.map((items, slideIndex) => (
                     <div
                       key={`slide-${slideIndex}`}
-                      className="shrink-0 w-full min-w-full snap-start px-1 first:pl-0 last:pr-0"
+                      className="shrink-0 w-full min-w-full h-full snap-start px-1 first:pl-0 last:pr-0"
                     >
-                      <div className="w-full grid grid-cols-2 grid-rows-3 md:grid-cols-3 md:grid-rows-2 gap-3">
+                      <div className="w-full md:h-full grid grid-cols-2 grid-rows-3 md:grid-cols-3 md:grid-rows-2 gap-3">
                         {items.map((photo, idx) => {
                           const absoluteIndex = slideIndex * 6 + idx;
                           return (
                             <StudioPhotoCard
                               key={`${photo.src}-${absoluteIndex}`}
                               photo={photo}
-                              onOpen={() => setOpenedIndex(absoluteIndex)}
+                              onOpen={() => {
+                                setGalleryIndex(absoluteIndex);
+                                setIsGalleryOpen(true);
+                              }}
                             />
                           );
                         })}
@@ -350,15 +354,33 @@ export default function StudioSection({ photos }: { photos?: StudioPhoto[] }) {
               </div>
             </div>
 
-            {/* Блок Индивидуальные заказы */}
-            <div className="mt-4 p-5 rounded-xl bg-white/5 border border-white/10 shrink-0">
-              <h3 className="text-amber-400 text-sm font-bold uppercase tracking-wider mb-2">
-                Индивидуальные заказы
+          </div>
+        </div>
+
+        <div className="mt-6 rounded-2xl border border-white/10 bg-black/30 p-5 md:p-6 backdrop-blur-3xl shadow-2xl">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8">
+            <div className="order-2 md:order-1">
+              <h3 className="text-amber-400 text-sm font-bold uppercase tracking-wider mb-2 inline-flex items-center gap-2">
+                <svg
+                  className="w-4 h-4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.7"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden
+                >
+                  <path d="M12 5v14" />
+                  <path d="M5 12h14" />
+                  <path d="M6 5h12v14H6z" />
+                </svg>
+                Сделать заказ
               </h3>
               <p className="text-gray-300 text-sm leading-relaxed mb-4">
-                В этой студии мы создаём вещи по вашим идеям. Хотите уникальную
-                вазу, тарелку с вашим рисунком или плитку под интерьер? Напишите
-                нам — обсудим и сделаем.
+                Расскажите, какая вещь вам нужна: форма, цвет, размер,
+                настроение или пример из интерьера. Мы подскажем, что лучше
+                подойдет для керамики, согласуем детали и сроки.
               </p>
               <a
                 href="#contacts"
@@ -370,6 +392,7 @@ export default function StudioSection({ photos }: { photos?: StudioPhoto[] }) {
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
+                  aria-hidden
                 >
                   <path
                     strokeLinecap="round"
@@ -380,16 +403,41 @@ export default function StudioSection({ photos }: { photos?: StudioPhoto[] }) {
                 </svg>
               </a>
             </div>
+
+            <div className="order-1 border-b border-white/10 pb-5 md:order-2 md:border-b-0 md:border-l md:pb-0 md:pl-8">
+              <h3 className="text-amber-400 text-sm font-bold uppercase tracking-wider mb-2 inline-flex items-center gap-2">
+                <svg
+                  className="w-4 h-4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.7"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden
+                >
+                  <path d="M4 19c4-8 8-12 16-14" />
+                  <path d="M7 17c2 .5 4 .5 6-.5" />
+                  <path d="M14 5l5 5" />
+                </svg>
+                Индивидуальные заказы
+              </h3>
+              <p className="text-gray-300 text-sm leading-relaxed">
+                В этой студии мы создаём вещи по вашим идеям. Хотите уникальную
+                вазу, тарелку с вашим рисунком или плитку под интерьер? Напишите
+                нам — обсудим и сделаем.
+              </p>
+            </div>
           </div>
         </div>
       </div>
 
       <StudioGalleryModal
         photos={effectivePhotos}
-        index={openedIndex ?? 0}
-        isOpen={openedIndex !== null}
-        onClose={() => setOpenedIndex(null)}
-        onChange={(i) => setOpenedIndex(i)}
+        index={galleryIndex}
+        isOpen={isGalleryOpen}
+        onClose={() => setIsGalleryOpen(false)}
+        onChange={(i) => setGalleryIndex(i)}
       />
     </section>
   );

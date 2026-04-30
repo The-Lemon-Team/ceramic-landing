@@ -1,3 +1,4 @@
+import type { SanityClient } from "@sanity/client";
 import { getSanityWriteClient } from "@/lib/sanityClient";
 import { loadVkPostsForImport } from "@/lib/vkPostsSource";
 import {
@@ -29,16 +30,76 @@ function toImageField(assetId?: string) {
   };
 }
 
-function toPostImages(images: VkPostImportImage[] | undefined) {
-  return (images ?? []).map((image, index) =>
-    withoutUndefined({
-      _key: image.id ? toKey(image.id) : `image-${index}`,
-      _type: "vkPostImage",
-      image: toImageField(image.assetId),
-      originalUrl: image.originalUrl,
-      alt: image.alt,
-    }),
+function getFilenameFromUrl(url: string, fallback: string) {
+  try {
+    const pathname = new URL(url).pathname;
+    const filename = pathname.split("/").filter(Boolean).at(-1);
+
+    return filename || fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+async function uploadImageAsset(
+  client: SanityClient,
+  url: string,
+  fallbackFilename: string,
+) {
+  const response = await fetch(url);
+
+  if (!response.ok) return undefined;
+
+  const buffer = Buffer.from(await response.arrayBuffer());
+  const asset = await client.assets.upload("image", buffer, {
+    filename: getFilenameFromUrl(url, fallbackFilename),
+    contentType: response.headers.get("content-type") ?? undefined,
+  });
+
+  return asset._id;
+}
+
+async function resolveAssetId(
+  client: SanityClient,
+  image: VkPostImportImage,
+  fallbackFilename: string,
+) {
+  if (image.assetId) return image.assetId;
+  if (!image.originalUrl) return undefined;
+
+  return uploadImageAsset(client, image.originalUrl, fallbackFilename);
+}
+
+async function toPostImages(
+  client: SanityClient,
+  images: VkPostImportImage[] | undefined,
+) {
+  return Promise.all(
+    (images ?? []).map(async (image, index) =>
+      withoutUndefined({
+        _key: image.id ? toKey(image.id) : `image-${index}`,
+        _type: "vkPostImage",
+        image: toImageField(
+          await resolveAssetId(client, image, `vk-post-image-${index}.jpg`),
+        ),
+        originalUrl: image.originalUrl,
+        alt: image.alt,
+      }),
+    ),
   );
+}
+
+async function toCommunityAvatar(
+  client: SanityClient,
+  post: VkPostImportItem,
+) {
+  const assetId =
+    post.communityAvatarAssetId ||
+    (post.communityAvatarUrl
+      ? await uploadImageAsset(client, post.communityAvatarUrl, "vk-avatar.jpg")
+      : undefined);
+
+  return toImageField(assetId);
 }
 
 function isImportablePost(post: VkPostImportItem) {
@@ -50,6 +111,10 @@ function isImportablePost(post: VkPostImportItem) {
       post.text &&
       post.publishedAt,
   );
+}
+
+function formatError(error: unknown) {
+  return error instanceof Error ? error.message : "Unknown VK sync error.";
 }
 
 export async function syncVkPosts(): Promise<VkPostSyncResult> {
@@ -65,7 +130,19 @@ export async function syncVkPosts(): Promise<VkPostSyncResult> {
     };
   }
 
-  const posts = await loadVkPostsForImport();
+  let posts: VkPostImportItem[];
+
+  try {
+    posts = await loadVkPostsForImport();
+  } catch (error) {
+    return {
+      ok: false,
+      imported: 0,
+      skipped: 0,
+      message: formatError(error),
+    };
+  }
+
   let imported = 0;
   let skipped = 0;
 
@@ -77,6 +154,10 @@ export async function syncVkPosts(): Promise<VkPostSyncResult> {
 
     const id = toDocumentId(post.sourceId);
     const now = new Date().toISOString();
+    const [communityAvatar, images] = await Promise.all([
+      toCommunityAvatar(client, post),
+      toPostImages(client, post.images),
+    ]);
 
     await client.createIfNotExists({
       _id: id,
@@ -92,13 +173,13 @@ export async function syncVkPosts(): Promise<VkPostSyncResult> {
           sourceId: post.sourceId,
           ownerId: post.ownerId,
           communityName: post.communityName,
-          communityAvatar: toImageField(post.communityAvatarAssetId),
+          communityAvatar,
           communityAvatarUrl: post.communityAvatarUrl,
           communityUrl: post.communityUrl,
           postUrl: post.postUrl,
           text: post.text,
           publishedAt: post.publishedAt,
-          images: toPostImages(post.images),
+          images,
           stats: post.stats,
           importedAt: now,
           rawJson: post.rawJson,
@@ -114,9 +195,6 @@ export async function syncVkPosts(): Promise<VkPostSyncResult> {
     ok: true,
     imported,
     skipped,
-    message:
-      posts.length === 0
-        ? "VK loader returned no posts. Add the real loader in lib/vkPostsSource.ts."
-        : "VK posts synced.",
+    message: posts.length === 0 ? "VK returned no posts." : "VK posts synced.",
   };
 }
