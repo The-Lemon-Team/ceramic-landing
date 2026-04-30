@@ -260,7 +260,7 @@ export default function StudioSection({ photos }: { photos?: StudioPhoto[] }) {
 
       {/* Основной контейнер — совпадает с отступами других секций */}
       <div className="relative z-10 max-w-7xl mx-auto">
-        <div className="w-full md:bg-black/40 md:backdrop-blur-3xl md:rounded-3xl overflow-hidden flex flex-col md:flex-row min-h-[600px] md:min-h-[680px] md:border md:border-white/10 md:shadow-2xl">
+        <div className="w-full md:bg-black/40 md:backdrop-blur-3xl md:rounded-3xl overflow-hidden flex flex-col md:flex-row md:min-h-[680px] md:border md:border-white/10 md:shadow-2xl">
           {/* ЛЕВАЯ КОЛОНКА: фото (только md+, на мобилке фото встроено в контент ниже) */}
           <div className="hidden md:block w-full md:w-[58%] order-1 aspect-square md:aspect-auto overflow-hidden shrink-0 relative">
             <Image
@@ -326,14 +326,14 @@ export default function StudioSection({ photos }: { photos?: StudioPhoto[] }) {
 
             {/* Галерея */}
             <div className="md:flex-1 md:min-h-0">
-              <div className="h-full rounded-2xl border border-white/10 bg-black/20 p-3 md:p-4">
-                <div className="carousel-scroll carousel-scroll-thin flex h-full overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth pb-2">
+              <div className="md:h-full rounded-2xl border border-white/10 bg-black/20 p-3 md:p-4">
+                <div className="carousel-scroll carousel-scroll-thin flex md:h-full overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth pb-1 md:pb-2">
                   {slides.map((items, slideIndex) => (
                     <div
                       key={`slide-${slideIndex}`}
-                      className="shrink-0 w-full min-w-full h-full snap-start px-1 first:pl-0 last:pr-0"
+                      className="shrink-0 w-full min-w-full md:h-full snap-start px-1 first:pl-0 last:pr-0"
                     >
-                      <div className="w-full md:h-full grid grid-cols-2 grid-rows-3 md:grid-cols-3 md:grid-rows-2 gap-3">
+                      <div className="w-full md:h-full grid grid-cols-2 md:grid-cols-3 md:grid-rows-2 gap-2 md:gap-3">
                         {items.map((photo, idx) => {
                           const absoluteIndex = slideIndex * 6 + idx;
                           return (
@@ -357,7 +357,7 @@ export default function StudioSection({ photos }: { photos?: StudioPhoto[] }) {
           </div>
         </div>
 
-        <div className="mt-6 rounded-2xl border border-white/10 bg-black/30 p-5 md:p-6 backdrop-blur-3xl shadow-2xl">
+        <div className="mt-3 md:mt-6 rounded-2xl border border-white/10 bg-black/30 p-5 md:p-6 backdrop-blur-3xl shadow-2xl">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8">
             <div className="order-2 md:order-1">
               <h3 className="text-amber-400 text-sm font-bold uppercase tracking-wider mb-2 inline-flex items-center gap-2">

@@ -402,7 +402,7 @@ export async function getAboutAuthor(): Promise<AboutAuthorData> {
       sectionLabel,
       authorName,
       bio,
-      photo,
+      "photo": coalesce(photo.asset->url, photo),
       photoAlt,
       quote,
       closingText,
