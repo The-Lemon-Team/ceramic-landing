@@ -59,6 +59,13 @@ export const product = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: "sortOrder",
+      title: "Sort order",
+      type: "number",
+      description: "Lower numbers appear first on the site.",
+      validation: (Rule) => Rule.integer().min(0),
+    }),
+    defineField({
       name: "mainImage",
       title: "Main image",
       type: "image",
@@ -88,7 +95,28 @@ export const product = defineType({
   preview: {
     select: {
       title: "title",
+      subtitle: "sortOrder",
       media: "thumbnail",
     },
+    prepare({ title, subtitle, media }) {
+      return {
+        title,
+        subtitle:
+          subtitle === undefined || subtitle === null
+            ? "No sort order"
+            : `Sort order: ${subtitle}`,
+        media,
+      };
+    },
   },
+  orderings: [
+    {
+      title: "Sort order",
+      name: "sortOrderAsc",
+      by: [
+        { field: "sortOrder", direction: "asc" },
+        { field: "title", direction: "asc" },
+      ],
+    },
+  ],
 });

@@ -26,6 +26,15 @@ function formatVkTimestamp(value: string) {
     .replace(".", "");
 }
 
+type ProductImageValue = string | { url?: string };
+
+function toImageUrl(image: ProductImageValue | undefined) {
+  if (!image) return "";
+  if (typeof image === "string") return image;
+
+  return image.url ?? "";
+}
+
 async function sanityFetch<T>(query: string, params?: Record<string, unknown>) {
   const client = getSanityClient();
   if (!client) return null;
@@ -63,12 +72,13 @@ export async function getProducts(): Promise<
       category?: string;
       finish?: string;
       dimensions?: string;
-      mainImage?: string;
-      thumbnail?: string;
-      images?: string[];
+      sortOrder?: number;
+      mainImage?: ProductImageValue;
+      thumbnail?: ProductImageValue;
+      images?: ProductImageValue[];
     }>
   >(
-    groq`*[_type == "product"] | order(coalesce(sortOrder, 0) asc, _updatedAt desc) {
+    groq`*[_type == "product"] | order(coalesce(sortOrder, 9999) asc, title asc) {
       title,
       slug,
       price,
@@ -78,9 +88,12 @@ export async function getProducts(): Promise<
       category,
       finish,
       dimensions,
-      mainImage,
-      thumbnail,
-      images
+      sortOrder,
+      "mainImage": coalesce(mainImage.asset->url, mainImage),
+      "thumbnail": coalesce(thumbnail.asset->url, thumbnail),
+      "images": images[]{
+        "url": coalesce(asset->url, @)
+      }
     }`,
   );
 
@@ -90,9 +103,12 @@ export async function getProducts(): Promise<
     .map((p) => {
       const slug =
         typeof p.slug === "string" ? p.slug : (p.slug?.current ?? "");
-      const images = Array.isArray(p.images) ? p.images.filter(Boolean) : [];
-      const mainImage = p.mainImage || images[0] || "";
-      const thumbnail = p.thumbnail || p.mainImage || images[0] || "";
+      const images = Array.isArray(p.images)
+        ? p.images.map(toImageUrl).filter(Boolean)
+        : [];
+      const fallbackMainImage = toImageUrl(p.mainImage);
+      const mainImage = images[0] || fallbackMainImage || "";
+      const thumbnail = toImageUrl(p.thumbnail) || mainImage;
 
       return {
         id: slug,

@@ -30,10 +30,13 @@ export default function ProductModal({
   const { addItem, notifyAdded } = useCart();
   const isGallery = variant === "gallery";
   const displayPrice = !isGallery || showPrice;
+  const orderedImages =
+    product.images.length > 0 ? product.images : [product.mainImage];
+  const selectedImage = orderedImages[selectedImageIndex] ?? orderedImages[0];
 
   useEffect(() => {
     setSelectedImageIndex(0);
-  }, [product.id]);
+  }, [isOpen, product.id]);
 
   const handleAddToCart = () => {
     addItem(
@@ -121,20 +124,22 @@ export default function ProductModal({
                   {/* Main Image */}
                   <div className="flex-1 min-w-0">
                     <div className="aspect-[4/5] max-h-[260px] md:max-h-[340px] bg-stone-200 dark:bg-stone-800 rounded-xl overflow-hidden">
-                      <Image
-                        src={product.images[selectedImageIndex]}
-                        alt={product.title}
-                        width={500}
-                        height={625}
-                        className="w-full h-full object-cover"
-                        sizes="(max-width: 768px) 100vw, 400px"
-                      />
+                      {selectedImage && (
+                        <Image
+                          src={selectedImage}
+                          alt={product.title}
+                          width={500}
+                          height={625}
+                          className="w-full h-full object-cover"
+                          sizes="(max-width: 768px) 100vw, 400px"
+                        />
+                      )}
                     </div>
                     {/* Thumbnails — под главным фото */}
                     <div className="flex gap-2 mt-3 overflow-x-auto pb-1">
-                      {product.images.map((image, index) => (
+                      {orderedImages.map((image, index) => (
                         <button
-                          key={index}
+                          key={`${image}-${index}`}
                           onClick={() => setSelectedImageIndex(index)}
                           className={`min-w-[56px] h-[56px] rounded-lg overflow-hidden transition-opacity shrink-0 border-2 ${
                             selectedImageIndex === index

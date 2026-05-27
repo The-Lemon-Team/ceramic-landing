@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  transpilePackages: ["@landing-brain/ui"],
   images: {
     remotePatterns: [
       {

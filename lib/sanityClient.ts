@@ -16,7 +16,7 @@ export function getSanityClient() {
 
   return createClient({
     ...config,
-    useCdn: process.env.NODE_ENV === "production",
+    useCdn: false,
     token: process.env.SANITY_API_READ_TOKEN,
     perspective: "published",
   });

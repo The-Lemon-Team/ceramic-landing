@@ -142,7 +142,7 @@ async function main() {
     });
 
     // Collections
-    for (const p of products) {
+    products.forEach((p, index) => {
       docs.push({
         _id: `product.${p.id}`,
         _type: "product",
@@ -155,11 +155,12 @@ async function main() {
         category: p.category,
         finish: p.finish,
         dimensions: p.dimensions,
+        sortOrder: index,
         mainImage: p.mainImage,
         images: p.images,
         thumbnail: p.thumbnail,
       });
-    }
+    });
 
     for (const t of artsThemes) {
       docs.push({
@@ -305,7 +306,7 @@ async function main() {
     ...DIRECTIONS,
   });
 
-  for (const p of products) {
+  for (const [index, p] of products.entries()) {
     const productImages = (
       await Promise.all(p.images.map((img) => toImageField(img)))
     ).filter(Boolean);
@@ -322,6 +323,7 @@ async function main() {
       category: p.category,
       finish: p.finish,
       dimensions: p.dimensions,
+      sortOrder: index,
       mainImage: await toImageField(p.mainImage),
       images: productImages,
       thumbnail: await toImageField(p.thumbnail),

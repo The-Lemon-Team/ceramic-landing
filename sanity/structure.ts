@@ -22,9 +22,20 @@ export const structure: StructureResolver = (S) =>
         .title("Directions")
         .child(S.document().schemaType("directions").documentId("directions")),
       S.divider(),
+      S.listItem()
+        .title("Products")
+        .child(
+          S.documentTypeList("product")
+            .title("Products")
+            .defaultOrdering([
+              { field: "sortOrder", direction: "asc" },
+              { field: "title", direction: "asc" },
+            ]),
+        ),
       ...S.documentTypeListItems().filter(
         (item) =>
           ![
+            "product",
             "siteConfig",
             "aboutAuthor",
             "studioSection",

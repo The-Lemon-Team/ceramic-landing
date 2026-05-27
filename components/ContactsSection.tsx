@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { Section } from "@/ui-lib";
 import Titles from "./Titles";
 
 export interface DirectionsData {
@@ -57,45 +58,46 @@ export default function ContactsSection({ directions }: ContactsSectionProps) {
     "https://www.google.com/maps/search/?api=1&query=59.966389,30.311389";
 
   return (
-    <section
+    <Section
       id="contacts"
-      className="py-10 px-8 md:py-10 md:px-[8px] bg-white dark:bg-[rgb(28_26_24)] border-t border-stone-100 dark:border-white/10 scroll-mt-20"
+      variant="plain"
+      size="M"
+      className="border-t border-stone-100 scroll-mt-20 dark:border-white/10"
     >
-      <div className="max-w-7xl mx-auto">
-        <Titles
-          className="section-label-wrap"
-          overline="Контакты"
-          title="Адрес и контакты"
-          overlineClassName="section-label text-stone-500 inline-flex items-center gap-1.5"
-          titleClassName="text-3xl md:text-4xl font-serif text-[#0d191b] dark:text-white mb-6"
-          icon={
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="text-stone-600 dark:text-stone-300 shrink-0"
-              aria-hidden
-            >
-              <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-              <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-          }
-        />
-        <p className="text-stone-600 dark:text-stone-300 text-base mb-2 max-w-lg">
-          {directions.address}
-        </p>
+      <Titles
+        className="section-label-wrap"
+        overline="Контакты"
+        title="Адрес и контакты"
+        overlineClassName="section-label text-stone-500 inline-flex items-center gap-1.5"
+        titleClassName="text-3xl md:text-4xl font-serif text-[#0d191b] dark:text-white mb-6"
+        icon={
+          <svg
+            width="12"
+            height="12"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="text-stone-600 dark:text-stone-300 shrink-0"
+            aria-hidden
+          >
+            <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+        }
+      />
+      <p className="text-stone-600 dark:text-stone-300 text-base mb-2 max-w-lg">
+        {directions.address}
+      </p>
 
-        <h3 className="text-lg font-semibold text-stone-800 dark:text-stone-50 mb-2">
-          Как добраться:
-        </h3>
+      <h3 className="text-lg font-semibold text-stone-800 dark:text-stone-50 mb-2">
+        Как добраться:
+      </h3>
 
-        {/* Карта слева, подсказка справа — одинаковые по высоте */}
-        <div className="grid md:grid-cols-2 gap-8 mb-8 md:items-stretch">
+      {/* Карта слева, подсказка справа — одинаковые по высоте */}
+      <div className="grid md:grid-cols-2 gap-8 mb-8 md:items-stretch">
           {/* Карта */}
           <div className="relative rounded-xl overflow-hidden bg-stone-100 dark:bg-white/5 border border-stone-200 dark:border-white/10 h-[280px] md:h-full">
             <iframe
@@ -230,8 +232,7 @@ export default function ContactsSection({ directions }: ContactsSectionProps) {
               </div>
             </div>
           </div>
-        </div>
       </div>
-    </section>
+    </Section>
   );
 }

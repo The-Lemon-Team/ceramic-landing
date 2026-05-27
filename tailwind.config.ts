@@ -6,6 +6,7 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./ui-lib/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/@landing-brain/ui/src/**/*.{js,ts,jsx,tsx}",
   ],
   darkMode: "class",
   theme: {
